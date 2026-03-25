@@ -55,32 +55,22 @@ html[lang="es"] .en{display:none!important}
 .signup-link a{color:var(--orange);font-weight:700}
 .signup-link a:hover{text-decoration:underline}
 
-.divider{display:flex;align-items:center;gap:16px;margin:24px 0}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:#ddd}
-.divider span{font-size:.75rem;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-
-/* Forgot password panel */
 .panel{display:none}
 .panel.active{display:block}
 
-@media(max-width:520px){
-  .card{padding:32px 24px}
-}
+@media(max-width:520px){.card{padding:32px 24px}}
 </style>
 <script>
-let currentLang = 'en';
-function setLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
 }
 </script>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <a href="/" class="nav-logo">book<span>d</span></a>
   <div class="top-right">
@@ -93,9 +83,8 @@ function setLang(lang) {
   </div>
 </div>
 
-<!-- LOGIN CARD -->
 <div class="card">
-  <!-- Login Panel -->
+  <!-- LOGIN PANEL -->
   <div class="panel active" id="loginPanel">
     <h1 class="en">Welcome Back</h1>
     <h1 class="es">Bienvenido</h1>
@@ -105,24 +94,21 @@ function setLang(lang) {
     <div class="error-msg" id="loginError"></div>
 
     <div class="form-group">
-      <label class="en">Email</label>
-      <label class="es">Correo Electrónico</label>
+      <label class="en">Email</label><label class="es">Correo Electrónico</label>
       <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
     </div>
     <div class="form-group">
-      <label class="en">Password</label>
-      <label class="es">Contraseña</label>
+      <label class="en">Password</label><label class="es">Contraseña</label>
       <input type="password" id="password" placeholder="Your password" autocomplete="current-password">
     </div>
 
     <div class="forgot-row">
-      <a href="#" onclick="showForgot()" class="en">Forgot password?</a>
-      <a href="#" onclick="showForgot()" class="es">¿Olvidaste tu contraseña?</a>
+      <a href="#" onclick="showPanel('forgotPanel')" class="en">Forgot password?</a>
+      <a href="#" onclick="showPanel('forgotPanel')" class="es">¿Olvidaste tu contraseña?</a>
     </div>
 
     <button class="btn-primary" id="loginBtn" onclick="doLogin()">
-      <span class="en">Log In</span>
-      <span class="es">Entrar</span>
+      <span class="en">Log In</span><span class="es">Entrar</span>
     </button>
 
     <div class="signup-link">
@@ -131,7 +117,7 @@ function setLang(lang) {
     </div>
   </div>
 
-  <!-- Forgot Password Panel -->
+  <!-- FORGOT PASSWORD PANEL -->
   <div class="panel" id="forgotPanel">
     <h1 class="en">Reset Password</h1>
     <h1 class="es">Restablecer Contraseña</h1>
@@ -142,138 +128,101 @@ function setLang(lang) {
     <div class="success-msg" id="forgotSuccess"></div>
 
     <div class="form-group">
-      <label class="en">Email</label>
-      <label class="es">Correo Electrónico</label>
+      <label class="en">Email</label><label class="es">Correo Electrónico</label>
       <input type="email" id="forgotEmail" placeholder="you@email.com">
     </div>
 
     <button class="btn-primary" id="forgotBtn" onclick="doForgot()">
-      <span class="en">Send Reset Link</span>
-      <span class="es">Enviar Enlace</span>
+      <span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>
     </button>
 
     <div class="signup-link" style="margin-top:20px">
-      <a href="#" onclick="showLogin()" style="color:var(--orange)">
-        <span class="en">← Back to login</span>
-        <span class="es">← Volver al login</span>
+      <a href="#" onclick="showPanel('loginPanel')" style="color:var(--orange)">
+        <span class="en">← Back to login</span><span class="es">← Volver al login</span>
       </a>
     </div>
   </div>
 </div>
 
 <script>
-function showForgot() {
-  document.getElementById('loginPanel').classList.remove('active');
-  document.getElementById('forgotPanel').classList.add('active');
+const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+
+let sb=null;
+
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
-function showLogin() {
-  document.getElementById('forgotPanel').classList.remove('active');
-  document.getElementById('loginPanel').classList.add('active');
+function showError(id,msg){const e=document.getElementById(id);e.textContent=msg;e.style.display='block';}
+function hideMsg(id){document.getElementById(id).style.display='none';}
+
+async function loadSB(){
+  if(sb) return sb;
+  await new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    s.onload=res;s.onerror=rej;
+    document.head.appendChild(s);
+  });
+  sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  return sb;
 }
 
-function showError(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.style.display = 'block';
+async function doLogin(){
+  hideMsg('loginError');
+  const email=document.getElementById('email').value.trim();
+  const password=document.getElementById('password').value;
+  if(!email||!email.includes('@')) return showError('loginError',currentLang==='es'?'Correo inválido':'Please enter a valid email');
+  if(!password) return showError('loginError',currentLang==='es'?'Ingresa tu contraseña':'Please enter your password');
+
+  const btn=document.getElementById('loginBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Entrando...':'Logging in...';
+
+  try{
+    const client=await loadSB();
+    const{data,error}=await client.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    window.location.href='/my-dashboard.html';
+  }catch(e){
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Log In</span><span class="es">Entrar</span>';
+    showError('loginError',e.message||'Login failed');
+  }
 }
-function hideError(id) {
-  document.getElementById(id).style.display = 'none';
-}
 
-async function loadSupabase() {
-  if (window._sb) return window._sb;
+async function doForgot(){
+  hideMsg('forgotError');
+  hideMsg('forgotSuccess');
+  const email=document.getElementById('forgotEmail').value.trim();
+  if(!email||!email.includes('@')) return showError('forgotError',currentLang==='es'?'Correo inválido':'Please enter a valid email');
 
-  const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+  const btn=document.getElementById('forgotBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Enviando...':'Sending...';
 
-  if (!window.supabase) {
-    await new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-      s.onload = resolve;
-      s.onerror = reject;
-      document.head.appendChild(s);
+  try{
+    const client=await loadSB();
+    const{error}=await client.auth.resetPasswordForEmail(email,{
+      redirectTo:'https://bookd.click/login.html'
     });
-  }
-  window._sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-  return window._sb;
-}
-
-async function doLogin() {
-  hideError('loginError');
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  if (!email || !email.includes('@')) return showError('loginError', currentLang === 'es' ? 'Correo inválido' : 'Please enter a valid email');
-  if (!password) return showError('loginError', currentLang === 'es' ? 'Ingresa tu contraseña' : 'Please enter your password');
-
-  const btn = document.getElementById('loginBtn');
-  btn.disabled = true;
-  btn.textContent = currentLang === 'es' ? 'Entrando...' : 'Logging in...';
-
-  // Demo mode when not on live domain
-  if (location.hostname !== 'bookd.click') {
-    setTimeout(() => { window.location.href = '/my-dashboard.html'; }, 1000);
-    return;
-  }
-
-  try {
-    const sb = await loadSupabase();
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    window.location.href = '/my-dashboard.html';
-  } catch (e) {
-    btn.disabled = false;
-    btn.innerHTML = '<span class="en">Log In</span><span class="es">Entrar</span>';
-    showError('loginError', e.message || 'Login failed');
+    if(error) throw error;
+    const suc=document.getElementById('forgotSuccess');
+    suc.textContent=currentLang==='es'?'Enlace enviado a tu correo':'Reset link sent to your email';
+    suc.style.display='block';
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>';
+  }catch(e){
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>';
+    showError('forgotError',e.message||'Something went wrong');
   }
 }
 
-async function doForgot() {
-  hideError('forgotError');
-  document.getElementById('forgotSuccess').style.display = 'none';
-  const email = document.getElementById('forgotEmail').value.trim();
-
-  if (!email || !email.includes('@')) return showError('forgotError', currentLang === 'es' ? 'Correo inválido' : 'Please enter a valid email');
-
-  const btn = document.getElementById('forgotBtn');
-  btn.disabled = true;
-  btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
-
-  if (location.hostname !== 'bookd.click') {
-    setTimeout(() => {
-      const suc = document.getElementById('forgotSuccess');
-      suc.textContent = currentLang === 'es' ? 'Enlace enviado (demo)' : 'Reset link sent (demo mode)';
-      suc.style.display = 'block';
-      btn.disabled = false;
-      btn.innerHTML = '<span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>';
-    }, 1000);
-    return;
-  }
-
-  try {
-    const sb = await loadSupabase();
-    const { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://bookd.click/login.html'
-    });
-    if (error) throw error;
-
-    const suc = document.getElementById('forgotSuccess');
-    suc.textContent = currentLang === 'es' ? 'Enlace de restablecimiento enviado a tu correo' : 'Password reset link sent to your email';
-    suc.style.display = 'block';
-    btn.disabled = false;
-    btn.innerHTML = '<span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>';
-  } catch (e) {
-    btn.disabled = false;
-    btn.innerHTML = '<span class="en">Send Reset Link</span><span class="es">Enviar Enlace</span>';
-    showError('forgotError', e.message || 'Something went wrong');
-  }
-}
-
-// Enter key support
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    if (document.getElementById('loginPanel').classList.contains('active')) doLogin();
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(document.getElementById('loginPanel').classList.contains('active')) doLogin();
     else doForgot();
   }
 });

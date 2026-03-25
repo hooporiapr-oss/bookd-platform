@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournament — Bookd</title>
+<link rel="icon" href="/bookd.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+
+:root{
+  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
+  --orange:#e8611a;--orange-light:#f4832f;
+  --white:#fafaf9;--gray:#8a8a8a;
+}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-weight:800;font-size:1.4rem;color:var(--orange)}
+.nav-logo span{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-right a{font-size:.8rem;color:var(--gray);font-weight:600}
+.nav-right a:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+/* HEADER */
+.tourney-header{padding:90px 24px 24px;text-align:center}
+.tourney-header .badge{display:inline-block;padding:6px 16px;border:1px solid rgba(232,97,26,.3);border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--orange);text-transform:uppercase;margin-bottom:12px}
+.tourney-header h1{font-size:clamp(1.5rem,4vw,2.25rem);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:4px}
+.tourney-header .meta{font-size:.85rem;color:var(--gray)}
+.tourney-header .meta span{margin:0 8px}
+
+/* TABS */
+.tabs{display:flex;justify-content:center;gap:4px;padding:16px 24px;flex-wrap:wrap}
+.tab{padding:10px 24px;border-radius:8px;font-size:.8rem;font-weight:700;color:var(--gray);background:var(--black2);border:1px solid rgba(255,255,255,.06);transition:all .2s;text-transform:uppercase;letter-spacing:.04em}
+.tab:hover{color:var(--white);border-color:rgba(255,255,255,.12)}
+.tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+
+/* CONTAINER */
+.container{max-width:900px;margin:0 auto;padding:24px 24px 80px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* BRACKET VIEW */
+.bracket-scroll{overflow-x:auto;padding-bottom:16px}
+.rounds{display:flex;gap:24px}
+.round{min-width:200px;flex-shrink:0}
+.round-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray);margin-bottom:12px;text-align:center}
+.match-box{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.match-box.completed{border-color:rgba(34,197,94,.15)}
+.match-box.live{border-color:rgba(34,197,94,.4)}
+.match-slot{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:.85rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,.04)}
+.match-slot:last-child{border-bottom:none}
+.match-slot.winner{color:var(--orange);font-weight:800}
+.match-slot.tbd{color:#555;font-style:italic}
+.match-slot .score{font-weight:800;min-width:24px;text-align:right}
+.match-num{font-size:.6rem;color:#444;text-align:center;padding:2px;font-weight:600}
+.live-badge{font-size:.6rem;color:#22c55e;font-weight:800;text-transform:uppercase;text-align:center;padding:2px}
+
+/* TEAMS LIST */
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.team-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px;text-align:center;transition:all .2s}
+.team-card:hover{border-color:rgba(232,97,26,.2)}
+.team-card .seed{font-size:.7rem;color:var(--gray);font-weight:700;margin-bottom:4px}
+.team-card h3{font-size:.95rem;font-weight:800;margin-bottom:6px}
+.team-card .record{font-size:.8rem;color:var(--gray)}
+.team-card .record .w{color:#22c55e}
+.team-card .record .l{color:#ef4444}
+.team-card.champion{border-color:var(--orange);background:rgba(232,97,26,.05)}
+.team-card.champion::after{content:'🏆';display:block;font-size:1.2rem;margin-top:8px}
+
+/* SCHEDULE */
+.schedule-list{display:flex;flex-direction:column;gap:12px}
+.sched-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sched-teams{flex:1}
+.sched-teams .t{font-weight:700;font-size:.9rem;margin-bottom:2px}
+.sched-teams .t.winner{color:var(--orange)}
+.sched-score{font-size:1.3rem;font-weight:900;min-width:70px;text-align:center}
+.sched-score .vs{font-size:.75rem;color:var(--gray);font-weight:600}
+.sched-meta{font-size:.75rem;color:var(--gray);text-align:right;min-width:90px}
+.sched-meta .live{color:#22c55e;font-weight:800}
+
+/* EMPTY / LOADING */
+.empty-state{text-align:center;padding:60px 24px;color:var(--gray);font-size:.9rem}
+.page-center{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.not-found{text-align:center;padding:120px 24px}
+.not-found h2{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+.not-found p{color:var(--gray);margin-bottom:24px}
+.not-found a{color:var(--orange);font-weight:700}
+
+@media(max-width:600px){
+  .rounds{flex-direction:column;gap:16px}
+  .round{min-width:auto}
+  .teams-grid{grid-template-columns:1fr 1fr}
+  .sched-card{flex-direction:column;text-align:center;gap:8px}
+  .sched-meta{text-align:center}
+}
+</style>
+<script>
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/" class="nav-logo">book<span>d</span></a>
+  <div class="nav-right">
+    <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="page-center" id="loading"><div class="spinner"></div></div>
+
+<!-- NOT FOUND -->
+<div class="not-found" id="notFound" style="display:none">
+  <h2 class="en">Tournament Not Found</h2><h2 class="es">Torneo No Encontrado</h2>
+  <p class="en">This tournament doesn't exist or hasn't started yet.</p>
+  <p class="es">Este torneo no existe o no ha comenzado aún.</p>
+  <a href="/" class="en">← Back to Bookd</a><a href="/" class="es">← Volver a Bookd</a>
+</div>
+
+<!-- MAIN -->
+<div id="mainContent" style="display:none">
+  <div class="tourney-header">
+    <div class="badge" id="formatBadge">Tournament</div>
+    <h1 id="tName">—</h1>
+    <div class="meta">
+      <span id="tLocation"></span>
+      <span id="tDates"></span>
+      <span id="tTeamCount"></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('bracket',this)"><span class="en">Bracket</span><span class="es">Llave</span></button>
+    <button class="tab" onclick="showTab('teams',this)"><span class="en">Teams</span><span class="es">Equipos</span></button>
+    <button class="tab" onclick="showTab('schedule',this)"><span class="en">Schedule</span><span class="es">Calendario</span></button>
+  </div>
+
+  <div class="container">
+    <!-- BRACKET -->
+    <div class="panel active" id="bracket">
+      <div class="bracket-scroll"><div class="rounds" id="roundsContainer"></div></div>
+    </div>
+
+    <!-- TEAMS -->
+    <div class="panel" id="teams">
+      <div class="teams-grid" id="teamsGrid"></div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="panel" id="schedule">
+      <div class="schedule-list" id="schedList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+
+let sb=null,tournament=null,teams=[],matches=[];
+
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function teamName(id){
+  const t=teams.find(t=>t.id===id);
+  return t?t.team_name:'TBD';
+}
+
+(async function init(){
+  try{
+    const params=new URLSearchParams(window.location.search);
+    const slug=params.get('t')||params.get('slug')||'';
+
+    if(!slug){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('notFound').style.display='block';
+      return;
+    }
+
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload=res;s.onerror=rej;
+      document.head.appendChild(s);
+    });
+    sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+
+    // Load tournament
+    const{data:t}=await sb.from('tournaments').select('*').eq('slug',slug).maybeSingle();
+    if(!t){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('notFound').style.display='block';
+      return;
+    }
+    tournament=t;
+    document.title=(t.name_en||'Tournament')+' — Bookd';
+    document.getElementById('tName').textContent=t.name_en||'Tournament';
+
+    const formatLabels={single_elimination:'Single Elimination',double_elimination:'Double Elimination',round_robin:'Round Robin'};
+    document.getElementById('formatBadge').textContent=formatLabels[t.format]||t.format;
+    document.getElementById('tLocation').textContent=t.location||'';
+
+    if(t.start_date){
+      const start=new Date(t.start_date).toLocaleDateString();
+      const end=t.end_date?(' — '+new Date(t.end_date).toLocaleDateString()):'';
+      document.getElementById('tDates').textContent=start+end;
+    }
+
+    // Load teams
+    const{data:tm}=await sb.from('tournament_teams').select('*').eq('tournament_id',t.id).order('seed');
+    teams=tm||[];
+    document.getElementById('tTeamCount').textContent=teams.length+' '+(currentLang==='es'?'equipos':'teams');
+
+    // Load matches
+    const{data:m}=await sb.from('tournament_matches').select('*').eq('tournament_id',t.id).order('round').order('match_number');
+    matches=m||[];
+
+    renderBracket();
+    renderTeams();
+    renderSchedule();
+
+    document.getElementById('loading').style.display='none';
+    document.getElementById('mainContent').style.display='block';
+
+  }catch(e){
+    console.error('Tournament error:',e);
+    document.getElementById('loading').style.display='none';
+    document.getElementById('notFound').style.display='block';
+  }
+})();
+
+function renderBracket(){
+  const container=document.getElementById('roundsContainer');
+  if(matches.length===0){
+    container.innerHTML='<div class="empty-state"><span class="en">Bracket not generated yet</span><span class="es">Llave no generada aún</span></div>';
+    return;
+  }
+
+  // Group matches by round
+  const rounds={};
+  matches.forEach(m=>{
+    if(!rounds[m.round]) rounds[m.round]=[];
+    rounds[m.round].push(m);
+  });
+
+  const roundNums=Object.keys(rounds).sort((a,b)=>a-b);
+  container.innerHTML='';
+
+  roundNums.forEach((rn,ri)=>{
+    const div=document.createElement('div');
+    div.className='round';
+    let label;
+    if(ri===roundNums.length-1) label=currentLang==='es'?'Final':'Final';
+    else if(ri===roundNums.length-2&&roundNums.length>2) label=currentLang==='es'?'Semifinal':'Semifinal';
+    else label=(currentLang==='es'?'Ronda ':'Round ')+rn;
+
+    div.innerHTML=`<div class="round-title">${label}</div>`;
+
+    rounds[rn].forEach(m=>{
+      const aName=teamName(m.team_a_id);
+      const bName=teamName(m.team_b_id);
+      const isComplete=m.status==='completed';
+      const isLive=m.status==='live';
+      const aWin=isComplete&&m.winner_id===m.team_a_id;
+      const bWin=isComplete&&m.winner_id===m.team_b_id;
+
+      const box=document.createElement('div');
+      box.className='match-box'+(isComplete?' completed':'')+(isLive?' live':'');
+      box.innerHTML=`
+        ${isLive?'<div class="live-badge">● LIVE</div>':''}
+        <div class="match-num">G${m.match_number}</div>
+        <div class="match-slot ${aWin?'winner':''} ${!m.team_a_id?'tbd':''}">
+          <span>${aName}</span>
+          <span class="score">${m.score_a!==null?m.score_a:''}</span>
+        </div>
+        <div class="match-slot ${bWin?'winner':''} ${!m.team_b_id?'tbd':''}">
+          <span>${bName}</span>
+          <span class="score">${m.score_b!==null?m.score_b:''}</span>
+        </div>`;
+      div.appendChild(box);
+    });
+
+    container.appendChild(div);
+  });
+}
+
+function renderTeams(){
+  const grid=document.getElementById('teamsGrid');
+  if(teams.length===0){
+    grid.innerHTML='<div class="empty-state"><span class="en">No teams registered</span><span class="es">Sin equipos registrados</span></div>';
+    return;
+  }
+  grid.innerHTML=teams.map(t=>{
+    const isChamp=t.status==='champion';
+    return `<div class="team-card${isChamp?' champion':''}">
+      ${t.seed?'<div class="seed">#'+t.seed+'</div>':''}
+      <h3>${t.team_name}</h3>
+      <div class="record"><span class="w">${t.wins}W</span> — <span class="l">${t.losses}L</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderSchedule(){
+  const list=document.getElementById('schedList');
+  if(matches.length===0){
+    list.innerHTML='<div class="empty-state"><span class="en">No games scheduled</span><span class="es">Sin juegos programados</span></div>';
+    return;
+  }
+  list.innerHTML=matches.map(m=>{
+    const aName=teamName(m.team_a_id);
+    const bName=teamName(m.team_b_id);
+    const isComplete=m.status==='completed';
+    const isLive=m.status==='live';
+    const aWin=isComplete&&m.winner_id===m.team_a_id;
+    const bWin=isComplete&&m.winner_id===m.team_b_id;
+
+    return `<div class="sched-card"${isLive?' style="border-color:rgba(34,197,94,.3)"':''}>
+      <div class="sched-teams">
+        <div class="t ${aWin?'winner':''}">${aName}</div>
+        <div class="t ${bWin?'winner':''}">${bName}</div>
+      </div>
+      <div class="sched-score">${isComplete||isLive?((m.score_a||0)+' - '+(m.score_b||0)):'<span class="vs">vs</span>'}</div>
+      <div class="sched-meta">
+        <div>R${m.round} G${m.match_number}</div>
+        ${m.court?'<div>'+m.court+'</div>':''}
+        ${isLive?'<div class="live">● LIVE</div>':''}
+        ${isComplete?'<div>Final</div>':''}
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bookd</title>
+<link rel="icon" href="/bookd.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+input,select,textarea{font-family:inherit}
+
+:root{
+  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
+  --orange:#e8611a;--orange-light:#f4832f;
+  --white:#fafaf9;--gray:#8a8a8a;
+}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-weight:800;font-size:1.4rem;color:var(--orange)}
+.nav-logo span{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-right a{font-size:.8rem;color:var(--gray);font-weight:600}
+.nav-right a:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+/* PROFILE */
+.profile{max-width:640px;margin:0 auto;padding:100px 24px 40px;text-align:center}
+.profile-avatar{width:80px;height:80px;border-radius:20px;background:rgba(232,97,26,.15);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 16px}
+.profile h1{font-size:1.75rem;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:4px}
+.profile .loc{font-size:.85rem;color:var(--gray);margin-bottom:12px}
+.profile .desc{font-size:.9rem;color:var(--gray);line-height:1.7;max-width:480px;margin:0 auto}
+
+/* EXPERIENCES */
+.exp-section{max-width:640px;margin:0 auto;padding:40px 24px 80px}
+.exp-section h2{font-size:1.15rem;font-weight:800;text-transform:uppercase;margin-bottom:20px;letter-spacing:.01em}
+.exp-list{display:flex;flex-direction:column;gap:16px}
+.exp-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:all .3s}
+.exp-card:hover{border-color:rgba(232,97,26,.2)}
+.exp-info h3{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+.exp-info .meta{font-size:.8rem;color:var(--gray)}
+.exp-info .meta span{margin-right:12px}
+.exp-info .meta .price{color:var(--orange);font-weight:800}
+.exp-right{flex-shrink:0}
+.btn-book{background:var(--orange);color:#fff;padding:12px 24px;border-radius:8px;font-weight:800;font-size:.85rem;letter-spacing:.03em;transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.btn-book:hover{background:var(--orange-light)}
+
+/* EMPTY / LOADING */
+.page-center{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;padding:24px;text-align:center}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.not-found h2{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+.not-found p{color:var(--gray);font-size:.9rem;margin-bottom:24px}
+.not-found a{color:var(--orange);font-weight:700;font-size:.9rem}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:40px 36px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal h2{font-size:1.25rem;font-weight:900;color:#000;text-transform:uppercase;margin-bottom:20px}
+.modal .close{position:absolute;top:16px;right:20px;background:none;font-size:1.5rem;color:#999;line-height:1}
+.modal .close:hover{color:#000}
+.modal .form-group{margin-bottom:16px}
+.modal .form-group label{display:block;font-size:.85rem;font-weight:700;color:#000;margin-bottom:6px}
+.modal .form-group input,.modal .form-group select,.modal .form-group textarea{width:100%;padding:12px 14px;font-size:1rem;font-weight:500;color:#000;background:#fff;border:2px solid #bbb;border-radius:10px;outline:none;transition:border-color .2s}
+.modal .form-group input:focus,.modal .form-group textarea:focus{border-color:var(--orange)}
+.modal .form-group textarea{resize:vertical;min-height:60px}
+.modal .form-group input::placeholder,.modal .form-group textarea::placeholder{color:#aaa;font-weight:400}
+.modal .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal .btn-submit{width:100%;padding:16px;background:var(--orange);color:#fff;border-radius:10px;font-size:1rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:all .25s;margin-top:8px}
+.modal .btn-submit:hover{background:var(--orange-light)}
+.modal .btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.modal .error-msg{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:10px 14px;border-radius:8px;font-size:.8rem;font-weight:600;margin-bottom:14px;display:none}
+.modal .success-msg{background:#f0fdf4;border:1px solid #86efac;color:#16a34a;padding:10px 14px;border-radius:8px;font-size:.85rem;font-weight:600;margin-bottom:14px;display:none;text-align:center}
+
+.exp-name-in-modal{font-size:.85rem;color:#666;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #eee}
+.exp-name-in-modal strong{color:#000}
+
+@media(max-width:520px){
+  .modal{padding:28px 20px}
+  .modal .form-row{grid-template-columns:1fr}
+  .exp-card{flex-direction:column;text-align:center;gap:12px}
+}
+</style>
+<script>
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <a href="/" class="nav-logo">book<span>d</span></a>
+  <div class="nav-right">
+    <a href="/login.html" class="en">Organizer Login</a>
+    <a href="/login.html" class="es">Login Organizador</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="page-center" id="loading">
+  <div class="spinner"></div>
+</div>
+
+<!-- NOT FOUND (hidden) -->
+<div class="page-center not-found" id="notFound" style="display:none">
+  <h2 class="en">Page Not Found</h2>
+  <h2 class="es">Página No Encontrada</h2>
+  <p class="en">This organizer doesn't exist or hasn't set up their page yet.</p>
+  <p class="es">Este organizador no existe o no ha configurado su página aún.</p>
+  <a href="/" class="en">← Back to Bookd</a>
+  <a href="/" class="es">← Volver a Bookd</a>
+</div>
+
+<!-- MAIN CONTENT (hidden until loaded) -->
+<div id="content" style="display:none">
+  <div class="profile">
+    <div class="profile-avatar" id="opAvatar">🏀</div>
+    <h1 id="opName">—</h1>
+    <div class="loc" id="opLoc"></div>
+    <div class="desc" id="opDesc"></div>
+  </div>
+  <div class="exp-section">
+    <h2 class="en">Events & Tournaments</h2>
+    <h2 class="es">Eventos y Torneos</h2>
+    <div class="exp-list" id="expList"></div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">&times;</button>
+    <h2 class="en">Register Your Team</h2>
+    <h2 class="es">Registra Tu Equipo</h2>
+    <div class="exp-name-in-modal" id="modalExpName"></div>
+    <div class="error-msg" id="bookError"></div>
+    <div class="success-msg" id="bookSuccess"></div>
+
+    <div class="form-group">
+      <label class="en">Your Name</label><label class="es">Tu Nombre</label>
+      <input type="text" id="bkName" placeholder="Full name">
+    </div>
+    <div class="form-group">
+      <label class="en">Email</label><label class="es">Correo</label>
+      <input type="email" id="bkEmail" placeholder="you@email.com">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Phone</label><label class="es">Teléfono</label>
+        <input type="tel" id="bkPhone" placeholder="(787) 555-0000">
+      </div>
+      <div class="form-group">
+        <label class="en">Team Name</label><label class="es">Nombre del Equipo</label>
+        <input type="text" id="bkTeam" placeholder="e.g. PR Elite">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Group Size</label><label class="es">Tamaño del Grupo</label>
+        <input type="number" id="bkCount" value="1" min="1">
+      </div>
+      <div class="form-group">
+        <label class="en">Date</label><label class="es">Fecha</label>
+        <input type="date" id="bkDate">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">Notes (optional)</label><label class="es">Notas (opcional)</label>
+      <textarea id="bkNotes" placeholder="Anything we should know..."></textarea>
+    </div>
+    <button class="btn-submit" onclick="submitBooking()" id="bookBtn">
+      <span class="en">Submit Registration</span><span class="es">Enviar Registro</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+
+let sb=null,operatorData=null,selectedExp=null;
+
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+
+function openBooking(expId){
+  const exp=window._exps.find(e=>e.id===expId);
+  if(!exp) return;
+  selectedExp=exp;
+  const title=currentLang==='es'?(exp.title_es||exp.title_en):exp.title_en;
+  document.getElementById('modalExpName').innerHTML='<strong>'+title+'</strong> — $'+(exp.price_per_person||0);
+  document.getElementById('bookError').style.display='none';
+  document.getElementById('bookSuccess').style.display='none';
+  document.getElementById('bookBtn').disabled=false;
+  document.getElementById('bookBtn').innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Registro</span>';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+// INIT
+(async function init(){
+  try{
+    // Get slug from URL path
+    const slug=window.location.pathname.replace(/^\//,'').replace(/\/$/,'').split('/')[0];
+    if(!slug||slug==='operator.html'){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('notFound').style.display='flex';
+      return;
+    }
+
+    // Load Supabase
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload=res;s.onerror=rej;
+      document.head.appendChild(s);
+    });
+    sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+
+    // Load operator by slug
+    const{data:op}=await sb.from('operators').select('*').eq('slug',slug).eq('active',true).maybeSingle();
+    if(!op){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('notFound').style.display='flex';
+      return;
+    }
+    operatorData=op;
+
+    // Set page title
+    document.title=op.business_name+' — Bookd';
+
+    // Populate profile
+    document.getElementById('opAvatar').textContent=op.avatar_emoji||'🏀';
+    document.getElementById('opName').textContent=op.business_name;
+    document.getElementById('opLoc').textContent=op.location||'';
+    document.getElementById('opDesc').textContent=op.description||'';
+
+    // Load experiences
+    const{data:exps}=await sb.from('experiences').select('*').eq('operator_id',op.id).eq('active',true).order('sort_order');
+    window._exps=exps||[];
+
+    const list=document.getElementById('expList');
+    if(!exps||exps.length===0){
+      list.innerHTML='<div style="text-align:center;padding:40px;color:var(--gray)"><span class="en">No events available right now.</span><span class="es">No hay eventos disponibles ahora.</span></div>';
+    }else{
+      list.innerHTML=exps.map(e=>{
+        const title='<span class="en">'+(e.title_en||'—')+'</span><span class="es">'+(e.title_es||e.title_en||'—')+'</span>';
+        const desc=e.description_en?('<br><span style="font-weight:400;font-size:.8rem;color:var(--gray)">'+e.description_en+'</span>'):'';
+        return `<div class="exp-card">
+          <div class="exp-info">
+            <h3>${title}</h3>
+            <div class="meta">
+              <span class="price">$${e.price_per_person||0}</span>
+              <span>${e.min_guests||'?'} – ${e.max_guests||'?'} <span class="en">teams</span><span class="es">equipos</span></span>
+            </div>
+          </div>
+          <div class="exp-right">
+            <button class="btn-book" onclick="openBooking('${e.id}')"><span class="en">Book</span><span class="es">Reservar</span></button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // Show content
+    document.getElementById('loading').style.display='none';
+    document.getElementById('content').style.display='block';
+
+  }catch(e){
+    console.error('Operator page error:',e);
+    document.getElementById('loading').style.display='none';
+    document.getElementById('notFound').style.display='flex';
+  }
+})();
+
+// SUBMIT BOOKING
+async function submitBooking(){
+  const err=document.getElementById('bookError');
+  err.style.display='none';
+
+  const name=document.getElementById('bkName').value.trim();
+  const email=document.getElementById('bkEmail').value.trim();
+  const phone=document.getElementById('bkPhone').value.trim();
+  const team=document.getElementById('bkTeam').value.trim();
+  const count=parseInt(document.getElementById('bkCount').value)||1;
+  const date=document.getElementById('bkDate').value;
+  const notes=document.getElementById('bkNotes').value.trim();
+
+  if(!name) return showBookError(currentLang==='es'?'Nombre requerido':'Name is required');
+  if(!email||!email.includes('@')) return showBookError(currentLang==='es'?'Correo inválido':'Valid email required');
+  if(!team) return showBookError(currentLang==='es'?'Nombre del equipo requerido':'Team name is required');
+
+  const btn=document.getElementById('bookBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Enviando...':'Submitting...';
+
+  try{
+    const totalAmount=selectedExp.price_per_person||0;
+
+    // Insert booking
+    const{data:booking,error:bkErr}=await sb.from('bookings').insert({
+      operator_id:operatorData.id,
+      experience_id:selectedExp.id,
+      guest_name:name,
+      guest_email:email,
+      guest_phone:phone,
+      team_name:team,
+      guest_count:count,
+      booking_date:date||null,
+      notes:notes,
+      total_amount:totalAmount,
+      payment_status:totalAmount>0?'pending':'paid',
+      status:'pending'
+    }).select().single();
+    if(bkErr) throw bkErr;
+
+    // If paid experience + operator has Stripe → redirect to checkout
+    if(totalAmount>0&&operatorData.stripe_account_id){
+      try{
+        const res=await fetch('/api/checkout',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            booking_id:booking.id,
+            operator_id:operatorData.id,
+            experience_title:selectedExp.title_en,
+            amount:totalAmount,
+            guest_email:email
+          })
+        });
+        const data=await res.json();
+        if(data.url){
+          window.location.href=data.url;
+          return;
+        }
+      }catch(stripeErr){
+        console.error('Checkout redirect failed:',stripeErr);
+      }
+    }
+
+    // Show success
+    document.getElementById('bookSuccess').textContent=currentLang==='es'
+      ?'¡Registro exitoso! El organizador se comunicará contigo.'
+      :'Registration submitted! The organizer will be in touch.';
+    document.getElementById('bookSuccess').style.display='block';
+    btn.style.display='none';
+
+  }catch(e){
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Registro</span>';
+    showBookError(e.message||'Something went wrong');
+  }
+}
+
+function showBookError(msg){
+  const e=document.getElementById('bookError');
+  e.textContent=msg;e.style.display='block';
+}
+</script>
+</body>
+</html>

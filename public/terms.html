@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Bookd</title>
+<link rel="icon" href="/bookd.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+
+:root{
+  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
+  --orange:#e8611a;--orange-light:#f4832f;
+  --white:#fafaf9;--gray:#8a8a8a;
+}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-weight:800;font-size:1.4rem;color:var(--orange)}
+.nav-logo span{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-right a{font-size:.8rem;color:var(--gray);font-weight:600}
+.nav-right a:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+.content{max-width:720px;margin:0 auto;padding:100px 24px 80px}
+.card{background:#fff;border-radius:16px;padding:48px 40px;color:#000}
+.card h1{font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;letter-spacing:-.01em}
+.card .updated{font-size:.8rem;color:#888;margin-bottom:32px}
+.card h2{font-size:1.1rem;font-weight:800;margin-top:28px;margin-bottom:10px;color:#000}
+.card p{font-size:.9rem;color:#333;margin-bottom:14px;line-height:1.7}
+.card ul{margin:0 0 14px 20px;font-size:.9rem;color:#333;line-height:1.8}
+.card a{color:var(--orange);font-weight:600}
+.card strong{color:#000}
+
+@media(max-width:520px){.card{padding:32px 20px}}
+</style>
+<script>
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/" class="nav-logo">book<span>d</span></a>
+  <div class="nav-right">
+    <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
+    <a href="/privacy.html" class="en">Privacy</a><a href="/privacy.html" class="es">Privacidad</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="card">
+
+    <!-- ENGLISH -->
+    <div class="en">
+      <h1>Terms of Service</h1>
+      <p class="updated">Last updated: January 2025</p>
+
+      <p>These Terms of Service ("Terms") govern your use of the Bookd platform operated by GoStar Digital LLC ("GoStar", "we", "us") at bookd.click. By using Bookd, you agree to these Terms.</p>
+
+      <h2>1. Platform Role</h2>
+      <p>Bookd is a <strong>technology platform only</strong>. We provide software tools that allow tournament organizers and league operators ("Organizers") to create events, accept team registrations, and receive payments. GoStar Digital LLC is not an event organizer, sports league, team manager, or payment processor. We do not organize, run, supervise, or have any involvement in the events created by Organizers on our platform.</p>
+
+      <h2>2. Accounts</h2>
+      <p>To use Bookd as an Organizer, you must create an account with a valid email address and password. You are responsible for maintaining the security of your account and all activity that occurs under it. You must be at least 18 years old to create an Organizer account.</p>
+
+      <h2>3. Payments</h2>
+      <p>All payments on Bookd are processed through <strong>Stripe Connect</strong>. When a team registers and pays for an event:</p>
+      <ul>
+        <li>The payment goes <strong>directly</strong> from the team to the Organizer's connected bank account</li>
+        <li>GoStar Digital LLC <strong>never holds, touches, controls, or has access to any funds</strong></li>
+        <li>A <strong>5% platform fee</strong> is automatically deducted by Stripe before funds reach the Organizer</li>
+        <li>Standard Stripe processing fees also apply (set by Stripe, not by GoStar)</li>
+        <li>Organizers are responsible for connecting their own Stripe account</li>
+      </ul>
+      <p>GoStar Digital LLC is not responsible for payment disputes, chargebacks, refunds, or any financial transactions between Organizers and teams. All payment-related issues must be resolved between the parties involved and/or through Stripe.</p>
+
+      <h2>4. Organizer Responsibilities</h2>
+      <p>Organizers are solely responsible for:</p>
+      <ul>
+        <li>The accuracy of their event listings (dates, prices, descriptions, rules)</li>
+        <li>Running their events safely and in compliance with local laws</li>
+        <li>Communicating with registered teams</li>
+        <li>Handling refunds, cancellations, and disputes with teams</li>
+        <li>Obtaining any required permits, insurance, or licenses for their events</li>
+        <li>Compliance with all applicable tax obligations</li>
+      </ul>
+
+      <h2>5. Team / Guest Responsibilities</h2>
+      <p>Teams and guests who register through Bookd are responsible for:</p>
+      <ul>
+        <li>Providing accurate registration information</li>
+        <li>Understanding and agreeing to the Organizer's event rules and policies</li>
+        <li>Directing any questions, refund requests, or complaints to the Organizer</li>
+      </ul>
+
+      <h2>6. Fees</h2>
+      <p>Bookd charges <strong>no monthly fees</strong> to Organizers. The platform operates on a 5% fee per transaction, automatically deducted by Stripe. There are no setup fees, hidden charges, or minimum commitments. Organizers may cancel their account at any time.</p>
+
+      <h2>7. Prohibited Use</h2>
+      <p>You may not use Bookd to:</p>
+      <ul>
+        <li>Create fraudulent or misleading event listings</li>
+        <li>Collect payments for events you do not intend to run</li>
+        <li>Violate any applicable laws or regulations</li>
+        <li>Harass, abuse, or harm other users</li>
+        <li>Interfere with or disrupt the platform</li>
+      </ul>
+
+      <h2>8. Limitation of Liability</h2>
+      <p>GoStar Digital LLC provides Bookd "as is" without warranties of any kind. We are not liable for any damages arising from the use of the platform, including but not limited to: event cancellations, payment disputes, injuries at events, losses due to platform downtime, or any disputes between Organizers and teams. Our total liability shall not exceed the fees paid by you to GoStar in the 12 months preceding the claim.</p>
+
+      <h2>9. Termination</h2>
+      <p>We may suspend or terminate your account at any time for violation of these Terms. You may delete your account at any time by contacting us.</p>
+
+      <h2>10. Changes to Terms</h2>
+      <p>We may update these Terms from time to time. Continued use of Bookd after changes constitutes acceptance of the updated Terms.</p>
+
+      <h2>11. Governing Law</h2>
+      <p>These Terms are governed by the laws of the Commonwealth of Puerto Rico. Any disputes shall be resolved in the courts of San Juan, Puerto Rico.</p>
+
+      <h2>12. Contact</h2>
+      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
+    </div>
+
+    <!-- SPANISH -->
+    <div class="es">
+      <h1>Términos de Servicio</h1>
+      <p class="updated">Última actualización: enero 2025</p>
+
+      <p>Estos Términos de Servicio ("Términos") gobiernan el uso de la plataforma Bookd operada por GoStar Digital LLC ("GoStar", "nosotros") en bookd.click. Al usar Bookd, aceptas estos Términos.</p>
+
+      <h2>1. Rol de la Plataforma</h2>
+      <p>Bookd es una <strong>plataforma tecnológica únicamente</strong>. Proveemos herramientas de software que permiten a organizadores de torneos y operadores de ligas ("Organizadores") crear eventos, aceptar inscripciones de equipos y recibir pagos. GoStar Digital LLC no es un organizador de eventos, liga deportiva, gestor de equipos, ni procesador de pagos. No organizamos, dirigimos, supervisamos ni tenemos ninguna participación en los eventos creados por los Organizadores en nuestra plataforma.</p>
+
+      <h2>2. Cuentas</h2>
+      <p>Para usar Bookd como Organizador, debes crear una cuenta con un correo electrónico válido y contraseña. Eres responsable de mantener la seguridad de tu cuenta y toda la actividad que ocurra en ella. Debes tener al menos 18 años para crear una cuenta de Organizador.</p>
+
+      <h2>3. Pagos</h2>
+      <p>Todos los pagos en Bookd son procesados a través de <strong>Stripe Connect</strong>. Cuando un equipo se registra y paga por un evento:</p>
+      <ul>
+        <li>El pago va <strong>directamente</strong> del equipo a la cuenta bancaria conectada del Organizador</li>
+        <li>GoStar Digital LLC <strong>nunca retiene, toca, controla ni tiene acceso a ningún fondo</strong></li>
+        <li>Una <strong>comisión de plataforma del 5%</strong> es automáticamente deducida por Stripe antes de que los fondos lleguen al Organizador</li>
+        <li>Las tarifas estándar de procesamiento de Stripe también aplican (establecidas por Stripe, no por GoStar)</li>
+        <li>Los Organizadores son responsables de conectar su propia cuenta de Stripe</li>
+      </ul>
+      <p>GoStar Digital LLC no es responsable de disputas de pago, contracargos, reembolsos, ni de ninguna transacción financiera entre Organizadores y equipos. Todos los problemas relacionados con pagos deben resolverse entre las partes involucradas y/o a través de Stripe.</p>
+
+      <h2>4. Responsabilidades del Organizador</h2>
+      <p>Los Organizadores son los únicos responsables de:</p>
+      <ul>
+        <li>La exactitud de sus listados de eventos (fechas, precios, descripciones, reglas)</li>
+        <li>Ejecutar sus eventos de forma segura y en cumplimiento con las leyes locales</li>
+        <li>Comunicarse con los equipos registrados</li>
+        <li>Manejar reembolsos, cancelaciones y disputas con equipos</li>
+        <li>Obtener cualquier permiso, seguro o licencia requerida para sus eventos</li>
+        <li>Cumplimiento con todas las obligaciones fiscales aplicables</li>
+      </ul>
+
+      <h2>5. Responsabilidades del Equipo / Invitado</h2>
+      <p>Los equipos e invitados que se registran a través de Bookd son responsables de:</p>
+      <ul>
+        <li>Proporcionar información de registro precisa</li>
+        <li>Entender y aceptar las reglas y políticas del evento del Organizador</li>
+        <li>Dirigir cualquier pregunta, solicitud de reembolso o queja al Organizador</li>
+      </ul>
+
+      <h2>6. Tarifas</h2>
+      <p>Bookd no cobra <strong>tarifas mensuales</strong> a los Organizadores. La plataforma opera con una tarifa del 5% por transacción, automáticamente deducida por Stripe. No hay tarifas de configuración, cargos ocultos, ni compromisos mínimos. Los Organizadores pueden cancelar su cuenta en cualquier momento.</p>
+
+      <h2>7. Uso Prohibido</h2>
+      <p>No puedes usar Bookd para:</p>
+      <ul>
+        <li>Crear listados de eventos fraudulentos o engañosos</li>
+        <li>Cobrar pagos por eventos que no tienes intención de realizar</li>
+        <li>Violar cualquier ley o regulación aplicable</li>
+        <li>Acosar, abusar o dañar a otros usuarios</li>
+        <li>Interferir con o interrumpir la plataforma</li>
+      </ul>
+
+      <h2>8. Limitación de Responsabilidad</h2>
+      <p>GoStar Digital LLC provee Bookd "tal cual" sin garantías de ningún tipo. No somos responsables de ningún daño que surja del uso de la plataforma, incluyendo pero no limitado a: cancelaciones de eventos, disputas de pago, lesiones en eventos, pérdidas por tiempo de inactividad de la plataforma, o cualquier disputa entre Organizadores y equipos. Nuestra responsabilidad total no excederá las tarifas que nos hayas pagado en los 12 meses anteriores a la reclamación.</p>
+
+      <h2>9. Terminación</h2>
+      <p>Podemos suspender o terminar tu cuenta en cualquier momento por violación de estos Términos. Puedes eliminar tu cuenta en cualquier momento contactándonos.</p>
+
+      <h2>10. Cambios a los Términos</h2>
+      <p>Podemos actualizar estos Términos periódicamente. El uso continuado de Bookd después de los cambios constituye aceptación de los Términos actualizados.</p>
+
+      <h2>11. Ley Aplicable</h2>
+      <p>Estos Términos se rigen por las leyes del Estado Libre Asociado de Puerto Rico. Cualquier disputa será resuelta en los tribunales de San Juan, Puerto Rico.</p>
+
+      <h2>12. Contacto</h2>
+      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

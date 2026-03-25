@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Bookd</title>
+<link rel="icon" href="/bookd.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+input,select,textarea{font-family:inherit}
+
+:root{
+  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
+  --orange:#e8611a;--orange-light:#f4832f;
+  --white:#fafaf9;--gray:#8a8a8a;
+}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.sidebar{width:260px;background:var(--black2);border-right:1px solid rgba(255,255,255,.06);padding:24px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50}
+.sidebar-logo{padding:0 24px 24px;font-weight:800;font-size:1.5rem;color:var(--orange);border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-logo span{color:var(--white)}
+.sidebar-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;font-size:.9rem;font-weight:600;color:var(--gray);transition:all .2s}
+.sidebar-item:hover{background:rgba(255,255,255,.04);color:var(--white)}
+.sidebar-item.active{background:rgba(232,97,26,.1);color:var(--orange)}
+.sidebar-item .icon{font-size:1.1rem;width:24px;text-align:center}
+.sidebar-bottom{padding:12px;border-top:1px solid rgba(255,255,255,.06)}
+.sidebar-profile{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px}
+.sidebar-avatar{width:40px;height:40px;border-radius:10px;background:rgba(232,97,26,.15);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.sidebar-name{font-size:.85rem;font-weight:700;color:var(--white)}
+.sidebar-email{font-size:.7rem;color:var(--gray)}
+.sidebar-lang{display:flex;gap:4px;padding:8px 12px}
+.lang-btn{padding:6px 12px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+.mobile-header{display:none;position:fixed;top:0;left:0;right:0;z-index:60;padding:14px 20px;background:var(--black2);border-bottom:1px solid rgba(255,255,255,.06);justify-content:space-between;align-items:center}
+.mobile-header .logo{font-weight:800;font-size:1.3rem;color:var(--orange)}
+.mobile-header .logo span{color:var(--white)}
+.hamburger{background:none;display:flex;flex-direction:column;gap:5px;padding:4px}
+.hamburger b{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+.sidebar-overlay.open{display:block}
+
+.main{margin-left:260px;padding:32px;min-height:100vh}
+.page-header{margin-bottom:32px}
+.page-header h1{font-size:1.75rem;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+.page-header p{color:var(--gray);font-size:.9rem;margin-top:4px}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px 20px}
+.stat-card .label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:8px}
+.stat-card .value{font-size:1.75rem;font-weight:900;color:var(--white)}
+.stat-card .value.orange{color:var(--orange)}
+
+.stripe-banner{background:linear-gradient(135deg,rgba(232,97,26,.12),rgba(232,97,26,.04));border:1px solid rgba(232,97,26,.25);border-radius:14px;padding:24px 28px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.stripe-banner h3{font-size:1rem;font-weight:800;text-transform:uppercase}
+.stripe-banner p{font-size:.85rem;color:var(--gray);margin-top:4px}
+.stripe-banner .btn{background:var(--orange);color:#fff;padding:12px 28px;border-radius:8px;font-weight:800;font-size:.85rem;letter-spacing:.03em;transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.stripe-banner .btn:hover{background:var(--orange-light)}
+.stripe-connected{color:#22c55e;font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:8px}
+
+.section{margin-bottom:32px}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-header h2{font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+.btn-add{background:var(--orange);color:#fff;padding:10px 20px;border-radius:8px;font-weight:700;font-size:.8rem;letter-spacing:.02em;transition:all .2s;display:flex;align-items:center;gap:6px}
+.btn-add:hover{background:var(--orange-light)}
+
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.exp-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;transition:all .3s}
+.exp-card:hover{border-color:rgba(232,97,26,.2)}
+.exp-card h3{font-size:1rem;font-weight:800;margin-bottom:4px}
+.exp-card .desc{font-size:.8rem;color:var(--gray);margin-bottom:12px;line-height:1.5}
+.exp-meta{display:flex;gap:16px;flex-wrap:wrap}
+.exp-meta span{font-size:.75rem;color:var(--gray);font-weight:600}
+.exp-meta .price{color:var(--orange);font-weight:800}
+.exp-empty{background:var(--black2);border:2px dashed rgba(255,255,255,.1);border-radius:14px;padding:48px 24px;text-align:center;color:var(--gray);font-size:.9rem}
+
+.table-wrap{overflow-x:auto;background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px}
+table{width:100%;border-collapse:collapse}
+thead th{padding:14px 16px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+tbody td{padding:14px 16px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+.status{padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.status.confirmed{background:rgba(34,197,94,.12);color:#22c55e}
+.status.pending{background:rgba(234,179,8,.12);color:#eab308}
+.status.cancelled{background:rgba(239,68,68,.12);color:#ef4444}
+.table-empty{padding:48px 24px;text-align:center;color:var(--gray);font-size:.9rem}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:40px 36px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal h2{font-size:1.35rem;font-weight:900;color:#000;text-transform:uppercase;margin-bottom:24px}
+.modal .close{position:absolute;top:16px;right:20px;background:none;font-size:1.5rem;color:#999;line-height:1}
+.modal .close:hover{color:#000}
+.modal .form-group{margin-bottom:18px}
+.modal .form-group label{display:block;font-size:.85rem;font-weight:700;color:#000;margin-bottom:6px}
+.modal .form-group input,.modal .form-group select,.modal .form-group textarea{width:100%;padding:12px 14px;font-size:1rem;font-weight:500;color:#000;background:#fff;border:2px solid #bbb;border-radius:10px;outline:none;transition:border-color .2s}
+.modal .form-group input:focus,.modal .form-group select:focus,.modal .form-group textarea:focus{border-color:var(--orange)}
+.modal .form-group textarea{resize:vertical;min-height:70px}
+.modal .form-group .hint{font-size:.7rem;color:#888;margin-top:4px}
+.modal .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal .btn-submit{width:100%;padding:16px;background:var(--orange);color:#fff;border-radius:10px;font-size:1rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:all .25s;margin-top:8px}
+.modal .btn-submit:hover{background:var(--orange-light)}
+.days-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.day-check{display:flex;align-items:center;gap:4px;font-size:.8rem;font-weight:600;color:#333}
+.day-check input{accent-color:var(--orange)}
+
+.notice{background:var(--black2);border:1px solid rgba(232,97,26,.2);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:.85rem;color:var(--orange);text-align:center;display:none}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:translateX(0)}
+  .mobile-header{display:flex}
+  .main{margin-left:0;padding:80px 16px 32px}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stripe-banner{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr}
+  .modal{padding:28px 20px}
+  .modal .form-row{grid-template-columns:1fr}
+}
+</style>
+<script>
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+</script>
+</head>
+<body>
+
+<div class="mobile-header">
+  <a href="/" class="logo">book<span>d</span></a>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><b></b><b></b><b></b></button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <a href="/" class="sidebar-logo">book<span>d</span></a>
+  <nav class="sidebar-nav">
+    <a class="sidebar-item active"><span class="icon">📊</span><span class="en">Dashboard</span><span class="es">Dashboard</span></a>
+    <a class="sidebar-item" onclick="scrollTo('experiences')"><span class="icon">🏀</span><span class="en">Experiences</span><span class="es">Experiencias</span></a>
+    <a class="sidebar-item" onclick="scrollTo('bookings')"><span class="icon">📋</span><span class="en">Bookings</span><span class="es">Reservas</span></a>
+    <a class="sidebar-item" onclick="openMyPage()"><span class="icon">🔗</span><span class="en">My Public Page</span><span class="es">Mi Página Pública</span></a>
+    <a class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span><span class="en">Log Out</span><span class="es">Cerrar Sesión</span></a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-lang">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar" id="avatar">🏀</div>
+      <div>
+        <div class="sidebar-name" id="bizName">—</div>
+        <div class="sidebar-email" id="bizEmail">—</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="notice" id="notice"></div>
+
+  <div class="page-header">
+    <h1 class="en">Dashboard</h1>
+    <h1 class="es">Dashboard</h1>
+    <p id="welcomeEn" class="en">Welcome back</p>
+    <p id="welcomeEs" class="es">Bienvenido</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="label en">Experiences</div><div class="label es">Experiencias</div>
+      <div class="value" id="sExp">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label en">Bookings</div><div class="label es">Reservas</div>
+      <div class="value" id="sBook">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label en">Revenue</div><div class="label es">Ingresos</div>
+      <div class="value orange" id="sRev">$0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label en">Teams Registered</div><div class="label es">Equipos Registrados</div>
+      <div class="value" id="sTeams">0</div>
+    </div>
+  </div>
+
+  <div class="stripe-banner" id="stripeBanner">
+    <div>
+      <h3 class="en">💳 Set Up Your Payments</h3>
+      <h3 class="es">💳 Configura Tus Pagos</h3>
+      <p class="en">Connect Stripe to accept payments directly to your bank account.</p>
+      <p class="es">Conecta Stripe para recibir pagos directo a tu cuenta bancaria.</p>
+    </div>
+    <button class="btn" onclick="connectStripe()" id="stripeBtn">
+      <span class="en">Connect Stripe</span><span class="es">Conectar Stripe</span>
+    </button>
+  </div>
+
+  <div class="section" id="experiences">
+    <div class="section-header">
+      <h2 class="en">Experiences</h2><h2 class="es">Experiencias</h2>
+      <button class="btn-add" onclick="openModal()">+ <span class="en">Add Experience</span><span class="es">Agregar</span></button>
+    </div>
+    <div class="exp-grid" id="expGrid">
+      <div class="exp-empty">
+        <span class="en">No experiences yet. Click "+ Add Experience" to create your first event.</span>
+        <span class="es">Sin experiencias aún. Haz clic en "+ Agregar" para crear tu primer evento.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="bookings">
+    <div class="section-header">
+      <h2 class="en">Recent Bookings</h2><h2 class="es">Reservas Recientes</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th class="en">Team</th><th class="es">Equipo</th>
+          <th class="en">Contact</th><th class="es">Contacto</th>
+          <th class="en">Experience</th><th class="es">Experiencia</th>
+          <th class="en">Date</th><th class="es">Fecha</th>
+          <th class="en">Amount</th><th class="es">Monto</th>
+          <th class="en">Status</th><th class="es">Estado</th>
+        </tr></thead>
+        <tbody id="bkBody">
+          <tr><td colspan="6" class="table-empty">
+            <span class="en">No bookings yet</span><span class="es">Sin reservas aún</span>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- ADD EXPERIENCE MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">&times;</button>
+    <h2 class="en">Add Experience</h2><h2 class="es">Agregar Experiencia</h2>
+    <div class="form-row">
+      <div class="form-group"><label>Title (EN)</label><input type="text" id="mTitleEn" placeholder="e.g. Summer Classic 5v5"></div>
+      <div class="form-group"><label>Título (ES)</label><input type="text" id="mTitleEs" placeholder="e.g. Clásico de Verano 5v5"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Description (EN)</label><textarea id="mDescEn" placeholder="Describe this event..."></textarea></div>
+      <div class="form-group"><label>Descripción (ES)</label><textarea id="mDescEs" placeholder="Describe este evento..."></textarea></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Price Per Team ($)</label><label class="es">Precio Por Equipo ($)</label>
+        <input type="number" id="mPrice" placeholder="250" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label class="en">Duration (minutes)</label><label class="es">Duración (minutos)</label>
+        <input type="number" id="mDuration" placeholder="120" min="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Min Teams</label><label class="es">Mín Equipos</label>
+        <input type="number" id="mMin" placeholder="4" min="1">
+      </div>
+      <div class="form-group">
+        <label class="en">Max Teams</label><label class="es">Máx Equipos</label>
+        <input type="number" id="mMax" placeholder="16" min="1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">Photo URL (optional)</label><label class="es">URL de Foto (opcional)</label>
+      <input type="url" id="mPhoto" placeholder="https://...">
+      <div class="hint en">Paste a link to an image</div><div class="hint es">Pega un enlace a una imagen</div>
+    </div>
+    <div class="form-group">
+      <label class="en">Available Days</label><label class="es">Días Disponibles</label>
+      <div class="days-row">
+        <label class="day-check"><input type="checkbox" value="Mon"> Mon</label>
+        <label class="day-check"><input type="checkbox" value="Tue"> Tue</label>
+        <label class="day-check"><input type="checkbox" value="Wed"> Wed</label>
+        <label class="day-check"><input type="checkbox" value="Thu"> Thu</label>
+        <label class="day-check"><input type="checkbox" value="Fri"> Fri</label>
+        <label class="day-check"><input type="checkbox" value="Sat" checked> Sat</label>
+        <label class="day-check"><input type="checkbox" value="Sun" checked> Sun</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">Start Time</label><label class="es">Hora de Inicio</label>
+      <input type="time" id="mTime" value="09:00">
+    </div>
+    <button class="btn-submit" onclick="saveExperience()" id="saveBtn">
+      <span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+
+let sb=null,operator=null;
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  if(window.innerWidth<=860) toggleSidebar();
+}
+function openMyPage(){if(operator?.slug) window.open('/'+operator.slug,'_blank');}
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+
+function showNotice(msg){
+  const n=document.getElementById('notice');
+  n.textContent=msg;
+  n.style.display='block';
+}
+
+// PAGE RENDERS IMMEDIATELY — Supabase loads in background
+(async function init(){
+  try{
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload=res;
+      s.onerror=()=>rej(new Error('CDN blocked'));
+      document.head.appendChild(s);
+    });
+
+    sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+    const{data:{user}}=await sb.auth.getUser();
+
+    if(!user){
+      showNotice(currentLang==='es'?'Inicia sesión en bookd.click para ver tus datos':'Log in at bookd.click to view your data');
+      return;
+    }
+
+    const{data:op}=await sb.from('operators').select('*').eq('auth_user_id',user.id).maybeSingle();
+    if(!op){
+      showNotice(currentLang==='es'?'Cuenta de organizador no encontrada':'Organizer account not found');
+      return;
+    }
+    operator=op;
+
+    document.getElementById('avatar').textContent=op.avatar_emoji||'🏀';
+    document.getElementById('bizName').textContent=op.business_name;
+    document.getElementById('bizEmail').textContent=op.email;
+    document.getElementById('welcomeEn').textContent='Welcome back, '+op.business_name;
+    document.getElementById('welcomeEs').textContent='Bienvenido, '+op.business_name;
+
+    if(op.stripe_account_id){
+      document.getElementById('stripeBanner').innerHTML=
+        '<div><h3 class="en">💳 Payments Connected</h3><h3 class="es">💳 Pagos Conectados</h3>'+
+        '<p class="en">Your Stripe account is active. Payments go directly to your bank.</p>'+
+        '<p class="es">Tu cuenta de Stripe está activa. Los pagos van directo a tu banco.</p></div>'+
+        '<span class="stripe-connected">✅ <span class="en">Connected</span><span class="es">Conectado</span></span>';
+    }
+
+    const{data:exps}=await sb.from('experiences').select('*').eq('operator_id',op.id).order('sort_order');
+    document.getElementById('sExp').textContent=(exps||[]).length;
+    if(exps&&exps.length>0) renderExps(exps);
+
+    const{data:bks}=await sb.from('bookings').select('*').eq('operator_id',op.id).order('created_at',{ascending:false}).limit(20);
+    document.getElementById('sBook').textContent=(bks||[]).length;
+    const rev=(bks||[]).filter(b=>b.payment_status==='paid').reduce((s,b)=>s+(b.total_amount||0),0);
+    document.getElementById('sRev').textContent='$'+rev.toLocaleString();
+    document.getElementById('sTeams').textContent=(bks||[]).filter(b=>b.status!=='cancelled').length;
+    if(bks&&bks.length>0) renderBookings(bks,exps||[]);
+
+  }catch(e){
+    console.error('Dashboard:',e);
+    showNotice(currentLang==='es'?'Conectando... Usa bookd.click para acceso completo':'Connecting... Use bookd.click for full access');
+  }
+})();
+
+function renderExps(exps){
+  document.getElementById('expGrid').innerHTML=exps.map(e=>`
+    <div class="exp-card">
+      <h3><span class="en">${e.title_en||'—'}</span><span class="es">${e.title_es||e.title_en||'—'}</span></h3>
+      <div class="desc">${e.description_en||''}</div>
+      <div class="exp-meta">
+        <span class="price">$${e.price_per_person||0}</span>
+        <span>${e.min_guests||'?'} – ${e.max_guests||'?'} <span class="en">teams</span><span class="es">equipos</span></span>
+      </div>
+    </div>`).join('');
+}
+
+function renderBookings(bks,exps){
+  const map={};(exps||[]).forEach(e=>{map[e.id]=e;});
+  document.getElementById('bkBody').innerHTML=bks.map(b=>{
+    const exp=map[b.experience_id]||{};
+    const cls=b.status==='confirmed'?'confirmed':b.status==='cancelled'?'cancelled':'pending';
+    return `<tr>
+      <td>${b.team_name||b.guest_name||'—'}</td>
+      <td>${b.guest_email||'—'}</td>
+      <td><span class="en">${exp.title_en||'—'}</span><span class="es">${exp.title_es||exp.title_en||'—'}</span></td>
+      <td>${b.booking_date||'—'}</td>
+      <td>$${b.total_amount||0}</td>
+      <td><span class="status ${cls}">${b.status||'pending'}</span></td>
+    </tr>`;}).join('');
+}
+
+async function connectStripe(){
+  const btn=document.getElementById('stripeBtn');
+  btn.textContent=currentLang==='es'?'Conectando...':'Connecting...';
+  btn.disabled=true;
+  try{
+    const res=await fetch('/api/connect',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({operator_id:operator.id})
+    });
+    const data=await res.json();
+    if(data.url) window.location.href=data.url;
+    else throw new Error(data.error||'Failed');
+  }catch(e){
+    alert(e.message);
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Connect Stripe</span><span class="es">Conectar Stripe</span>';
+  }
+}
+
+async function saveExperience(){
+  const titleEn=document.getElementById('mTitleEn').value.trim();
+  if(!titleEn) return alert(currentLang==='es'?'Título EN requerido':'English title required');
+  if(!sb||!operator) return alert(currentLang==='es'?'No conectado':'Not connected');
+
+  const days=Array.from(document.querySelectorAll('.days-row input:checked')).map(c=>c.value);
+  const payload={
+    operator_id:operator.id,
+    title_en:titleEn,
+    title_es:document.getElementById('mTitleEs').value.trim()||titleEn,
+    description_en:document.getElementById('mDescEn').value.trim(),
+    description_es:document.getElementById('mDescEs').value.trim(),
+    price_per_person:parseFloat(document.getElementById('mPrice').value)||0,
+    duration_minutes:parseInt(document.getElementById('mDuration').value)||120,
+    min_guests:parseInt(document.getElementById('mMin').value)||4,
+    max_guests:parseInt(document.getElementById('mMax').value)||16,
+    photo_url:document.getElementById('mPhoto').value.trim(),
+    available_days:days,
+    start_times:[document.getElementById('mTime').value||'09:00'],
+    active:true,sort_order:0
+  };
+
+  const btn=document.getElementById('saveBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Guardando...':'Saving...';
+
+  try{
+    const{error}=await sb.from('experiences').insert(payload);
+    if(error) throw error;
+    closeModal();
+    location.reload();
+  }catch(e){
+    alert(e.message);
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>';
+  }
+}
+
+async function doLogout(){
+  if(sb) await sb.auth.signOut();
+  window.location.href='/login.html';
+}
+</script>
+</body>
+</html>

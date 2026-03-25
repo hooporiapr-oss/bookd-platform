@@ -7,7 +7,6 @@
 <link rel="icon" href="/bookd.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;line-height:1.6}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:none;font-family:inherit}
@@ -21,7 +20,6 @@ input,select,textarea{font-family:inherit}
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
 
-/* NAV BAR */
 .top-bar{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-logo{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;color:var(--orange)}
 .nav-logo span{color:var(--white)}
@@ -32,12 +30,10 @@ html[lang="es"] .en{display:none!important}
 .lang-btn{padding:6px 12px;border-radius:5px;font-size:.75rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
 .lang-btn.active{background:var(--orange);color:#fff}
 
-/* CARD */
 .card{background:#fff;border-radius:16px;padding:48px 40px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);margin-top:80px}
 .card h1{font-size:1.75rem;font-weight:900;color:#000;text-align:center;margin-bottom:4px;text-transform:uppercase;letter-spacing:-.01em}
 .card .subtitle{font-size:.9rem;color:#666;text-align:center;margin-bottom:32px}
 
-/* STEPS INDICATOR */
 .steps-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:32px}
 .step-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;background:#eee;color:#999;transition:all .3s}
 .step-dot.active{background:var(--orange);color:#fff}
@@ -45,7 +41,6 @@ html[lang="es"] .en{display:none!important}
 .step-line{width:40px;height:2px;background:#eee;border-radius:2px}
 .step-line.active{background:var(--orange)}
 
-/* FORM FIELDS */
 .form-group{margin-bottom:20px}
 .form-group label{display:block;font-size:.85rem;font-weight:700;color:#000;margin-bottom:6px}
 .form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;font-size:1rem;font-weight:500;color:#000;background:#fff;border:2px solid #bbb;border-radius:10px;outline:none;transition:border-color .2s}
@@ -54,13 +49,11 @@ html[lang="es"] .en{display:none!important}
 .form-group .hint{font-size:.75rem;color:#888;margin-top:4px}
 .form-group textarea{resize:vertical;min-height:80px}
 
-/* CHECKBOX */
 .checkbox-group{display:flex;align-items:flex-start;gap:10px;margin-bottom:24px}
 .checkbox-group input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:var(--orange);flex-shrink:0}
 .checkbox-group label{font-size:.8rem;color:#555;font-weight:500;line-height:1.5}
 .checkbox-group a{color:var(--orange);font-weight:600}
 
-/* BUTTONS */
 .btn-row{display:flex;gap:12px}
 .btn-primary{width:100%;padding:16px;background:var(--orange);color:#fff;border-radius:10px;font-size:1rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:all .25s;text-align:center}
 .btn-primary:hover{background:var(--orange-light)}
@@ -68,29 +61,24 @@ html[lang="es"] .en{display:none!important}
 .btn-back{padding:16px 24px;background:#eee;color:#333;border-radius:10px;font-size:1rem;font-weight:700;transition:all .2s}
 .btn-back:hover{background:#ddd}
 
-/* EMOJI PICKER */
 .emoji-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px}
 .emoji-option{width:100%;aspect-ratio:1;border-radius:10px;border:2px solid #ddd;background:#fff;font-size:1.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
 .emoji-option:hover{border-color:var(--orange);transform:scale(1.1)}
 .emoji-option.selected{border-color:var(--orange);background:rgba(232,97,26,.08);box-shadow:0 0 0 2px rgba(232,97,26,.3)}
 
-/* REVIEW */
 .review-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee}
 .review-item:last-child{border-bottom:none}
 .review-label{font-size:.85rem;color:#888;font-weight:600}
 .review-value{font-size:.9rem;color:#000;font-weight:700;text-align:right;max-width:60%;word-break:break-word}
 
-/* SUCCESS */
 .success-screen{text-align:center}
 .success-screen .check{font-size:3rem;margin-bottom:16px}
 .success-screen h2{color:#000;font-size:1.5rem;font-weight:900;margin-bottom:8px}
 .success-screen p{color:#666;font-size:.9rem;margin-bottom:24px}
 .link-box{background:#f5f5f5;border:2px solid #ddd;border-radius:10px;padding:16px;font-size:1rem;font-weight:700;color:var(--orange);word-break:break-all;margin-bottom:24px}
 
-/* ERROR */
 .error-msg{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:12px 16px;border-radius:8px;font-size:.85rem;font-weight:600;margin-bottom:16px;display:none}
 
-/* STEP PANELS */
 .step-panel{display:none}
 .step-panel.active{display:block}
 
@@ -100,19 +88,16 @@ html[lang="es"] .en{display:none!important}
 }
 </style>
 <script>
-let currentLang = 'en';
-function setLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
 }
 </script>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <a href="/" class="nav-logo">book<span>d</span></a>
   <div class="top-right">
@@ -125,9 +110,7 @@ function setLang(lang) {
   </div>
 </div>
 
-<!-- SIGNUP CARD -->
 <div class="card">
-  <!-- Steps Indicator -->
   <div class="steps-bar">
     <div class="step-dot active" id="dot1">1</div>
     <div class="step-line" id="line1"></div>
@@ -144,28 +127,21 @@ function setLang(lang) {
     <h1 class="es">Crear Cuenta</h1>
     <p class="subtitle en">Step 1 of 3 — Your login credentials</p>
     <p class="subtitle es">Paso 1 de 3 — Tus credenciales</p>
-
     <div class="form-group">
-      <label class="en">Email</label>
-      <label class="es">Correo Electrónico</label>
+      <label class="en">Email</label><label class="es">Correo Electrónico</label>
       <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
     </div>
     <div class="form-group">
-      <label class="en">Password</label>
-      <label class="es">Contraseña</label>
+      <label class="en">Password</label><label class="es">Contraseña</label>
       <input type="password" id="password" placeholder="Minimum 8 characters" autocomplete="new-password">
       <div class="hint en">At least 8 characters</div>
       <div class="hint es">Mínimo 8 caracteres</div>
     </div>
     <div class="form-group">
-      <label class="en">Confirm Password</label>
-      <label class="es">Confirmar Contraseña</label>
+      <label class="en">Confirm Password</label><label class="es">Confirmar Contraseña</label>
       <input type="password" id="confirmPassword" placeholder="Re-enter password" autocomplete="new-password">
     </div>
-    <button class="btn-primary" onclick="goStep(2)">
-      <span class="en">Next</span>
-      <span class="es">Siguiente</span>
-    </button>
+    <button class="btn-primary" onclick="goStep(2)"><span class="en">Next</span><span class="es">Siguiente</span></button>
   </div>
 
   <!-- STEP 2: Organization -->
@@ -174,40 +150,30 @@ function setLang(lang) {
     <h1 class="es">Tu Organización</h1>
     <p class="subtitle en">Step 2 of 3 — Tell us about your business</p>
     <p class="subtitle es">Paso 2 de 3 — Cuéntanos sobre tu negocio</p>
-
     <div class="form-group">
-      <label class="en">Business / Organization Name</label>
-      <label class="es">Nombre del Negocio / Organización</label>
+      <label class="en">Business / Organization Name</label><label class="es">Nombre del Negocio</label>
       <input type="text" id="businessName" placeholder="e.g. Reibball Tournaments">
     </div>
     <div class="form-group">
-      <label class="en">Your Page URL (slug)</label>
-      <label class="es">URL de Tu Página (slug)</label>
-      <input type="text" id="slug" placeholder="e.g. reibball" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
-      <div class="hint" id="slugPreview">bookd.click/<span id="slugText">your-slug</span></div>
+      <label class="en">Your Page URL (slug)</label><label class="es">URL de Tu Página (slug)</label>
+      <input type="text" id="slug" placeholder="e.g. reibball" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'');document.getElementById('slugText').textContent=this.value||'your-slug'">
+      <div class="hint">bookd.click/<span id="slugText">your-slug</span></div>
     </div>
     <div class="form-group">
-      <label class="en">Location</label>
-      <label class="es">Ubicación</label>
+      <label class="en">Location</label><label class="es">Ubicación</label>
       <input type="text" id="location" placeholder="e.g. San Juan, PR">
     </div>
     <div class="form-group">
-      <label class="en">Description (optional)</label>
-      <label class="es">Descripción (opcional)</label>
+      <label class="en">Description (optional)</label><label class="es">Descripción (opcional)</label>
       <textarea id="description" placeholder="Tell teams what you're about..."></textarea>
     </div>
     <div class="form-group">
-      <label class="en">Pick Your Avatar</label>
-      <label class="es">Elige Tu Avatar</label>
+      <label class="en">Pick Your Avatar</label><label class="es">Elige Tu Avatar</label>
       <div class="emoji-grid" id="emojiGrid"></div>
     </div>
-
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(1)">←</button>
-      <button class="btn-primary" onclick="goStep(3)" style="flex:1">
-        <span class="en">Next</span>
-        <span class="es">Siguiente</span>
-      </button>
+      <button class="btn-primary" onclick="goStep(3)" style="flex:1"><span class="en">Next</span><span class="es">Siguiente</span></button>
     </div>
   </div>
 
@@ -217,25 +183,19 @@ function setLang(lang) {
     <h1 class="es">Revisar y Confirmar</h1>
     <p class="subtitle en">Step 3 of 3 — Make sure everything looks good</p>
     <p class="subtitle es">Paso 3 de 3 — Verifica que todo esté correcto</p>
-
     <div id="reviewList"></div>
-
     <div class="checkbox-group" style="margin-top:24px">
       <input type="checkbox" id="agreeTerms">
       <label class="en">I agree to the <a href="/terms.html" target="_blank">Terms of Service</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a></label>
       <label class="es">Acepto los <a href="/terms.html" target="_blank">Términos de Servicio</a> y la <a href="/privacy.html" target="_blank">Política de Privacidad</a></label>
     </div>
-
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(2)">←</button>
-      <button class="btn-primary" onclick="submitSignup()" id="submitBtn" style="flex:1">
-        <span class="en">Create My Page</span>
-        <span class="es">Crear Mi Página</span>
-      </button>
+      <button class="btn-primary" onclick="submitSignup()" id="submitBtn" style="flex:1"><span class="en">Create My Page</span><span class="es">Crear Mi Página</span></button>
     </div>
   </div>
 
-  <!-- SUCCESS -->
+  <!-- STEP 4: Success -->
   <div class="step-panel" id="step4">
     <div class="success-screen">
       <div class="check">✅</div>
@@ -245,188 +205,157 @@ function setLang(lang) {
       <p class="es">Tu página está activa. Comparte este enlace con tus equipos:</p>
       <div class="link-box" id="yourLink"></div>
       <a href="/my-dashboard.html" class="btn-primary" style="display:inline-block;width:100%">
-        <span class="en">Go to Dashboard</span>
-        <span class="es">Ir al Dashboard</span>
+        <span class="en">Go to Dashboard</span><span class="es">Ir al Dashboard</span>
       </a>
     </div>
   </div>
 </div>
 
 <script>
-// Emoji options
-const emojis = ['🏀','⚡','🔥','🏆','👑','💪','🎯','🌟','🦅','🐉','💎','🎮'];
-let selectedEmoji = '🏀';
-const grid = document.getElementById('emojiGrid');
-emojis.forEach(e => {
-  const btn = document.createElement('button');
-  btn.className = 'emoji-option' + (e === selectedEmoji ? ' selected' : '');
-  btn.textContent = e;
-  btn.type = 'button';
-  btn.onclick = () => {
-    document.querySelectorAll('.emoji-option').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedEmoji = e;
+const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+
+let sb=null;
+
+// Emoji picker
+const emojis=['🏀','⚡','🔥','🏆','👑','💪','🎯','🌟','🦅','🐉','💎','🎮'];
+let selectedEmoji='🏀';
+const grid=document.getElementById('emojiGrid');
+emojis.forEach(e=>{
+  const btn=document.createElement('button');
+  btn.className='emoji-option'+(e==='🏀'?' selected':'');
+  btn.textContent=e;btn.type='button';
+  btn.onclick=()=>{
+    document.querySelectorAll('.emoji-option').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');selectedEmoji=e;
   };
   grid.appendChild(btn);
 });
 
-// Slug preview
-document.getElementById('slug').addEventListener('input', function() {
-  document.getElementById('slugText').textContent = this.value || 'your-slug';
-});
-
 // Step navigation
-let currentStep = 1;
-function goStep(step) {
-  const err = document.getElementById('errorMsg');
-  err.style.display = 'none';
+let currentStep=1;
+function goStep(step){
+  const err=document.getElementById('errorMsg');
+  err.style.display='none';
 
-  // Validate step 1
-  if (step === 2 && currentStep === 1) {
-    const email = document.getElementById('email').value.trim();
-    const pw = document.getElementById('password').value;
-    const pw2 = document.getElementById('confirmPassword').value;
-    if (!email || !email.includes('@')) return showError(currentLang === 'es' ? 'Correo inválido' : 'Please enter a valid email');
-    if (pw.length < 8) return showError(currentLang === 'es' ? 'La contraseña debe tener al menos 8 caracteres' : 'Password must be at least 8 characters');
-    if (pw !== pw2) return showError(currentLang === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
+  if(step===2&&currentStep===1){
+    const email=document.getElementById('email').value.trim();
+    const pw=document.getElementById('password').value;
+    const pw2=document.getElementById('confirmPassword').value;
+    if(!email||!email.includes('@')) return showError(currentLang==='es'?'Correo inválido':'Please enter a valid email');
+    if(pw.length<8) return showError(currentLang==='es'?'Mínimo 8 caracteres':'Password must be at least 8 characters');
+    if(pw!==pw2) return showError(currentLang==='es'?'Las contraseñas no coinciden':'Passwords do not match');
   }
 
-  // Validate step 2
-  if (step === 3 && currentStep === 2) {
-    const name = document.getElementById('businessName').value.trim();
-    const slug = document.getElementById('slug').value.trim();
-    if (!name) return showError(currentLang === 'es' ? 'Nombre de negocio requerido' : 'Business name is required');
-    if (!slug || slug.length < 3) return showError(currentLang === 'es' ? 'Slug debe tener al menos 3 caracteres' : 'Slug must be at least 3 characters');
+  if(step===3&&currentStep===2){
+    const name=document.getElementById('businessName').value.trim();
+    const slug=document.getElementById('slug').value.trim();
+    if(!name) return showError(currentLang==='es'?'Nombre requerido':'Business name is required');
+    if(!slug||slug.length<3) return showError(currentLang==='es'?'Slug mínimo 3 caracteres':'Slug must be at least 3 characters');
     buildReview();
   }
 
-  currentStep = step;
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('step' + step).classList.add('active');
-
-  // Update dots
-  for (let i = 1; i <= 3; i++) {
-    const dot = document.getElementById('dot' + i);
-    dot.classList.remove('active', 'done');
-    if (i < step) dot.classList.add('done');
-    else if (i === step) dot.classList.add('active');
+  currentStep=step;
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('step'+step).classList.add('active');
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('dot'+i);
+    dot.classList.remove('active','done');
+    if(i<step) dot.classList.add('done');
+    else if(i===step) dot.classList.add('active');
   }
-  for (let i = 1; i <= 2; i++) {
-    document.getElementById('line' + i).classList.toggle('active', i < step);
-  }
+  for(let i=1;i<=2;i++) document.getElementById('line'+i).classList.toggle('active',i<step);
 }
 
-function showError(msg) {
-  const err = document.getElementById('errorMsg');
-  err.textContent = msg;
-  err.style.display = 'block';
-}
+function showError(msg){const e=document.getElementById('errorMsg');e.textContent=msg;e.style.display='block';}
 
-function buildReview() {
-  const items = [
-    { en: 'Email', es: 'Correo', val: document.getElementById('email').value },
-    { en: 'Organization', es: 'Organización', val: document.getElementById('businessName').value },
-    { en: 'Page URL', es: 'URL de Página', val: 'bookd.click/' + document.getElementById('slug').value },
-    { en: 'Location', es: 'Ubicación', val: document.getElementById('location').value || '—' },
-    { en: 'Avatar', es: 'Avatar', val: selectedEmoji },
+function buildReview(){
+  const items=[
+    {en:'Email',es:'Correo',val:document.getElementById('email').value},
+    {en:'Organization',es:'Organización',val:document.getElementById('businessName').value},
+    {en:'Page URL',es:'URL',val:'bookd.click/'+document.getElementById('slug').value},
+    {en:'Location',es:'Ubicación',val:document.getElementById('location').value||'—'},
+    {en:'Avatar',es:'Avatar',val:selectedEmoji},
   ];
-  const list = document.getElementById('reviewList');
-  list.innerHTML = items.map(i => `
+  document.getElementById('reviewList').innerHTML=items.map(i=>`
     <div class="review-item">
       <span class="review-label"><span class="en">${i.en}</span><span class="es">${i.es}</span></span>
       <span class="review-value">${i.val}</span>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// Submit
-async function submitSignup() {
-  const err = document.getElementById('errorMsg');
-  err.style.display = 'none';
+// Load Supabase
+async function loadSB(){
+  if(sb) return sb;
+  await new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    s.onload=res;s.onerror=rej;
+    document.head.appendChild(s);
+  });
+  sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  return sb;
+}
 
-  if (!document.getElementById('agreeTerms').checked) {
-    return showError(currentLang === 'es' ? 'Debes aceptar los términos' : 'You must agree to the terms');
-  }
+// Submit — 100% live
+async function submitSignup(){
+  const err=document.getElementById('errorMsg');
+  err.style.display='none';
+  if(!document.getElementById('agreeTerms').checked)
+    return showError(currentLang==='es'?'Debes aceptar los términos':'You must agree to the terms');
 
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = currentLang === 'es' ? 'Creando...' : 'Creating...';
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Creando...':'Creating...';
 
-  // Only connect to Supabase on the live domain
-  if (location.hostname !== 'bookd.click') {
-    // Demo mode
-    setTimeout(() => {
-      document.getElementById('yourLink').textContent = 'bookd.click/' + document.getElementById('slug').value;
-      goStep(4);
-    }, 1500);
-    return;
-  }
+  try{
+    const client=await loadSB();
+    const email=document.getElementById('email').value.trim();
+    const password=document.getElementById('password').value;
+    const slug=document.getElementById('slug').value.trim();
+    const businessName=document.getElementById('businessName').value.trim();
+    const loc=document.getElementById('location').value.trim();
+    const desc=document.getElementById('description').value.trim();
 
-  try {
-    const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
-
-    // Load Supabase client
-    if (!window.supabase) {
-      await new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-        s.onload = resolve;
-        s.onerror = reject;
-        document.head.appendChild(s);
-      });
+    // Check slug
+    const{data:existing}=await client.from('operators').select('id').eq('slug',slug).maybeSingle();
+    if(existing){
+      btn.disabled=false;
+      btn.innerHTML='<span class="en">Create My Page</span><span class="es">Crear Mi Página</span>';
+      return showError(currentLang==='es'?'Slug ya en uso':'This slug is already taken');
     }
 
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    // Auth signup
+    const{data:authData,error:authErr}=await client.auth.signUp({email,password});
+    if(authErr) throw authErr;
 
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const slug = document.getElementById('slug').value.trim();
-    const businessName = document.getElementById('businessName').value.trim();
-    const loc = document.getElementById('location').value.trim();
-    const desc = document.getElementById('description').value.trim();
-
-    // Check slug availability
-    const { data: existing } = await sb.from('operators').select('id').eq('slug', slug).maybeSingle();
-    if (existing) {
-      btn.disabled = false;
-      btn.innerHTML = '<span class="en">Create My Page</span><span class="es">Crear Mi Página</span>';
-      return showError(currentLang === 'es' ? 'Este slug ya está en uso' : 'This slug is already taken');
-    }
-
-    // Sign up
-    const { data: authData, error: authErr } = await sb.auth.signUp({ email, password });
-    if (authErr) throw authErr;
-
-    // Insert operator row
-    const { error: insertErr } = await sb.from('operators').insert({
-      auth_user_id: authData.user.id,
-      slug: slug,
-      business_name: businessName,
-      email: email,
-      location: loc,
-      description: desc,
-      avatar_emoji: selectedEmoji,
-      active: true
+    // Insert operator
+    const{error:insertErr}=await client.from('operators').insert({
+      auth_user_id:authData.user.id,
+      slug:slug,
+      business_name:businessName,
+      email:email,
+      location:loc,
+      description:desc,
+      avatar_emoji:selectedEmoji,
+      active:true
     });
-    if (insertErr) throw insertErr;
+    if(insertErr) throw insertErr;
 
-    document.getElementById('yourLink').textContent = 'bookd.click/' + slug;
+    document.getElementById('yourLink').textContent='bookd.click/'+slug;
     goStep(4);
-
-  } catch (e) {
-    btn.disabled = false;
-    btn.innerHTML = '<span class="en">Create My Page</span><span class="es">Crear Mi Página</span>';
-    showError(e.message || 'Something went wrong');
+  }catch(e){
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Create My Page</span><span class="es">Crear Mi Página</span>';
+    showError(e.message||'Something went wrong');
   }
 }
 
-// Enter key support
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    if (currentStep === 1) goStep(2);
-    else if (currentStep === 2) goStep(3);
-    else if (currentStep === 3) submitSignup();
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(currentStep===1) goStep(2);
+    else if(currentStep===2) goStep(3);
+    else if(currentStep===3) submitSignup();
   }
 });
 </script>

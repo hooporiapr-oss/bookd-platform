@@ -7,7 +7,6 @@
 <meta name="description" content="Tournament & League booking platform. Create events, accept registrations, get paid directly.">
 <link rel="icon" href="/bookd.png">
 <style>
-/* ============ RESET ============ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;overflow-x:hidden;line-height:1.6}
@@ -15,152 +14,167 @@ a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 button{cursor:pointer;border:none;font-family:inherit}
 
-/* ============ CSS VARS ============ */
 :root{
   --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
   --orange:#e8611a;--orange-light:#f4832f;
   --white:#fafaf9;--gray:#8a8a8a;
-  --radius:12px;
 }
-
-/* ============ UTILITIES ============ */
-.container{max-width:1140px;margin:0 auto;padding:0 24px}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
 
-/* ============ NAV ============ */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
-nav .container{display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;color:var(--orange)}
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 20px;background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+nav .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:1.4rem;letter-spacing:-.02em;color:var(--orange)}
 .nav-logo span{color:var(--white)}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:.875rem;font-weight:500;color:var(--gray);transition:color .2s}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--gray);transition:color .2s}
 .nav-links a:hover{color:var(--white)}
-.nav-cta{background:var(--orange);color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;font-size:.875rem;letter-spacing:.03em;transition:background .2s}
+.nav-cta{background:var(--orange);color:#fff;padding:8px 18px;border-radius:7px;font-weight:700;font-size:.82rem;letter-spacing:.02em;transition:background .2s}
 .nav-cta:hover{background:var(--orange-light)}
-.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
-.lang-btn{padding:6px 12px;border-radius:5px;font-size:.75rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-toggle{display:flex;gap:3px;background:var(--black3);border-radius:5px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:4px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.04em}
 .lang-btn.active{background:var(--orange);color:#fff}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;padding:4px}
-.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--black2);padding:24px;flex-direction:column;gap:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.hamburger{display:none;background:none;padding:4px;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+.mobile-menu{display:none;position:fixed;top:54px;left:0;right:0;background:var(--black2);padding:20px;flex-direction:column;gap:14px;border-bottom:1px solid rgba(255,255,255,.06);z-index:99}
 .mobile-menu.open{display:flex}
+.mobile-menu a{font-size:.9rem;color:var(--gray);font-weight:500}
+.mobile-menu a:hover{color:var(--white)}
 
-/* ============ HERO ============ */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-40%;left:-20%;width:140%;height:140%;background:radial-gradient(ellipse at 50% 40%,rgba(232,97,26,.12) 0%,transparent 65%);pointer-events:none}
-.hero-content{position:relative;z-index:2;max-width:800px}
-.hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(232,97,26,.3);border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.12em;color:var(--orange);margin-bottom:32px;text-transform:uppercase}
-.hero h1{font-size:clamp(3rem,8vw,5.5rem);font-weight:900;line-height:.95;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:24px}
-.hero h1 .highlight{color:var(--orange);display:inline}
-.hero p{font-size:1.15rem;color:var(--gray);max-width:520px;margin:0 auto 40px;line-height:1.7}
-.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:var(--orange);color:#fff;padding:16px 40px;border-radius:10px;font-weight:800;font-size:1rem;letter-spacing:.04em;transition:all .25s;text-transform:uppercase}
-.btn-primary:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(232,97,26,.3)}
-.btn-secondary{background:transparent;color:var(--white);padding:16px 40px;border-radius:10px;font-weight:700;font-size:1rem;border:2px solid rgba(255,255,255,.15);transition:all .25s}
-.btn-secondary:hover{border-color:var(--white);transform:translateY(-2px)}
+/* ===== HERO ===== */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 20px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;left:-10%;width:120%;height:120%;background:radial-gradient(ellipse at 50% 40%,rgba(232,97,26,.1) 0%,transparent 60%);pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:700px;width:100%}
+.hero-badge{display:inline-block;padding:6px 16px;border:1px solid rgba(232,97,26,.3);border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--orange);margin-bottom:24px;text-transform:uppercase}
+.hero h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:900;line-height:.92;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:20px}
+.hero h1 .hl{color:var(--orange)}
+.hero p{font-size:clamp(.9rem,2.5vw,1.1rem);color:var(--gray);max-width:460px;margin:0 auto 32px;line-height:1.65}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--orange);color:#fff;padding:14px 32px;border-radius:9px;font-weight:800;font-size:.9rem;letter-spacing:.03em;transition:all .25s;text-transform:uppercase;display:inline-block}
+.btn-p:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,97,26,.25)}
+.btn-s{background:transparent;color:var(--white);padding:14px 32px;border-radius:9px;font-weight:700;font-size:.9rem;border:2px solid rgba(255,255,255,.12);transition:all .25s;display:inline-block}
+.btn-s:hover{border-color:var(--white);transform:translateY(-2px)}
 
-/* ============ STATS BAR ============ */
-.stats{padding:0 24px}
-.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
-.stat{padding:32px 24px;text-align:center;border-right:1px solid rgba(255,255,255,.06)}
+/* ===== STATS ===== */
+.stats{padding:0 20px}
+.stats-inner{max-width:800px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+.stat{padding:24px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.06)}
 .stat:last-child{border-right:none}
-.stat-value{font-size:1.5rem;font-weight:900;color:var(--orange);letter-spacing:-.02em}
-.stat-label{font-size:.75rem;color:var(--gray);margin-top:4px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.stat-val{font-size:1.3rem;font-weight:900;color:var(--orange);letter-spacing:-.01em}
+.stat-lbl{font-size:.65rem;color:var(--gray);margin-top:3px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 
-/* ============ HOW IT WORKS ============ */
-.how{padding:120px 24px;text-align:center}
-.section-tag{font-size:.75rem;font-weight:700;letter-spacing:.12em;color:var(--orange);text-transform:uppercase;margin-bottom:16px}
-.section-title{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.02em;margin-bottom:64px;text-transform:uppercase}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:960px;margin:0 auto}
-.step{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:48px 32px 40px;position:relative;transition:all .3s}
-.step:hover{border-color:rgba(232,97,26,.3);transform:translateY(-4px)}
-.step-num{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.875rem}
-.step-icon{font-size:2.5rem;margin-bottom:20px}
-.step h3{font-size:1.25rem;font-weight:800;margin-bottom:12px;text-transform:uppercase;letter-spacing:.02em}
-.step p{font-size:.9rem;color:var(--gray);line-height:1.6}
+/* ===== SECTIONS ===== */
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
+.sec-tag{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--orange);text-transform:uppercase;margin-bottom:12px;text-align:center}
+.sec-title{font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;letter-spacing:-.02em;margin-bottom:48px;text-transform:uppercase;text-align:center}
 
-/* ============ MOCKUP ============ */
-.mockup-section{padding:80px 24px;text-align:center}
-.mockup-card{max-width:400px;margin:0 auto;background:var(--black2);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.mockup-header{background:linear-gradient(135deg,var(--orange),#c44d10);padding:32px 24px 24px;text-align:left}
-.mockup-header h4{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
-.mockup-header h3{font-size:1.5rem;font-weight:900;color:#fff}
-.mockup-body{padding:24px}
-.mockup-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.mockup-item:last-child{border-bottom:none}
-.mockup-item-left{text-align:left}
-.mockup-item-left h5{font-weight:700;font-size:.9rem}
-.mockup-item-left span{font-size:.75rem;color:var(--gray)}
-.mockup-price{font-weight:800;color:var(--orange)}
+/* ===== HOW IT WORKS ===== */
+.how{padding:100px 20px;text-align:center}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:860px;margin:0 auto}
+.step{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:40px 24px 32px;position:relative;transition:all .3s}
+.step:hover{border-color:rgba(232,97,26,.25);transform:translateY(-3px)}
+.step-num{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem}
+.step-icon{font-size:2rem;margin-bottom:16px}
+.step h3{font-size:1.05rem;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.02em}
+.step p{font-size:.82rem;color:var(--gray);line-height:1.6}
 
-/* ============ FEATURES ============ */
-.features{padding:120px 24px;text-align:center}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:960px;margin:0 auto}
-.feature{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:36px 28px;text-align:left;transition:all .3s}
-.feature:hover{border-color:rgba(232,97,26,.2);transform:translateY(-3px)}
-.feature-icon{font-size:1.8rem;margin-bottom:16px}
-.feature h3{font-size:1rem;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.02em}
-.feature p{font-size:.85rem;color:var(--gray);line-height:1.6}
+/* ===== MOCKUP ===== */
+.mockup-sec{padding:60px 20px;text-align:center}
+.mockup-card{max-width:360px;margin:0 auto;background:var(--black2);border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.mockup-hd{background:linear-gradient(135deg,var(--orange),#c44d10);padding:24px 20px 20px;text-align:left}
+.mockup-hd h4{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:2px}
+.mockup-hd h3{font-size:1.25rem;font-weight:900;color:#fff}
+.mockup-body{padding:16px 20px}
+.mockup-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.mockup-row:last-child{border-bottom:none}
+.mockup-left h5{font-weight:700;font-size:.85rem}
+.mockup-left span{font-size:.7rem;color:var(--gray)}
+.mockup-price{font-weight:800;color:var(--orange);font-size:.9rem}
 
-/* ============ WHO ITS FOR ============ */
-.audience{padding:120px 24px;text-align:center}
-.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:800px;margin:0 auto}
-.audience-item{padding:28px 20px;background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;transition:all .3s}
-.audience-item:hover{border-color:var(--orange);background:rgba(232,97,26,.05)}
-.audience-item .icon{font-size:1.5rem;margin-bottom:10px}
-.audience-item h4{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+/* ===== FEATURES ===== */
+.features{padding:100px 20px;text-align:center}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto}
+.feat{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:28px 22px;text-align:left;transition:all .3s}
+.feat:hover{border-color:rgba(232,97,26,.2);transform:translateY(-2px)}
+.feat-icon{font-size:1.5rem;margin-bottom:12px}
+.feat h3{font-size:.88rem;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:.01em}
+.feat p{font-size:.78rem;color:var(--gray);line-height:1.55}
 
-/* ============ CTA ============ */
-.cta{padding:120px 24px;text-align:center}
-.cta-box{max-width:700px;margin:0 auto;background:linear-gradient(135deg,rgba(232,97,26,.1),rgba(232,97,26,.03));border:1px solid rgba(232,97,26,.2);border-radius:24px;padding:80px 48px}
-.cta-box h2{font-size:clamp(2rem,5vw,3rem);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:16px}
-.cta-box p{color:var(--gray);margin-bottom:40px;font-size:1.05rem}
+/* ===== AUDIENCE ===== */
+.audience{padding:100px 20px;text-align:center}
+.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:700px;margin:0 auto}
+.aud-item{padding:22px 16px;background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:10px;transition:all .3s}
+.aud-item:hover{border-color:var(--orange);background:rgba(232,97,26,.04)}
+.aud-item .icon{font-size:1.3rem;margin-bottom:6px}
+.aud-item h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
 
-/* ============ FOOTER ============ */
-footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:center}
-footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.footer-brand{font-weight:800;color:var(--orange);font-size:1.1rem}
-.footer-links{display:flex;gap:24px}
-.footer-links a{font-size:.8rem;color:var(--gray);transition:color .2s}
+/* ===== CTA ===== */
+.cta{padding:100px 20px;text-align:center}
+.cta-box{max-width:620px;margin:0 auto;background:linear-gradient(135deg,rgba(232,97,26,.1),rgba(232,97,26,.03));border:1px solid rgba(232,97,26,.2);border-radius:20px;padding:60px 32px}
+.cta-box h2{font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:12px}
+.cta-box p{color:var(--gray);margin-bottom:32px;font-size:.95rem}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 20px}
+footer .wrap{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-brand{font-weight:800;color:var(--orange);font-size:1rem}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.75rem;color:var(--gray);transition:color .2s}
 .footer-links a:hover{color:var(--white)}
-.footer-copy{font-size:.75rem;color:var(--gray)}
+.footer-copy{font-size:.7rem;color:var(--gray)}
 
-/* ============ RESPONSIVE ============ */
+/* ===== MOBILE ===== */
 @media(max-width:768px){
   .nav-links{display:none}
   .hamburger{display:flex}
+  .hero{padding:70px 16px 48px;min-height:auto;min-height:100svh}
+  .hero h1{font-size:2.2rem}
+  .hero p{font-size:.88rem;margin-bottom:24px}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px}
+  .btn-p,.btn-s{padding:14px 20px;font-size:.88rem;text-align:center;width:100%}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .stat{border-bottom:1px solid rgba(255,255,255,.06)}
-  .steps,.features-grid,.audience-grid{grid-template-columns:1fr}
-  .hero h1{font-size:2.8rem}
-  .cta-box{padding:48px 24px}
-  footer .container{justify-content:center;text-align:center}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(3){border-right:1px solid rgba(255,255,255,.06)}
+  .stat:nth-child(4){border-right:none;border-bottom:none}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+  .steps{grid-template-columns:1fr;max-width:400px}
+  .feat-grid{grid-template-columns:1fr;max-width:400px}
+  .aud-grid{grid-template-columns:repeat(2,1fr)}
+  .cta-box{padding:40px 20px}
+  .cta-box h2{font-size:1.5rem}
+  .sec-title{font-size:1.5rem;margin-bottom:32px}
+  footer .wrap{justify-content:center;text-align:center;flex-direction:column}
 }
 
-/* ============ ANIMATIONS ============ */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.hero-content{animation:fadeUp .8s ease-out}
-.stats-inner{animation:fadeUp .8s ease-out .2s both}
+@media(max-width:380px){
+  .hero h1{font-size:1.9rem}
+  .hero-badge{font-size:.6rem;padding:5px 12px}
+  .stat-val{font-size:1.1rem}
+  .stat-lbl{font-size:.6rem}
+  .aud-grid{grid-template-columns:1fr}
+}
+
+/* ===== ANIM ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content{animation:fadeUp .7s ease-out}
+.stats-inner{animation:fadeUp .7s ease-out .15s both}
 </style>
 <script>
-// Language toggle — defined in head before buttons
-let currentLang = 'en';
-function setLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
 }
 </script>
 </head>
 <body>
 
-<!-- ========== NAV ========== -->
+<!-- NAV -->
 <nav>
-  <div class="container">
+  <div class="wrap">
     <a href="/" class="nav-logo">book<span>d</span></a>
     <div class="nav-links">
       <a href="#how" class="en">How It Works</a>
@@ -196,254 +210,202 @@ function setLang(lang) {
   </div>
 </div>
 
-<!-- ========== HERO ========== -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-badge en">Tournament & League Platform</div>
     <div class="hero-badge es">Plataforma de Torneos y Ligas</div>
-    <h1 class="en">Reimagine <span class="highlight">Basketball</span></h1>
-    <h1 class="es">Reimagina el <span class="highlight">Basketball</span></h1>
+    <h1 class="en">Reimagine <span class="hl">Basketball</span></h1>
+    <h1 class="es">Reimagina el <span class="hl">Basketball</span></h1>
     <p class="en">Create tournaments, accept team registrations, and get paid directly — all from one link. Zero monthly fees.</p>
-    <p class="es">Crea torneos, acepta inscripciones de equipos y recibe pagos directos — todo desde un enlace. Cero cargos mensuales.</p>
-    <div class="hero-buttons">
-      <a href="/signup.html" class="btn-primary en">Start Free</a>
-      <a href="/signup.html" class="btn-primary es">Comenzar Gratis</a>
-      <a href="#how" class="btn-secondary en">See How It Works</a>
-      <a href="#how" class="btn-secondary es">Ver Cómo Funciona</a>
+    <p class="es">Crea torneos, acepta inscripciones y recibe pagos directos — todo desde un enlace. Cero cargos mensuales.</p>
+    <div class="hero-btns">
+      <a href="/signup.html" class="btn-p en">Start Free</a>
+      <a href="/signup.html" class="btn-p es">Comenzar Gratis</a>
+      <a href="#how" class="btn-s en">How It Works</a>
+      <a href="#how" class="btn-s es">Cómo Funciona</a>
     </div>
   </div>
 </section>
 
-<!-- ========== STATS BAR ========== -->
+<!-- STATS -->
 <section class="stats">
   <div class="stats-inner">
     <div class="stat">
-      <div class="stat-value">5 MIN</div>
-      <div class="stat-label en">Setup Time</div>
-      <div class="stat-label es">Configuración</div>
+      <div class="stat-val">5 MIN</div>
+      <div class="stat-lbl en">Setup</div>
+      <div class="stat-lbl es">Configuración</div>
     </div>
     <div class="stat">
-      <div class="stat-value">$0</div>
-      <div class="stat-label en">Monthly Fee</div>
-      <div class="stat-label es">Cargo Mensual</div>
+      <div class="stat-val">$0</div>
+      <div class="stat-lbl en">Monthly</div>
+      <div class="stat-lbl es">Mensual</div>
     </div>
     <div class="stat">
-      <div class="stat-value">5%</div>
-      <div class="stat-label en">+ Stripe Fees</div>
-      <div class="stat-label es">+ Comisión Stripe</div>
+      <div class="stat-val">5%</div>
+      <div class="stat-lbl en">+ Stripe</div>
+      <div class="stat-lbl es">+ Stripe</div>
     </div>
     <div class="stat">
-      <div class="stat-value">DIRECT</div>
-      <div class="stat-label en">To Your Bank</div>
-      <div class="stat-label es">A Tu Banco</div>
+      <div class="stat-val">DIRECT</div>
+      <div class="stat-lbl en">To Bank</div>
+      <div class="stat-lbl es">Al Banco</div>
     </div>
   </div>
 </section>
 
-<!-- ========== HOW IT WORKS ========== -->
+<!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="container">
-    <div class="section-tag en">How It Works</div>
-    <div class="section-tag es">Cómo Funciona</div>
-    <h2 class="section-title en">Three Steps. That's It.</h2>
-    <h2 class="section-title es">Tres Pasos. Eso Es Todo.</h2>
+    <div class="sec-tag en">How It Works</div>
+    <div class="sec-tag es">Cómo Funciona</div>
+    <h2 class="sec-title en">Three Steps. That's It.</h2>
+    <h2 class="sec-title es">Tres Pasos. Eso Es Todo.</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-icon">⚡</div>
-        <h3 class="en">Create</h3>
-        <h3 class="es">Crea</h3>
-        <p class="en">Sign up, add your tournament or league details, set your price. Done in 5 minutes.</p>
-        <p class="es">Regístrate, agrega los detalles de tu torneo o liga, fija tu precio. Listo en 5 minutos.</p>
+        <h3 class="en">Create</h3><h3 class="es">Crea</h3>
+        <p class="en">Sign up, add your event details, set your price. Done in 5 minutes.</p>
+        <p class="es">Regístrate, agrega detalles de tu evento, fija tu precio. Listo en 5 minutos.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-icon">🔗</div>
-        <h3 class="en">Share</h3>
-        <h3 class="es">Comparte</h3>
-        <p class="en">Get your custom bookd.click link. Share it anywhere — text, social, email. Teams register and pay in one click.</p>
-        <p class="es">Obtén tu enlace personalizado bookd.click. Compártelo donde quieras — texto, redes, email. Los equipos se registran y pagan en un clic.</p>
+        <h3 class="en">Share</h3><h3 class="es">Comparte</h3>
+        <p class="en">Get your bookd.click link. Share it anywhere — teams register and pay in one click.</p>
+        <p class="es">Obtén tu enlace bookd.click. Compártelo — equipos se registran y pagan en un clic.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-icon">🏀</div>
-        <h3 class="en">Run It</h3>
-        <h3 class="es">Ejecútalo</h3>
-        <p class="en">Manage brackets, scores, and standings from your phone. Payments go direct to your bank — we never touch your money.</p>
-        <p class="es">Administra llaves, puntuaciones y posiciones desde tu celular. Los pagos van directo a tu banco — nunca tocamos tu dinero.</p>
+        <h3 class="en">Run It</h3><h3 class="es">Ejecútalo</h3>
+        <p class="en">Manage brackets and scores from your phone. Payments go direct to your bank.</p>
+        <p class="es">Administra llaves y puntuaciones desde tu celular. Pagos directo a tu banco.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== MOCKUP ========== -->
-<section class="mockup-section">
-  <div class="container">
-    <div class="mockup-card">
-      <div class="mockup-header">
-        <h4>bookd.click/reibball</h4>
-        <h3>Reibball Tournaments</h3>
+<!-- MOCKUP -->
+<section class="mockup-sec">
+  <div class="mockup-card">
+    <div class="mockup-hd">
+      <h4>bookd.click/reibball</h4>
+      <h3>Reibball Tournaments</h3>
+    </div>
+    <div class="mockup-body">
+      <div class="mockup-row">
+        <div class="mockup-left">
+          <h5 class="en">Summer Classic 5v5</h5><h5 class="es">Clásico de Verano 5v5</h5>
+          <span class="en">8-16 teams · 2 days</span><span class="es">8-16 equipos · 2 días</span>
+        </div>
+        <div class="mockup-price">$250</div>
       </div>
-      <div class="mockup-body">
-        <div class="mockup-item">
-          <div class="mockup-item-left">
-            <h5 class="en">Summer Classic 5v5</h5>
-            <h5 class="es">Clásico de Verano 5v5</h5>
-            <span class="en">8-16 teams · 2 days</span>
-            <span class="es">8-16 equipos · 2 días</span>
-          </div>
-          <div class="mockup-price">$250</div>
+      <div class="mockup-row">
+        <div class="mockup-left">
+          <h5 class="en">Friday Night League</h5><h5 class="es">Liga de Viernes</h5>
+          <span class="en">10 teams · 8 weeks</span><span class="es">10 equipos · 8 semanas</span>
         </div>
-        <div class="mockup-item">
-          <div class="mockup-item-left">
-            <h5 class="en">Friday Night League</h5>
-            <h5 class="es">Liga de Viernes</h5>
-            <span class="en">10 teams · 8 weeks</span>
-            <span class="es">10 equipos · 8 semanas</span>
-          </div>
-          <div class="mockup-price">$400</div>
+        <div class="mockup-price">$400</div>
+      </div>
+      <div class="mockup-row">
+        <div class="mockup-left">
+          <h5 class="en">Youth 3v3 Showcase</h5><h5 class="es">Exhibición Juvenil 3v3</h5>
+          <span class="en">12-24 teams · 1 day</span><span class="es">12-24 equipos · 1 día</span>
         </div>
-        <div class="mockup-item">
-          <div class="mockup-item-left">
-            <h5 class="en">Youth 3v3 Showcase</h5>
-            <h5 class="es">Exhibición Juvenil 3v3</h5>
-            <span class="en">12-24 teams · 1 day</span>
-            <span class="es">12-24 equipos · 1 día</span>
-          </div>
-          <div class="mockup-price">$150</div>
-        </div>
+        <div class="mockup-price">$150</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== FEATURES ========== -->
+<!-- FEATURES -->
 <section class="features" id="features">
   <div class="container">
-    <div class="section-tag en">Features</div>
-    <div class="section-tag es">Funciones</div>
-    <h2 class="section-title en">Everything You Need</h2>
-    <h2 class="section-title es">Todo Lo Que Necesitas</h2>
-    <div class="features-grid">
-      <div class="feature">
-        <div class="feature-icon">🏆</div>
-        <h3 class="en">Auto Brackets</h3>
-        <h3 class="es">Llaves Automáticas</h3>
-        <p class="en">Single elimination, double elimination, or round robin — generated instantly. Manage from your phone.</p>
-        <p class="es">Eliminación sencilla, doble, o todos contra todos — generado al instante. Maneja desde tu celular.</p>
+    <div class="sec-tag en">Features</div><div class="sec-tag es">Funciones</div>
+    <h2 class="sec-title en">Everything You Need</h2><h2 class="sec-title es">Todo Lo Que Necesitas</h2>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon">🏆</div>
+        <h3 class="en">Auto Brackets</h3><h3 class="es">Llaves Automáticas</h3>
+        <p class="en">Single elim, double elim, or round robin — generated instantly from your phone.</p>
+        <p class="es">Eliminación sencilla, doble, o todos contra todos — generado al instante.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">💰</div>
-        <h3 class="en">Direct Payments</h3>
-        <h3 class="es">Pagos Directos</h3>
-        <p class="en">Money goes straight to your bank. We never hold, touch, or control your funds. 5% platform fee only.</p>
-        <p class="es">El dinero va directo a tu banco. Nunca retenemos, tocamos, o controlamos tus fondos. Solo 5% de comisión.</p>
+      <div class="feat">
+        <div class="feat-icon">💰</div>
+        <h3 class="en">Direct Payments</h3><h3 class="es">Pagos Directos</h3>
+        <p class="en">Money goes straight to your bank. We never hold or control your funds.</p>
+        <p class="es">El dinero va directo a tu banco. Nunca retenemos tus fondos.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📊</div>
-        <h3 class="en">Live Standings</h3>
-        <h3 class="es">Posiciones en Vivo</h3>
-        <p class="en">Real-time standings, stats, and schedules. Your teams and fans can follow along live.</p>
-        <p class="es">Posiciones, estadísticas y calendario en tiempo real. Tus equipos y fans pueden seguir en vivo.</p>
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <h3 class="en">Live Standings</h3><h3 class="es">Posiciones en Vivo</h3>
+        <p class="en">Real-time standings, stats, and schedules for teams and fans.</p>
+        <p class="es">Posiciones, estadísticas y calendario en tiempo real.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📱</div>
-        <h3 class="en">Score From Phone</h3>
-        <h3 class="es">Anota Desde el Celular</h3>
-        <p class="en">Enter scores courtside. Brackets and standings update automatically. No laptop needed.</p>
-        <p class="es">Ingresa puntuaciones desde la cancha. Las llaves y posiciones se actualizan automáticamente.</p>
+      <div class="feat">
+        <div class="feat-icon">📱</div>
+        <h3 class="en">Score From Phone</h3><h3 class="es">Anota Desde el Cel</h3>
+        <p class="en">Enter scores courtside. Brackets update automatically.</p>
+        <p class="es">Ingresa puntuaciones desde la cancha. Las llaves se actualizan solas.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">🏅</div>
-        <h3 class="en">Divisions & Groups</h3>
-        <h3 class="es">Divisiones y Grupos</h3>
-        <p class="en">Split teams by skill level, age, or any category. Pool play into playoffs — you design the format.</p>
-        <p class="es">Separa equipos por nivel, edad, o cualquier categoría. Fase de grupos a playoffs — tú diseñas el formato.</p>
+      <div class="feat">
+        <div class="feat-icon">🏅</div>
+        <h3 class="en">Divisions</h3><h3 class="es">Divisiones</h3>
+        <p class="en">Split teams by skill, age, or any category. You design the format.</p>
+        <p class="es">Separa equipos por nivel, edad, o categoría. Tú diseñas el formato.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📋</div>
-        <h3 class="en">Rosters</h3>
-        <h3 class="es">Rosters</h3>
-        <p class="en">Coaches submit rosters during registration. Player names, numbers, and details all in one place.</p>
-        <p class="es">Los coaches envían rosters al registrarse. Nombres, números y detalles de jugadores en un solo lugar.</p>
+      <div class="feat">
+        <div class="feat-icon">📋</div>
+        <h3 class="en">Rosters</h3><h3 class="es">Rosters</h3>
+        <p class="en">Coaches submit rosters at registration. All player info in one place.</p>
+        <p class="es">Los coaches envían rosters al registrarse. Todo en un solo lugar.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== WHO IT'S FOR ========== -->
+<!-- AUDIENCE -->
 <section class="audience" id="audience">
   <div class="container">
-    <div class="section-tag en">Who It's For</div>
-    <div class="section-tag es">Para Quién Es</div>
-    <h2 class="section-title en">Built For Organizers</h2>
-    <h2 class="section-title es">Hecho Para Organizadores</h2>
-    <div class="audience-grid">
-      <div class="audience-item">
-        <div class="icon">🏀</div>
-        <h4 class="en">Tournament Directors</h4>
-        <h4 class="es">Directores de Torneo</h4>
-      </div>
-      <div class="audience-item">
-        <div class="icon">🏟️</div>
-        <h4 class="en">League Organizers</h4>
-        <h4 class="es">Organizadores de Liga</h4>
-      </div>
-      <div class="audience-item">
-        <div class="icon">🏫</div>
-        <h4 class="en">Schools & Academies</h4>
-        <h4 class="es">Escuelas y Academias</h4>
-      </div>
-      <div class="audience-item">
-        <div class="icon">🌎</div>
-        <h4 class="en">International Events</h4>
-        <h4 class="es">Eventos Internacionales</h4>
-      </div>
-      <div class="audience-item">
-        <div class="icon">🏢</div>
-        <h4 class="en">Rec Centers</h4>
-        <h4 class="es">Centros Recreativos</h4>
-      </div>
-      <div class="audience-item">
-        <div class="icon">🎮</div>
-        <h4 class="en">Esports</h4>
-        <h4 class="es">Esports</h4>
-      </div>
+    <div class="sec-tag en">Who It's For</div><div class="sec-tag es">Para Quién Es</div>
+    <h2 class="sec-title en">Built For Organizers</h2><h2 class="sec-title es">Hecho Para Organizadores</h2>
+    <div class="aud-grid">
+      <div class="aud-item"><div class="icon">🏀</div><h4 class="en">Tournament Directors</h4><h4 class="es">Directores de Torneo</h4></div>
+      <div class="aud-item"><div class="icon">🏟️</div><h4 class="en">League Organizers</h4><h4 class="es">Organizadores de Liga</h4></div>
+      <div class="aud-item"><div class="icon">🏫</div><h4 class="en">Schools</h4><h4 class="es">Escuelas</h4></div>
+      <div class="aud-item"><div class="icon">🌎</div><h4 class="en">International</h4><h4 class="es">Internacional</h4></div>
+      <div class="aud-item"><div class="icon">🏢</div><h4 class="en">Rec Centers</h4><h4 class="es">Centros Rec.</h4></div>
+      <div class="aud-item"><div class="icon">🎮</div><h4 class="en">Esports</h4><h4 class="es">Esports</h4></div>
     </div>
   </div>
 </section>
 
-<!-- ========== CTA ========== -->
+<!-- CTA -->
 <section class="cta">
-  <div class="container">
-    <div class="cta-box">
-      <h2 class="en">It All Starts<br>With a Click</h2>
-      <h2 class="es">Todo Comienza<br>Con un Click</h2>
-      <p class="en">Free to start. No monthly fees. Set up your first event in 5 minutes.</p>
-      <p class="es">Gratis para comenzar. Sin cargos mensuales. Crea tu primer evento en 5 minutos.</p>
-      <a href="/signup.html" class="btn-primary en">Create Your Page</a>
-      <a href="/signup.html" class="btn-primary es">Crea Tu Página</a>
-    </div>
+  <div class="cta-box">
+    <h2 class="en">It All Starts<br>With a Click</h2>
+    <h2 class="es">Todo Comienza<br>Con un Click</h2>
+    <p class="en">Free to start. No monthly fees. Set up in 5 minutes.</p>
+    <p class="es">Gratis para comenzar. Sin cargos mensuales. En 5 minutos.</p>
+    <a href="/signup.html" class="btn-p en">Create Your Page</a>
+    <a href="/signup.html" class="btn-p es">Crea Tu Página</a>
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- FOOTER -->
 <footer>
-  <div class="container">
+  <div class="wrap">
     <div class="footer-brand">bookd</div>
     <div class="footer-links">
-      <a href="/privacy.html" class="en">Privacy</a>
-      <a href="/privacy.html" class="es">Privacidad</a>
-      <a href="/terms.html" class="en">Terms</a>
-      <a href="/terms.html" class="es">Términos</a>
+      <a href="/privacy.html" class="en">Privacy</a><a href="/privacy.html" class="es">Privacidad</a>
+      <a href="/terms.html" class="en">Terms</a><a href="/terms.html" class="es">Términos</a>
     </div>
     <div class="footer-copy">&copy; 2025 GoStar Digital LLC</div>
   </div>
 </footer>
 
-<script>
-// Initialize language
-setLang('en');
-</script>
+<script>setLang('en');</script>
 </body>
 </html>

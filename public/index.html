@@ -49,6 +49,7 @@ nav .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify
 .hero-badge{display:inline-block;padding:6px 16px;border:1px solid rgba(232,97,26,.3);border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--orange);margin-bottom:24px;text-transform:uppercase}
 .hero h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:900;line-height:.92;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:20px}
 .hero h1 .hl{color:var(--orange)}
+.hero-logo{max-width:320px;height:auto;margin:0 auto 20px;display:block}
 .hero p{font-size:clamp(.9rem,2.5vw,1.1rem);color:var(--gray);max-width:460px;margin:0 auto 32px;line-height:1.65}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn-p{background:var(--orange);color:#fff;padding:14px 32px;border-radius:9px;font-weight:800;font-size:.9rem;letter-spacing:.03em;transition:all .25s;text-transform:uppercase;display:inline-block}
@@ -130,6 +131,7 @@ footer .wrap{max-width:1000px;margin:0 auto;display:flex;justify-content:space-b
   .hamburger{display:flex}
   .hero{padding:70px 16px 48px;min-height:auto;min-height:100svh}
   .hero h1{font-size:2.2rem}
+  .hero-logo{max-width:220px;margin-bottom:16px}
   .hero p{font-size:.88rem;margin-bottom:24px}
   .hero-btns{flex-direction:column;align-items:stretch;gap:10px}
   .btn-p,.btn-s{padding:14px 20px;font-size:.88rem;text-align:center;width:100%}
@@ -150,6 +152,7 @@ footer .wrap{max-width:1000px;margin:0 auto;display:flex;justify-content:space-b
 
 @media(max-width:380px){
   .hero h1{font-size:1.9rem}
+  .hero-logo{max-width:180px}
   .hero-badge{font-size:.6rem;padding:5px 12px}
   .stat-val{font-size:1.1rem}
   .stat-lbl{font-size:.6rem}
@@ -215,6 +218,7 @@ function setLang(lang){
   <div class="hero-content">
     <div class="hero-badge en">Tournament & League Platform</div>
     <div class="hero-badge es">Plataforma de Torneos y Ligas</div>
+    <img src="/bookd.png" alt="Bookd" class="hero-logo">
     <h1 class="en">Reimagine <span class="hl">Basketball</span></h1>
     <h1 class="es">Reimagina el <span class="hl">Basketball</span></h1>
     <p class="en">Create tournaments, accept team registrations, and get paid directly — all from one link. Zero monthly fees.</p>

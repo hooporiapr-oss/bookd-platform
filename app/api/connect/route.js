@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  // SELF-CONTAINED — no imports from lib/
-  const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-  const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
-  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const SQUARE_APP_ID = process.env.SQUARE_APPLICATION_ID;
   const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bookd.click';
 
-  if (!STRIPE_SECRET_KEY) {
-    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
+  if (!SQUARE_APP_ID) {
+    return NextResponse.json({ error: 'Square not configured' }, { status: 500 });
   }
 
   try {
@@ -17,66 +14,22 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Missing operator_id' }, { status: 400 });
     }
 
-    // Fetch operator from Supabase
-    const opRes = await fetch(`${SUPABASE_URL}/rest/v1/operators?id=eq.${operator_id}&select=*`, {
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      },
-    });
-    const operators = await opRes.json();
-    if (!operators || operators.length === 0) {
-      return NextResponse.json({ error: 'Operator not found' }, { status: 404 });
-    }
-    const operator = operators[0];
+    // Build Square OAuth authorization URL
+    const scopes = [
+      'PAYMENTS_WRITE',
+      'PAYMENTS_READ',
+      'PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS',
+      'MERCHANT_PROFILE_READ',
+      'ORDERS_WRITE',
+      'ORDERS_READ'
+    ].join('+');
 
-    let stripeAccountId = operator.stripe_account_id;
+    const state = encodeURIComponent(operator_id);
+    const redirectUri = encodeURIComponent(`${APP_URL}/api/square/callback`);
 
-    // Create Stripe Express account if none exists
-    if (!stripeAccountId) {
-      const Stripe = (await import('stripe')).default;
-      const stripe = new Stripe(STRIPE_SECRET_KEY);
+    const authUrl = `https://connect.squareup.com/oauth2/authorize?client_id=${SQUARE_APP_ID}&scope=${scopes}&session=false&state=${state}&redirect_uri=${redirectUri}`;
 
-      const account = await stripe.accounts.create({
-        type: 'express',
-        email: operator.email,
-        business_profile: {
-          name: operator.business_name,
-          url: `${APP_URL}/${operator.slug}`,
-        },
-        capabilities: {
-          card_payments: { requested: true },
-          transfers: { requested: true },
-        },
-      });
-
-      stripeAccountId = account.id;
-
-      // Save stripe_account_id to Supabase
-      await fetch(`${SUPABASE_URL}/rest/v1/operators?id=eq.${operator_id}`, {
-        method: 'PATCH',
-        headers: {
-          'apikey': SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal',
-        },
-        body: JSON.stringify({ stripe_account_id: stripeAccountId }),
-      });
-    }
-
-    // Create onboarding link
-    const Stripe = (await import('stripe')).default;
-    const stripe = new Stripe(STRIPE_SECRET_KEY);
-
-    const accountLink = await stripe.accountLinks.create({
-      account: stripeAccountId,
-      refresh_url: `${APP_URL}/my-dashboard.html`,
-      return_url: `${APP_URL}/my-dashboard.html`,
-      type: 'account_onboarding',
-    });
-
-    return NextResponse.json({ url: accountLink.url });
+    return NextResponse.json({ url: authUrl });
 
   } catch (error) {
     console.error('Connect error:', error);

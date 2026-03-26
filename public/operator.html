@@ -328,8 +328,8 @@ async function submitBooking(){
     }).select().single();
     if(bkErr) throw bkErr;
 
-    // If paid experience + operator has Stripe → redirect to checkout
-    if(totalAmount>0&&operatorData.stripe_account_id){
+    // If paid experience + operator has Square connected → redirect to checkout
+    if(totalAmount>0&&operatorData.square_merchant_id){
       try{
         const res=await fetch('/api/checkout',{
           method:'POST',
@@ -347,8 +347,8 @@ async function submitBooking(){
           window.location.href=data.url;
           return;
         }
-      }catch(stripeErr){
-        console.error('Checkout redirect failed:',stripeErr);
+      }catch(payErr){
+        console.error('Checkout redirect failed:',payErr);
       }
     }
 

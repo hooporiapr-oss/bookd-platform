@@ -56,12 +56,12 @@ html[lang="es"] .en{display:none!important}
 .stat-card .value{font-size:1.75rem;font-weight:900;color:var(--white)}
 .stat-card .value.orange{color:var(--orange)}
 
-.stripe-banner{background:linear-gradient(135deg,rgba(232,97,26,.12),rgba(232,97,26,.04));border:1px solid rgba(232,97,26,.25);border-radius:14px;padding:24px 28px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.stripe-banner h3{font-size:1rem;font-weight:800;text-transform:uppercase}
-.stripe-banner p{font-size:.85rem;color:var(--gray);margin-top:4px}
-.stripe-banner .btn{background:var(--orange);color:#fff;padding:12px 28px;border-radius:8px;font-weight:800;font-size:.85rem;letter-spacing:.03em;transition:all .2s;text-transform:uppercase;white-space:nowrap}
-.stripe-banner .btn:hover{background:var(--orange-light)}
-.stripe-connected{color:#22c55e;font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:8px}
+.payment-banner{background:linear-gradient(135deg,rgba(232,97,26,.12),rgba(232,97,26,.04));border:1px solid rgba(232,97,26,.25);border-radius:14px;padding:24px 28px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.payment-banner h3{font-size:1rem;font-weight:800;text-transform:uppercase}
+.payment-banner p{font-size:.85rem;color:var(--gray);margin-top:4px}
+.payment-banner .btn{background:var(--orange);color:#fff;padding:12px 28px;border-radius:8px;font-weight:800;font-size:.85rem;letter-spacing:.03em;transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.payment-banner .btn:hover{background:var(--orange-light)}
+.payment-connected{color:#22c55e;font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:8px}
 
 .section{margin-bottom:32px}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
@@ -124,7 +124,7 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
   .mobile-header{display:flex}
   .main{margin-left:0;padding:80px 16px 32px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
-  .stripe-banner{flex-direction:column;text-align:center}
+  .payment-banner{flex-direction:column;text-align:center}
 }
 @media(max-width:480px){
   .stats-row{grid-template-columns:1fr}
@@ -202,15 +202,15 @@ function setLang(lang){
     </div>
   </div>
 
-  <div class="stripe-banner" id="stripeBanner">
+  <div class="payment-banner" id="paymentBanner">
     <div>
       <h3 class="en">💳 Set Up Your Payments</h3>
       <h3 class="es">💳 Configura Tus Pagos</h3>
-      <p class="en">Connect Stripe to accept payments directly to your bank account.</p>
-      <p class="es">Conecta Stripe para recibir pagos directo a tu cuenta bancaria.</p>
+      <p class="en">Connect Square to accept payments directly to your bank account.</p>
+      <p class="es">Conecta Square para recibir pagos directo a tu cuenta bancaria.</p>
     </div>
-    <button class="btn" onclick="connectStripe()" id="stripeBtn">
-      <span class="en">Connect Stripe</span><span class="es">Conectar Stripe</span>
+    <button class="btn" onclick="connectSquare()" id="payBtn">
+      <span class="en">Connect Square</span><span class="es">Conectar Square</span>
     </button>
   </div>
 
@@ -390,6 +390,12 @@ function showNotice(msg){
 
 // PAGE RENDERS IMMEDIATELY — Supabase loads in background
 (async function init(){
+  // Check for payment callback status
+  const urlParams=new URLSearchParams(window.location.search);
+  if(urlParams.get('payments')==='connected') showNotice(currentLang==='es'?'✅ Pagos conectados exitosamente':'✅ Payments connected successfully');
+  if(urlParams.get('payments')==='error') showNotice(currentLang==='es'?'❌ Error al conectar pagos':'❌ Error connecting payments');
+  if(urlParams.get('payments')==='denied') showNotice(currentLang==='es'?'Conexión de pagos cancelada':'Payment connection cancelled');
+
   try{
     await new Promise((res,rej)=>{
       const s=document.createElement('script');
@@ -420,12 +426,12 @@ function showNotice(msg){
     document.getElementById('welcomeEn').textContent='Welcome back, '+op.business_name;
     document.getElementById('welcomeEs').textContent='Bienvenido, '+op.business_name;
 
-    if(op.stripe_account_id){
-      document.getElementById('stripeBanner').innerHTML=
+    if(op.square_merchant_id){
+      document.getElementById('paymentBanner').innerHTML=
         '<div><h3 class="en">💳 Payments Connected</h3><h3 class="es">💳 Pagos Conectados</h3>'+
-        '<p class="en">Your Stripe account is active. Payments go directly to your bank.</p>'+
-        '<p class="es">Tu cuenta de Stripe está activa. Los pagos van directo a tu banco.</p></div>'+
-        '<span class="stripe-connected">✅ <span class="en">Connected</span><span class="es">Conectado</span></span>';
+        '<p class="en">Your Square account is active. Payments go directly to your bank.</p>'+
+        '<p class="es">Tu cuenta de Square está activa. Los pagos van directo a tu banco.</p></div>'+
+        '<span class="payment-connected">✅ <span class="en">Connected</span><span class="es">Conectado</span></span>';
     }
 
     const{data:exps}=await sb.from('experiences').select('*').eq('operator_id',op.id).order('sort_order');
@@ -477,8 +483,8 @@ function renderBookings(bks,exps){
     </tr>`;}).join('');
 }
 
-async function connectStripe(){
-  const btn=document.getElementById('stripeBtn');
+async function connectSquare(){
+  const btn=document.getElementById('payBtn');
   btn.textContent=currentLang==='es'?'Conectando...':'Connecting...';
   btn.disabled=true;
   try{
@@ -493,7 +499,7 @@ async function connectStripe(){
   }catch(e){
     alert(e.message);
     btn.disabled=false;
-    btn.innerHTML='<span class="en">Connect Stripe</span><span class="es">Conectar Stripe</span>';
+    btn.innerHTML='<span class="en">Connect Square</span><span class="es">Conectar Square</span>';
   }
 }
 

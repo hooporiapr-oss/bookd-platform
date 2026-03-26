@@ -77,6 +77,12 @@ html[lang="es"] .en{display:none!important}
 .exp-meta{display:flex;gap:16px;flex-wrap:wrap}
 .exp-meta span{font-size:.75rem;color:var(--gray);font-weight:600}
 .exp-meta .price{color:var(--orange);font-weight:800}
+.exp-actions{display:flex;gap:8px;margin-top:12px}
+.exp-actions button{padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;transition:all .2s}
+.btn-edit{background:rgba(255,255,255,.06);color:var(--gray)}
+.btn-edit:hover{background:rgba(255,255,255,.1);color:var(--white)}
+.btn-delete{background:rgba(239,68,68,.08);color:#ef4444}
+.btn-delete:hover{background:rgba(239,68,68,.15)}
 .exp-empty{background:var(--black2);border:2px dashed rgba(255,255,255,.1);border-radius:14px;padding:48px 24px;text-align:center;color:var(--gray);font-size:.9rem}
 
 .table-wrap{overflow-x:auto;background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px}
@@ -249,7 +255,7 @@ function setLang(lang){
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="close" onclick="closeModal()">&times;</button>
-    <h2 class="en">Add Experience</h2><h2 class="es">Agregar Experiencia</h2>
+    <h2 class="en" id="modalTitleEn">Add Experience</h2><h2 class="es" id="modalTitleEs">Agregar Experiencia</h2>
     <div class="form-row">
       <div class="form-group"><label>Title (EN)</label><input type="text" id="mTitleEn" placeholder="e.g. Summer Classic 5v5"></div>
       <div class="form-group"><label>Título (ES)</label><input type="text" id="mTitleEs" placeholder="e.g. Clásico de Verano 5v5"></div>
@@ -295,10 +301,6 @@ function setLang(lang){
         <label class="day-check"><input type="checkbox" value="Sun" checked> Sun</label>
       </div>
     </div>
-    <div class="form-group">
-      <label class="en">Start Time</label><label class="es">Hora de Inicio</label>
-      <input type="time" id="mTime" value="09:00">
-    </div>
     <button class="btn-submit" onclick="saveExperience()" id="saveBtn">
       <span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>
     </button>
@@ -320,8 +322,65 @@ function scrollTo(id){
   if(window.innerWidth<=860) toggleSidebar();
 }
 function openMyPage(){if(operator?.slug) window.open('/'+operator.slug,'_blank');}
-function openModal(){document.getElementById('modalOverlay').classList.add('open');}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+
+let editingId=null;
+function openModal(id){
+  editingId=id||null;
+  // Reset form
+  document.getElementById('mTitleEn').value='';
+  document.getElementById('mTitleEs').value='';
+  document.getElementById('mDescEn').value='';
+  document.getElementById('mDescEs').value='';
+  document.getElementById('mPrice').value='';
+  document.getElementById('mDuration').value='';
+  document.getElementById('mMin').value='';
+  document.getElementById('mMax').value='';
+  document.getElementById('mPhoto').value='';
+  document.querySelectorAll('.days-row input').forEach(c=>{c.checked=c.value==='Sat'||c.value==='Sun';});
+
+  if(editingId&&window._exps){
+    const e=window._exps.find(x=>x.id===editingId);
+    if(e){
+      document.getElementById('mTitleEn').value=e.title_en||'';
+      document.getElementById('mTitleEs').value=e.title_es||'';
+      document.getElementById('mDescEn').value=e.description_en||'';
+      document.getElementById('mDescEs').value=e.description_es||'';
+      document.getElementById('mPrice').value=e.price_per_person||'';
+      document.getElementById('mDuration').value=e.duration_minutes||'';
+      document.getElementById('mMin').value=e.min_guests||'';
+      document.getElementById('mMax').value=e.max_guests||'';
+      document.getElementById('mPhoto').value=e.photo_url||'';
+      if(e.available_days){
+        document.querySelectorAll('.days-row input').forEach(c=>{c.checked=e.available_days.includes(c.value);});
+      }
+    }
+    document.getElementById('modalTitleEn').textContent='Edit Experience';
+    document.getElementById('modalTitleEs').textContent='Editar Experiencia';
+    document.getElementById('saveBtn').innerHTML='<span class="en">Update Experience</span><span class="es">Actualizar Experiencia</span>';
+  }else{
+    document.getElementById('modalTitleEn').textContent='Add Experience';
+    document.getElementById('modalTitleEs').textContent='Agregar Experiencia';
+    document.getElementById('saveBtn').innerHTML='<span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>';
+  }
+  document.getElementById('saveBtn').disabled=false;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');editingId=null;}
+
+function editExperience(id){openModal(id);}
+
+async function deleteExperience(id){
+  const msg=currentLang==='es'?'¿Eliminar esta experiencia?':'Delete this experience?';
+  if(!confirm(msg)) return;
+  if(!sb) return;
+  try{
+    const{error}=await sb.from('experiences').delete().eq('id',id);
+    if(error) throw error;
+    location.reload();
+  }catch(e){
+    alert(e.message);
+  }
+}
 
 function showNotice(msg){
   const n=document.getElementById('notice');
@@ -387,6 +446,7 @@ function showNotice(msg){
 })();
 
 function renderExps(exps){
+  window._exps=exps;
   document.getElementById('expGrid').innerHTML=exps.map(e=>`
     <div class="exp-card">
       <h3><span class="en">${e.title_en||'—'}</span><span class="es">${e.title_es||e.title_en||'—'}</span></h3>
@@ -394,6 +454,10 @@ function renderExps(exps){
       <div class="exp-meta">
         <span class="price">$${e.price_per_person||0}</span>
         <span>${e.min_guests||'?'} – ${e.max_guests||'?'} <span class="en">teams</span><span class="es">equipos</span></span>
+      </div>
+      <div class="exp-actions">
+        <button class="btn-edit" onclick="editExperience('${e.id}')"><span class="en">Edit</span><span class="es">Editar</span></button>
+        <button class="btn-delete" onclick="deleteExperience('${e.id}')"><span class="en">Delete</span><span class="es">Eliminar</span></button>
       </div>
     </div>`).join('');
 }
@@ -451,7 +515,6 @@ async function saveExperience(){
     max_guests:parseInt(document.getElementById('mMax').value)||16,
     photo_url:document.getElementById('mPhoto').value.trim(),
     available_days:days,
-    start_times:[document.getElementById('mTime').value||'09:00'],
     active:true,sort_order:0
   };
 
@@ -460,14 +523,21 @@ async function saveExperience(){
   btn.textContent=currentLang==='es'?'Guardando...':'Saving...';
 
   try{
-    const{error}=await sb.from('experiences').insert(payload);
-    if(error) throw error;
+    if(editingId){
+      const{error}=await sb.from('experiences').update(payload).eq('id',editingId);
+      if(error) throw error;
+    }else{
+      const{error}=await sb.from('experiences').insert(payload);
+      if(error) throw error;
+    }
     closeModal();
     location.reload();
   }catch(e){
     alert(e.message);
     btn.disabled=false;
-    btn.innerHTML='<span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>';
+    btn.innerHTML=editingId
+      ?'<span class="en">Update Experience</span><span class="es">Actualizar Experiencia</span>'
+      :'<span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>';
   }
 }
 

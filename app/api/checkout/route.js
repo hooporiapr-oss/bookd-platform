@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 
 export async function POST(request) {
-  const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bookd.click';
-
-  if (!STRIPE_SECRET_KEY) {
-    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
-  }
 
   try {
     const { booking_id, operator_id, experience_title, amount, guest_email } = await request.json();
@@ -17,60 +13,68 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Fetch operator to get stripe_account_id
-    const opRes = await fetch(`${SUPABASE_URL}/rest/v1/operators?id=eq.${operator_id}&select=stripe_account_id,slug`, {
+    // Fetch operator to get Square credentials
+    const opRes = await fetch(`${SUPABASE_URL}/rest/v1/operators?id=eq.${operator_id}&select=square_access_token,square_location_id,slug`, {
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
         'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
       },
     });
     const operators = await opRes.json();
-    if (!operators || operators.length === 0 || !operators[0].stripe_account_id) {
-      return NextResponse.json({ error: 'Operator has no Stripe account connected' }, { status: 400 });
+    if (!operators || operators.length === 0 || !operators[0].square_access_token) {
+      return NextResponse.json({ error: 'Operator has no Square account connected' }, { status: 400 });
     }
 
-    const stripeAccountId = operators[0].stripe_account_id;
+    const squareToken = operators[0].square_access_token;
+    const locationId = operators[0].square_location_id;
     const slug = operators[0].slug || '';
 
-    const Stripe = (await import('stripe')).default;
-    const stripe = new Stripe(STRIPE_SECRET_KEY);
-
-    // Calculate 5% platform fee in cents
+    // Calculate amounts in cents
     const amountCents = Math.round(amount * 100);
-    const platformFee = Math.round(amountCents * 0.05);
+    const appFeeCents = Math.round(amountCents * 0.05); // 5% platform fee
 
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      customer_email: guest_email || undefined,
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: experience_title || 'Event Registration',
-            },
-            unit_amount: amountCents,
+    const idempotencyKey = crypto.randomUUID();
+
+    // Create Square Checkout using the Checkout API
+    const checkoutRes = await fetch(`https://connect.squareup.com/v2/online-checkout/payment-links`, {
+      method: 'POST',
+      headers: {
+        'Square-Version': '2025-01-23',
+        'Authorization': `Bearer ${squareToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idempotency_key: idempotencyKey,
+        quick_pay: {
+          name: experience_title || 'Event Registration',
+          price_money: {
+            amount: amountCents,
+            currency: 'USD',
           },
-          quantity: 1,
+          location_id: locationId,
         },
-      ],
-      payment_intent_data: {
-        application_fee_amount: platformFee,
-        transfer_data: {
-          destination: stripeAccountId,
+        checkout_options: {
+          app_fee_money: {
+            amount: appFeeCents,
+            currency: 'USD',
+          },
+          redirect_url: `${APP_URL}/${slug}?payment=success&booking=${booking_id}`,
         },
-      },
-      success_url: `${APP_URL}/${slug}?payment=success&booking=${booking_id}`,
-      cancel_url: `${APP_URL}/${slug}?payment=cancelled`,
-      metadata: {
-        booking_id: booking_id,
-        operator_id: operator_id,
-      },
+        payment_note: `Bookd Registration - ${experience_title || 'Event'}`,
+      }),
     });
 
-    // Update booking with stripe session id
+    const checkoutData = await checkoutRes.json();
+
+    if (!checkoutRes.ok || !checkoutData.payment_link) {
+      console.error('Square checkout failed:', checkoutData);
+      return NextResponse.json({ error: checkoutData.errors?.[0]?.detail || 'Checkout creation failed' }, { status: 400 });
+    }
+
+    const checkoutUrl = checkoutData.payment_link.url;
+    const orderId = checkoutData.payment_link.order_id;
+
+    // Update booking with Square order ID
     await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${booking_id}`, {
       method: 'PATCH',
       headers: {
@@ -79,10 +83,10 @@ export async function POST(request) {
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal',
       },
-      body: JSON.stringify({ stripe_session_id: session.id }),
+      body: JSON.stringify({ stripe_session_id: orderId }), // reuse field for Square order ID
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: checkoutUrl });
 
   } catch (error) {
     console.error('Checkout error:', error);

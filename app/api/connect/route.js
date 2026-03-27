@@ -1,38 +1,93 @@
+// app/api/connect/route.js
+// Stripe Connect onboarding — generates link for operators to connect bank accounts
+// SELF-CONTAINED: no external imports from lib/
+
 import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Supabase REST API (no SDK needed)
+const SUPABASE_URL = 'https://ixykmnvlmfnxpctrgvej.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+async function supabaseGet(table, query) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return res.json();
+}
+
+async function supabasePatch(table, query, body) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(body)
+  });
+  return res;
+}
 
 export async function POST(request) {
-  const SQUARE_APP_ID = process.env.SQUARE_APPLICATION_ID;
-  const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bookd.click';
-
-  if (!SQUARE_APP_ID) {
-    return NextResponse.json({ error: 'Square not configured' }, { status: 500 });
-  }
-
   try {
     const { operator_id } = await request.json();
+
     if (!operator_id) {
       return NextResponse.json({ error: 'Missing operator_id' }, { status: 400 });
     }
 
-    // Build Square OAuth authorization URL
-    const scopes = [
-      'PAYMENTS_WRITE',
-      'PAYMENTS_READ',
-      'PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS',
-      'MERCHANT_PROFILE_READ',
-      'ORDERS_WRITE',
-      'ORDERS_READ'
-    ].join('+');
+    // Check if operator already has a Stripe account
+    const operators = await supabaseGet('operators', `id=eq.${operator_id}&select=stripe_account_id,business_name`);
+    
+    if (!operators || operators.length === 0) {
+      return NextResponse.json({ error: 'Operator not found' }, { status: 404 });
+    }
 
-    const state = encodeURIComponent(operator_id);
-    const redirectUri = encodeURIComponent(`${APP_URL}/api/square/callback`);
+    const operator = operators[0];
+    let stripeAccountId = operator.stripe_account_id;
 
-    const authUrl = `https://connect.squareup.com/oauth2/authorize?client_id=${SQUARE_APP_ID}&scope=${scopes}&session=false&state=${state}&redirect_uri=${redirectUri}`;
+    // Create new Stripe Connect account if none exists
+    if (!stripeAccountId) {
+      const account = await stripe.accounts.create({
+        type: 'express',
+        country: 'US',
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true }
+        },
+        business_profile: {
+          name: operator.business_name || 'Bookd Operator'
+        }
+      });
 
-    return NextResponse.json({ url: authUrl });
+      stripeAccountId = account.id;
+
+      // Save to Supabase
+      await supabasePatch('operators', `id=eq.${operator_id}`, {
+        stripe_account_id: stripeAccountId
+      });
+    }
+
+    // Generate onboarding link
+    const accountLink = await stripe.accountLinks.create({
+      account: stripeAccountId,
+      refresh_url: 'https://hoops.money/my-dashboard.html?stripe=refresh',
+      return_url: 'https://hoops.money/my-dashboard.html?stripe=success',
+      type: 'account_onboarding'
+    });
+
+    return NextResponse.json({ url: accountLink.url });
 
   } catch (error) {
     console.error('Connect error:', error);
-    return NextResponse.json({ error: error.message || 'Internal error' }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

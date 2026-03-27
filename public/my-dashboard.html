@@ -50,7 +50,7 @@ html[lang="es"] .en{display:none!important}
 .page-header h1{font-size:1.75rem;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
 .page-header p{color:var(--gray);font-size:.9rem;margin-top:4px}
 
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
 .stat-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px 20px}
 .stat-card .label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:8px}
 .stat-card .value{font-size:1.75rem;font-weight:900;color:var(--white)}
@@ -117,6 +117,20 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .day-check input{accent-color:var(--orange)}
 
 .notice{background:var(--black2);border:1px solid rgba(232,97,26,.2);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:.85rem;color:var(--orange);text-align:center;display:none}
+
+.pl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.pl-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
+.pl-card h4{font-size:.9rem;font-weight:800;margin-bottom:12px;text-transform:uppercase}
+.pl-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.8rem}
+.pl-row .pl-label{color:var(--gray)}
+.pl-row .pl-val{font-weight:800}
+.pl-row .pl-val.revenue{color:var(--orange)}
+.pl-row .pl-val.expense{color:#ef4444}
+.pl-row .pl-val.profit{color:#22c55e}
+.pl-row .pl-val.loss{color:#ef4444}
+.pl-divider{border-top:1px solid rgba(255,255,255,.08);margin:6px 0}
+.btn-del-exp{background:none;color:#ef4444;font-size:.8rem;font-weight:700;padding:4px 8px;border-radius:4px;transition:all .2s}
+.btn-del-exp:hover{background:rgba(239,68,68,.1)}
 
 @media(max-width:860px){
   .sidebar{transform:translateX(-100%);transition:transform .3s}
@@ -197,6 +211,14 @@ function setLang(lang){
       <div class="value orange" id="sRev">$0</div>
     </div>
     <div class="stat-card">
+      <div class="label en">Expenses</div><div class="label es">Gastos</div>
+      <div class="value" id="sExpenses" style="color:#ef4444">$0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label en">Profit</div><div class="label es">Ganancia</div>
+      <div class="value" id="sProfit" style="color:#22c55e">$0</div>
+    </div>
+    <div class="stat-card">
       <div class="label en">Teams Registered</div><div class="label es">Equipos Registrados</div>
       <div class="value" id="sTeams">0</div>
     </div>
@@ -249,7 +271,78 @@ function setLang(lang){
       </table>
     </div>
   </div>
+
+  <!-- EXPENSES -->
+  <div class="section" id="expenses-section">
+    <div class="section-header">
+      <h2 class="en">Expenses</h2><h2 class="es">Gastos</h2>
+      <button class="btn-add" onclick="openExpenseModal()">+ <span class="en">Add Expense</span><span class="es">Agregar Gasto</span></button>
+    </div>
+    <!-- P&L PER EXPERIENCE -->
+    <div id="plCards" style="margin-bottom:16px"></div>
+    <!-- EXPENSES TABLE -->
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th class="en">Category</th><th class="es">Categoría</th>
+          <th class="en">Description</th><th class="es">Descripción</th>
+          <th class="en">Experience</th><th class="es">Experiencia</th>
+          <th class="en">Date</th><th class="es">Fecha</th>
+          <th class="en">Amount</th><th class="es">Monto</th>
+          <th></th>
+        </tr></thead>
+        <tbody id="expenseBody">
+          <tr><td colspan="6" class="table-empty">
+            <span class="en">No expenses yet</span><span class="es">Sin gastos aún</span>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
+
+<!-- ADD EXPENSE MODAL -->
+<div class="modal-overlay" id="expenseModalOverlay" onclick="if(event.target===this)closeExpenseModal()">
+  <div class="modal">
+    <button class="close" onclick="closeExpenseModal()">&times;</button>
+    <h2 class="en">Add Expense</h2><h2 class="es">Agregar Gasto</h2>
+    <div class="form-group">
+      <label class="en">Category</label><label class="es">Categoría</label>
+      <select id="exCat">
+        <option value="Court/Venue">Court / Venue — Cancha / Local</option>
+        <option value="Referees">Referees — Árbitros</option>
+        <option value="Trophies/Awards">Trophies / Awards — Trofeos / Premios</option>
+        <option value="Equipment">Equipment — Equipo</option>
+        <option value="Marketing">Marketing — Marketing</option>
+        <option value="Insurance">Insurance — Seguro</option>
+        <option value="Staff">Staff — Personal</option>
+        <option value="Food/Drinks">Food / Drinks — Comida / Bebidas</option>
+        <option value="Other">Other — Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="en">Experience (optional)</label><label class="es">Experiencia (opcional)</label>
+      <select id="exExp"><option value="">General</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Amount ($)</label><label class="es">Monto ($)</label>
+        <input type="number" id="exAmount" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="en">Date</label><label class="es">Fecha</label>
+        <input type="date" id="exDate">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">Description (optional)</label><label class="es">Descripción (opcional)</label>
+      <input type="text" id="exDesc" placeholder="e.g. Court rental deposit">
+    </div>
+    <button class="btn-submit" onclick="saveExpense()" id="saveExpBtn">
+      <span class="en">Save Expense</span><span class="es">Guardar Gasto</span>
+    </button>
+  </div>
+</div>
 
 <!-- ADD EXPERIENCE MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
@@ -445,6 +538,28 @@ function showNotice(msg){
     document.getElementById('sTeams').textContent=(bks||[]).filter(b=>b.status!=='cancelled').length;
     if(bks&&bks.length>0) renderBookings(bks,exps||[]);
 
+    // Load expenses
+    const{data:expenses}=await sb.from('expenses').select('*').eq('operator_id',op.id).order('expense_date',{ascending:false});
+    window._expenses=expenses||[];
+    const totalExpenses=(expenses||[]).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const profit=rev-totalExpenses;
+    document.getElementById('sExpenses').textContent='$'+totalExpenses.toLocaleString();
+    document.getElementById('sProfit').textContent='$'+profit.toLocaleString();
+    document.getElementById('sProfit').style.color=profit>=0?'#22c55e':'#ef4444';
+    if(expenses&&expenses.length>0) renderExpenses(expenses,exps||[]);
+
+    // Populate experience dropdown in expense modal
+    const exSelect=document.getElementById('exExp');
+    (exps||[]).forEach(e=>{
+      const opt=document.createElement('option');
+      opt.value=e.id;
+      opt.textContent=e.title_en||'—';
+      exSelect.appendChild(opt);
+    });
+
+    // Build P&L per experience
+    renderPL(exps||[],bks||[],expenses||[]);
+
   }catch(e){
     console.error('Dashboard:',e);
     showNotice(currentLang==='es'?'Conectando... Usa bookd.click para acceso completo':'Connecting... Use bookd.click for full access');
@@ -545,6 +660,84 @@ async function saveExperience(){
       ?'<span class="en">Update Experience</span><span class="es">Actualizar Experiencia</span>'
       :'<span class="en">Save Experience</span><span class="es">Guardar Experiencia</span>';
   }
+}
+
+// ===== EXPENSES =====
+function openExpenseModal(){document.getElementById('expenseModalOverlay').classList.add('open');}
+function closeExpenseModal(){document.getElementById('expenseModalOverlay').classList.remove('open');}
+
+function renderExpenses(expenses,exps){
+  const expMap={};(exps||[]).forEach(e=>{expMap[e.id]=e;});
+  document.getElementById('expenseBody').innerHTML=expenses.map(ex=>{
+    const exp=expMap[ex.experience_id]||{};
+    const expName=exp.title_en||'<span class="en">General</span><span class="es">General</span>';
+    return `<tr>
+      <td><span style="font-weight:700">${ex.category||'Other'}</span></td>
+      <td>${ex.description||'—'}</td>
+      <td>${typeof expName==='string'&&expName.includes('<span')?expName:(exp.title_en||'General')}</td>
+      <td>${ex.expense_date||'—'}</td>
+      <td style="color:#ef4444;font-weight:800">-$${parseFloat(ex.amount||0).toLocaleString()}</td>
+      <td><button class="btn-del-exp" onclick="deleteExpense('${ex.id}')">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPL(exps,bks,expenses){
+  const container=document.getElementById('plCards');
+  if(!exps||exps.length===0){container.innerHTML='';return;}
+
+  container.innerHTML='<div class="pl-grid">'+exps.map(exp=>{
+    const expRev=(bks||[]).filter(b=>b.experience_id===exp.id&&b.payment_status==='paid').reduce((s,b)=>s+parseFloat(b.total_amount||0),0);
+    const expCost=(expenses||[]).filter(e=>e.experience_id===exp.id).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const expProfit=expRev-expCost;
+    const profitClass=expProfit>=0?'profit':'loss';
+    return `<div class="pl-card">
+      <h4><span class="en">${exp.title_en||'—'}</span><span class="es">${exp.title_es||exp.title_en||'—'}</span></h4>
+      <div class="pl-row"><span class="pl-label en">Revenue</span><span class="pl-label es">Ingresos</span><span class="pl-val revenue">$${expRev.toLocaleString()}</span></div>
+      <div class="pl-row"><span class="pl-label en">Expenses</span><span class="pl-label es">Gastos</span><span class="pl-val expense">-$${expCost.toLocaleString()}</span></div>
+      <div class="pl-divider"></div>
+      <div class="pl-row"><span class="pl-label en">Profit</span><span class="pl-label es">Ganancia</span><span class="pl-val ${profitClass}">${expProfit>=0?'':'−'}$${Math.abs(expProfit).toLocaleString()}</span></div>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+async function saveExpense(){
+  if(!sb||!operator) return alert('Not connected');
+  const amount=parseFloat(document.getElementById('exAmount').value);
+  if(!amount||amount<=0) return alert(currentLang==='es'?'Monto requerido':'Amount is required');
+
+  const payload={
+    operator_id:operator.id,
+    experience_id:document.getElementById('exExp').value||null,
+    category:document.getElementById('exCat').value,
+    description:document.getElementById('exDesc').value.trim(),
+    amount:amount,
+    expense_date:document.getElementById('exDate').value||new Date().toISOString().split('T')[0]
+  };
+
+  const btn=document.getElementById('saveExpBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Guardando...':'Saving...';
+
+  try{
+    const{error}=await sb.from('expenses').insert(payload);
+    if(error) throw error;
+    closeExpenseModal();
+    location.reload();
+  }catch(e){
+    alert(e.message);
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Save Expense</span><span class="es">Guardar Gasto</span>';
+  }
+}
+
+async function deleteExpense(id){
+  if(!confirm(currentLang==='es'?'¿Eliminar este gasto?':'Delete this expense?')) return;
+  try{
+    const{error}=await sb.from('expenses').delete().eq('id',id);
+    if(error) throw error;
+    location.reload();
+  }catch(e){alert(e.message);}
 }
 
 async function doLogout(){

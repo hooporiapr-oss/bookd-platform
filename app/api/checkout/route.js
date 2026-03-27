@@ -1,95 +1,115 @@
+// app/api/checkout/route.js
+// Stripe Checkout — creates session with 5% platform fee split to operator
+// SELF-CONTAINED: no external imports from lib/
+
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Supabase REST API
+const SUPABASE_URL = 'https://ixykmnvlmfnxpctrgvej.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+async function supabaseGet(table, query) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return res.json();
+}
+
+async function supabasePost(table, body) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
 
 export async function POST(request) {
-  const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
-  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bookd.click';
-
   try {
-    const { booking_id, operator_id, experience_title, amount, guest_email } = await request.json();
+    const { experience_id, team_name, contact_name, contact_email, contact_phone } = await request.json();
 
-    if (!booking_id || !operator_id || !amount) {
+    if (!experience_id || !team_name || !contact_email) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Fetch operator to get Square credentials
-    const opRes = await fetch(`${SUPABASE_URL}/rest/v1/operators?id=eq.${operator_id}&select=square_access_token,square_location_id,slug`, {
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      },
-    });
-    const operators = await opRes.json();
-    if (!operators || operators.length === 0 || !operators[0].square_access_token) {
-      return NextResponse.json({ error: 'Operator has no Square account connected' }, { status: 400 });
+    // Get experience + operator info
+    const experiences = await supabaseGet('experiences', `id=eq.${experience_id}&select=*,operators(id,slug,stripe_account_id,business_name)`);
+
+    if (!experiences || experiences.length === 0) {
+      return NextResponse.json({ error: 'Experience not found' }, { status: 404 });
     }
 
-    const squareToken = operators[0].square_access_token;
-    const locationId = operators[0].square_location_id;
-    const slug = operators[0].slug || '';
+    const experience = experiences[0];
+    const operator = experience.operators;
 
-    // Calculate amounts in cents
-    const amountCents = Math.round(amount * 100);
-    const appFeeCents = Math.round(amountCents * 0.05); // 5% platform fee
-
-    const idempotencyKey = crypto.randomUUID();
-
-    // Create Square Checkout using the Checkout API
-    const checkoutRes = await fetch(`https://connect.squareup.com/v2/online-checkout/payment-links`, {
-      method: 'POST',
-      headers: {
-        'Square-Version': '2025-01-23',
-        'Authorization': `Bearer ${squareToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        idempotency_key: idempotencyKey,
-        quick_pay: {
-          name: experience_title || 'Event Registration',
-          price_money: {
-            amount: amountCents,
-            currency: 'USD',
-          },
-          location_id: locationId,
-        },
-        checkout_options: {
-          app_fee_money: {
-            amount: appFeeCents,
-            currency: 'USD',
-          },
-          redirect_url: `${APP_URL}/${slug}?payment=success&booking=${booking_id}`,
-        },
-        payment_note: `Bookd Registration - ${experience_title || 'Event'}`,
-      }),
-    });
-
-    const checkoutData = await checkoutRes.json();
-
-    if (!checkoutRes.ok || !checkoutData.payment_link) {
-      console.error('Square checkout failed:', checkoutData);
-      return NextResponse.json({ error: checkoutData.errors?.[0]?.detail || 'Checkout creation failed' }, { status: 400 });
+    if (!operator || !operator.stripe_account_id) {
+      return NextResponse.json({ error: 'Operator has not connected payments' }, { status: 400 });
     }
 
-    const checkoutUrl = checkoutData.payment_link.url;
-    const orderId = checkoutData.payment_link.order_id;
+    const priceInCents = Math.round(experience.price * 100);
+    const platformFee = Math.round(priceInCents * 0.05); // 5% platform fee
 
-    // Update booking with Square order ID
-    await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${booking_id}`, {
-      method: 'PATCH',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
-      },
-      body: JSON.stringify({ stripe_session_id: orderId }), // reuse field for Square order ID
+    // Create booking record in Supabase (pending payment)
+    const bookings = await supabasePost('bookings', {
+      experience_id: experience.id,
+      operator_id: operator.id,
+      team_name,
+      contact_name: contact_name || '',
+      contact_email,
+      contact_phone: contact_phone || '',
+      amount: experience.price,
+      payment_status: 'pending'
     });
 
-    return NextResponse.json({ url: checkoutUrl });
+    const booking = Array.isArray(bookings) ? bookings[0] : bookings;
+
+    // Create Stripe Checkout session
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: experience.title,
+            description: `${team_name} — ${operator.business_name}`
+          },
+          unit_amount: priceInCents
+        },
+        quantity: 1
+      }],
+      payment_intent_data: {
+        application_fee_amount: platformFee,
+        transfer_data: {
+          destination: operator.stripe_account_id
+        }
+      },
+      customer_email: contact_email,
+      metadata: {
+        booking_id: booking.id,
+        operator_id: operator.id,
+        experience_id: experience.id,
+        team_name
+      },
+      success_url: `https://hoops.money/${operator.slug}?booked=success&team=${encodeURIComponent(team_name)}`,
+      cancel_url: `https://hoops.money/${operator.slug}?booked=cancelled`
+    });
+
+    return NextResponse.json({ url: session.url, booking_id: booking.id });
 
   } catch (error) {
     console.error('Checkout error:', error);
-    return NextResponse.json({ error: error.message || 'Internal error' }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — HOOP$.MONEY</title>
+<link rel="icon" href="/hoops.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+
+:root{
+  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
+  --orange:#e8611a;--orange-light:#f4832f;
+  --white:#fafaf9;--gray:#8a8a8a;
+}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 24px 8px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-weight:900;font-size:1.4rem;letter-spacing:.02em;color:var(--orange);text-transform:uppercase}
+.nav-logo span{color:#f4c542}
+.nav-row{display:flex;align-items:center;gap:12px}
+.nav-row a{font-size:.8rem;color:var(--gray);font-weight:600}
+.nav-row a:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+.content{max-width:720px;margin:0 auto;padding:100px 24px 80px}
+.card{background:#fff;border-radius:16px;padding:48px 40px;color:#000}
+.card h1{font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;letter-spacing:-.01em}
+.card .updated{font-size:.8rem;color:#888;margin-bottom:32px}
+.card h2{font-size:1.1rem;font-weight:800;margin-top:28px;margin-bottom:10px;color:#000}
+.card p{font-size:.9rem;color:#333;margin-bottom:14px;line-height:1.7}
+.card ul{margin:0 0 14px 20px;font-size:.9rem;color:#333;line-height:1.8}
+.card a{color:var(--orange);font-weight:600}
+
+@media(max-width:520px){.card{padding:32px 20px}}
+</style>
+<script>
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+</script>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/" class="nav-logo">HOOP<span>$</span>.MONEY</a>
+  <div class="nav-row">
+    <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
+    <a href="/terms.html" class="en">Terms</a><a href="/terms.html" class="es">Términos</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="card">
+
+    <!-- ENGLISH -->
+    <div class="en">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: January 2025</p>
+
+      <p>GoStar Digital LLC ("we", "us", "our") operates the Bookd platform at bookd.click. This Privacy Policy explains how we collect, use, and protect your information.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>When you use Bookd, we may collect:</p>
+      <ul>
+        <li>Account information: email address, password, business name, location</li>
+        <li>Booking information: guest name, email, phone, team name, booking details</li>
+        <li>Usage data: pages visited, features used, browser type</li>
+      </ul>
+
+      <h2>2. How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Provide and operate the Bookd platform</li>
+        <li>Process bookings and facilitate communication between organizers and teams</li>
+        <li>Send transactional emails (confirmations, password resets)</li>
+        <li>Improve our platform and user experience</li>
+      </ul>
+
+      <h2>3. Payments & Financial Data</h2>
+      <p>GoStar Digital LLC never holds, touches, controls, or has access to any funds. All payments are processed directly by Stripe. When a team pays for an event, the money goes directly from the team to the organizer's bank account via Stripe Connect. We do not store credit card numbers or banking information. Stripe's privacy policy governs the handling of all payment data.</p>
+
+      <h2>4. Data Sharing</h2>
+      <p>We do not sell your personal information. We share data only with:</p>
+      <ul>
+        <li>Stripe — for payment processing</li>
+        <li>Supabase — for database hosting and authentication</li>
+        <li>Vercel — for website hosting</li>
+        <li>Resend — for transactional email delivery</li>
+      </ul>
+
+      <h2>5. Data Security</h2>
+      <p>We use industry-standard security measures including encrypted connections (HTTPS), secure authentication, and access controls. However, no method of transmission over the Internet is 100% secure.</p>
+
+      <h2>6. Your Rights</h2>
+      <p>You may request access to, correction of, or deletion of your personal data by contacting us at gostardigital@gmail.com. Organizers can delete their accounts and data through the platform.</p>
+
+      <h2>7. Cookies</h2>
+      <p>We use essential cookies for authentication and session management. We do not use advertising or tracking cookies.</p>
+
+      <h2>8. Children's Privacy</h2>
+      <p>Bookd is not directed at children under 13. We do not knowingly collect information from children under 13.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date.</p>
+
+      <h2>10. Contact Us</h2>
+      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
+    </div>
+
+    <!-- SPANISH -->
+    <div class="es">
+      <h1>Política de Privacidad</h1>
+      <p class="updated">Última actualización: enero 2025</p>
+
+      <p>GoStar Digital LLC ("nosotros", "nuestro") opera la plataforma Bookd en bookd.click. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos tu información.</p>
+
+      <h2>1. Información que Recopilamos</h2>
+      <p>Cuando usas Bookd, podemos recopilar:</p>
+      <ul>
+        <li>Información de cuenta: correo electrónico, contraseña, nombre del negocio, ubicación</li>
+        <li>Información de reservas: nombre del invitado, correo, teléfono, nombre del equipo, detalles de reserva</li>
+        <li>Datos de uso: páginas visitadas, funciones usadas, tipo de navegador</li>
+      </ul>
+
+      <h2>2. Cómo Usamos Tu Información</h2>
+      <p>Usamos la información recopilada para:</p>
+      <ul>
+        <li>Proveer y operar la plataforma Bookd</li>
+        <li>Procesar reservas y facilitar la comunicación entre organizadores y equipos</li>
+        <li>Enviar correos transaccionales (confirmaciones, restablecimiento de contraseña)</li>
+        <li>Mejorar nuestra plataforma y experiencia de usuario</li>
+      </ul>
+
+      <h2>3. Pagos y Datos Financieros</h2>
+      <p>GoStar Digital LLC nunca retiene, toca, controla ni tiene acceso a ningún fondo. Todos los pagos son procesados directamente por Stripe. Cuando un equipo paga por un evento, el dinero va directamente del equipo a la cuenta bancaria del organizador a través de Stripe Connect. No almacenamos números de tarjetas de crédito ni información bancaria. La política de privacidad de Stripe gobierna el manejo de todos los datos de pago.</p>
+
+      <h2>4. Compartir Datos</h2>
+      <p>No vendemos tu información personal. Compartimos datos solo con:</p>
+      <ul>
+        <li>Stripe — para procesamiento de pagos</li>
+        <li>Supabase — para alojamiento de base de datos y autenticación</li>
+        <li>Vercel — para alojamiento del sitio web</li>
+        <li>Resend — para entrega de correo transaccional</li>
+      </ul>
+
+      <h2>5. Seguridad de Datos</h2>
+      <p>Usamos medidas de seguridad estándar de la industria incluyendo conexiones encriptadas (HTTPS), autenticación segura y controles de acceso. Sin embargo, ningún método de transmisión por Internet es 100% seguro.</p>
+
+      <h2>6. Tus Derechos</h2>
+      <p>Puedes solicitar acceso, corrección o eliminación de tus datos personales contactándonos a gostardigital@gmail.com. Los organizadores pueden eliminar sus cuentas y datos a través de la plataforma.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Usamos cookies esenciales para autenticación y gestión de sesiones. No usamos cookies de publicidad o rastreo.</p>
+
+      <h2>8. Privacidad de Menores</h2>
+      <p>Bookd no está dirigido a menores de 13 años. No recopilamos intencionalmente información de menores de 13 años.</p>
+
+      <h2>9. Cambios a Esta Política</h2>
+      <p>Podemos actualizar esta Política de Privacidad periódicamente. Los cambios se publicarán en esta página con una fecha actualizada.</p>
+
+      <h2>10. Contáctanos</h2>
+      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

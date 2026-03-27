@@ -272,11 +272,14 @@ function setLang(lang){
     </div>
   </div>
 
-  <!-- EXPENSES -->
+  <!-- CASH FLOW -->
   <div class="section" id="expenses-section">
     <div class="section-header">
-      <h2 class="en">Expenses</h2><h2 class="es">Gastos</h2>
-      <button class="btn-add" onclick="openExpenseModal()">+ <span class="en">Add Expense</span><span class="es">Agregar Gasto</span></button>
+      <h2 class="en">Cash Flow</h2><h2 class="es">Flujo de Caja</h2>
+      <div style="display:flex;gap:8px">
+        <button class="btn-add" style="background:#22c55e" onclick="openExpenseModal('revenue')">+ <span class="en">Add Revenue</span><span class="es">Agregar Ingreso</span></button>
+        <button class="btn-add" onclick="openExpenseModal('expense')">+ <span class="en">Add Expense</span><span class="es">Agregar Gasto</span></button>
+      </div>
     </div>
     <!-- P&L PER EXPERIENCE -->
     <div id="plCards" style="margin-bottom:16px"></div>
@@ -301,24 +304,15 @@ function setLang(lang){
   </div>
 </main>
 
-<!-- ADD EXPENSE MODAL -->
+<!-- ADD CASH FLOW MODAL -->
 <div class="modal-overlay" id="expenseModalOverlay" onclick="if(event.target===this)closeExpenseModal()">
   <div class="modal">
     <button class="close" onclick="closeExpenseModal()">&times;</button>
-    <h2 class="en">Add Expense</h2><h2 class="es">Agregar Gasto</h2>
+    <h2 class="en" id="cfModalTitleEn">Add Expense</h2><h2 class="es" id="cfModalTitleEs">Agregar Gasto</h2>
+    <input type="hidden" id="cfType" value="expense">
     <div class="form-group">
       <label class="en">Category</label><label class="es">Categoría</label>
-      <select id="exCat">
-        <option value="Court/Venue">Court / Venue — Cancha / Local</option>
-        <option value="Referees">Referees — Árbitros</option>
-        <option value="Trophies/Awards">Trophies / Awards — Trofeos / Premios</option>
-        <option value="Equipment">Equipment — Equipo</option>
-        <option value="Marketing">Marketing — Marketing</option>
-        <option value="Insurance">Insurance — Seguro</option>
-        <option value="Staff">Staff — Personal</option>
-        <option value="Food/Drinks">Food / Drinks — Comida / Bebidas</option>
-        <option value="Other">Other — Otro</option>
-      </select>
+      <select id="exCat"></select>
     </div>
     <div class="form-group">
       <label class="en">Experience (optional)</label><label class="es">Experiencia (opcional)</label>
@@ -339,7 +333,7 @@ function setLang(lang){
       <input type="text" id="exDesc" placeholder="e.g. Court rental deposit">
     </div>
     <button class="btn-submit" onclick="saveExpense()" id="saveExpBtn">
-      <span class="en">Save Expense</span><span class="es">Guardar Gasto</span>
+      <span class="en">Save</span><span class="es">Guardar</span>
     </button>
   </div>
 </div>
@@ -541,10 +535,14 @@ function showNotice(msg){
     // Load expenses
     const{data:expenses}=await sb.from('expenses').select('*').eq('operator_id',op.id).order('expense_date',{ascending:false});
     window._expenses=expenses||[];
-    const totalExpenses=(expenses||[]).reduce((s,e)=>s+parseFloat(e.amount||0),0);
-    const profit=rev-totalExpenses;
+    const revCatNames=['Concessions','Parking','Sponsorships','Merchandise','Donations','Gate/Admission','Vendor Fees','Other Revenue'];
+    const extraRevenue=(expenses||[]).filter(e=>revCatNames.includes(e.category)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const totalExpenses=(expenses||[]).filter(e=>!revCatNames.includes(e.category)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const totalRev=rev+extraRevenue;
+    const profit=totalRev-totalExpenses;
+    document.getElementById('sRev').textContent='$'+totalRev.toLocaleString();
     document.getElementById('sExpenses').textContent='$'+totalExpenses.toLocaleString();
-    document.getElementById('sProfit').textContent='$'+profit.toLocaleString();
+    document.getElementById('sProfit').textContent=(profit>=0?'':'−')+'$'+Math.abs(profit).toLocaleString();
     document.getElementById('sProfit').style.color=profit>=0?'#22c55e':'#ef4444';
     if(expenses&&expenses.length>0) renderExpenses(expenses,exps||[]);
 
@@ -662,21 +660,64 @@ async function saveExperience(){
   }
 }
 
-// ===== EXPENSES =====
-function openExpenseModal(){document.getElementById('expenseModalOverlay').classList.add('open');}
+// ===== CASH FLOW =====
+const expenseCategories=[
+  {v:'Court/Venue',l:'Court / Venue — Cancha / Local'},
+  {v:'Referees',l:'Referees — Árbitros'},
+  {v:'Trophies/Awards',l:'Trophies / Awards — Trofeos / Premios'},
+  {v:'Equipment',l:'Equipment — Equipo'},
+  {v:'Marketing',l:'Marketing — Marketing'},
+  {v:'Insurance',l:'Insurance — Seguro'},
+  {v:'Staff',l:'Staff — Personal'},
+  {v:'Food/Drinks',l:'Food / Drinks — Comida / Bebidas'},
+  {v:'Transportation',l:'Transportation — Transporte'},
+  {v:'Permits',l:'Permits / Licenses — Permisos'},
+  {v:'Other Expense',l:'Other Expense — Otro Gasto'}
+];
+const revenueCategories=[
+  {v:'Concessions',l:'Concessions — Concesiones'},
+  {v:'Parking',l:'Parking — Estacionamiento'},
+  {v:'Sponsorships',l:'Sponsorships — Patrocinios'},
+  {v:'Merchandise',l:'Merchandise — Mercancía'},
+  {v:'Donations',l:'Donations — Donaciones'},
+  {v:'Gate/Admission',l:'Gate / Admission — Entrada'},
+  {v:'Vendor Fees',l:'Vendor Fees — Tarifas de Vendedores'},
+  {v:'Other Revenue',l:'Other Revenue — Otro Ingreso'}
+];
+
+function openExpenseModal(type){
+  document.getElementById('cfType').value=type||'expense';
+  const isRev=type==='revenue';
+  document.getElementById('cfModalTitleEn').textContent=isRev?'Add Revenue':'Add Expense';
+  document.getElementById('cfModalTitleEs').textContent=isRev?'Agregar Ingreso':'Agregar Gasto';
+  document.getElementById('saveExpBtn').style.background=isRev?'#22c55e':'var(--orange)';
+  // Populate categories
+  const sel=document.getElementById('exCat');
+  const cats=isRev?revenueCategories:expenseCategories;
+  sel.innerHTML=cats.map(c=>`<option value="${c.v}">${c.l}</option>`).join('');
+  // Reset fields
+  document.getElementById('exAmount').value='';
+  document.getElementById('exDate').value='';
+  document.getElementById('exDesc').value='';
+  document.getElementById('saveExpBtn').disabled=false;
+  document.getElementById('saveExpBtn').innerHTML=isRev?'<span class="en">Save Revenue</span><span class="es">Guardar Ingreso</span>':'<span class="en">Save Expense</span><span class="es">Guardar Gasto</span>';
+  document.getElementById('expenseModalOverlay').classList.add('open');
+}
 function closeExpenseModal(){document.getElementById('expenseModalOverlay').classList.remove('open');}
 
 function renderExpenses(expenses,exps){
   const expMap={};(exps||[]).forEach(e=>{expMap[e.id]=e;});
   document.getElementById('expenseBody').innerHTML=expenses.map(ex=>{
     const exp=expMap[ex.experience_id]||{};
-    const expName=exp.title_en||'<span class="en">General</span><span class="es">General</span>';
+    const isRev=revenueCategories.some(c=>c.v===ex.category);
+    const color=isRev?'#22c55e':'#ef4444';
+    const sign=isRev?'+':'-';
     return `<tr>
       <td><span style="font-weight:700">${ex.category||'Other'}</span></td>
       <td>${ex.description||'—'}</td>
-      <td>${typeof expName==='string'&&expName.includes('<span')?expName:(exp.title_en||'General')}</td>
+      <td>${exp.title_en||'General'}</td>
       <td>${ex.expense_date||'—'}</td>
-      <td style="color:#ef4444;font-weight:800">-$${parseFloat(ex.amount||0).toLocaleString()}</td>
+      <td style="color:${color};font-weight:800">${sign}$${parseFloat(ex.amount||0).toLocaleString()}</td>
       <td><button class="btn-del-exp" onclick="deleteExpense('${ex.id}')">✕</button></td>
     </tr>`;
   }).join('');
@@ -686,14 +727,19 @@ function renderPL(exps,bks,expenses){
   const container=document.getElementById('plCards');
   if(!exps||exps.length===0){container.innerHTML='';return;}
 
+  const revCats=revenueCategories.map(c=>c.v);
+
   container.innerHTML='<div class="pl-grid">'+exps.map(exp=>{
-    const expRev=(bks||[]).filter(b=>b.experience_id===exp.id&&b.payment_status==='paid').reduce((s,b)=>s+parseFloat(b.total_amount||0),0);
-    const expCost=(expenses||[]).filter(e=>e.experience_id===exp.id).reduce((s,e)=>s+parseFloat(e.amount||0),0);
-    const expProfit=expRev-expCost;
+    const bookingRev=(bks||[]).filter(b=>b.experience_id===exp.id&&b.payment_status==='paid').reduce((s,b)=>s+parseFloat(b.total_amount||0),0);
+    const extraRev=(expenses||[]).filter(e=>e.experience_id===exp.id&&revCats.includes(e.category)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const totalRev=bookingRev+extraRev;
+    const expCost=(expenses||[]).filter(e=>e.experience_id===exp.id&&!revCats.includes(e.category)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const expProfit=totalRev-expCost;
     const profitClass=expProfit>=0?'profit':'loss';
     return `<div class="pl-card">
       <h4><span class="en">${exp.title_en||'—'}</span><span class="es">${exp.title_es||exp.title_en||'—'}</span></h4>
-      <div class="pl-row"><span class="pl-label en">Revenue</span><span class="pl-label es">Ingresos</span><span class="pl-val revenue">$${expRev.toLocaleString()}</span></div>
+      <div class="pl-row"><span class="pl-label en">Registrations</span><span class="pl-label es">Inscripciones</span><span class="pl-val revenue">$${bookingRev.toLocaleString()}</span></div>
+      ${extraRev>0?`<div class="pl-row"><span class="pl-label en">Other Revenue</span><span class="pl-label es">Otros Ingresos</span><span class="pl-val revenue">$${extraRev.toLocaleString()}</span></div>`:''}
       <div class="pl-row"><span class="pl-label en">Expenses</span><span class="pl-label es">Gastos</span><span class="pl-val expense">-$${expCost.toLocaleString()}</span></div>
       <div class="pl-divider"></div>
       <div class="pl-row"><span class="pl-label en">Profit</span><span class="pl-label es">Ganancia</span><span class="pl-val ${profitClass}">${expProfit>=0?'':'−'}$${Math.abs(expProfit).toLocaleString()}</span></div>
@@ -727,12 +773,12 @@ async function saveExpense(){
   }catch(e){
     alert(e.message);
     btn.disabled=false;
-    btn.innerHTML='<span class="en">Save Expense</span><span class="es">Guardar Gasto</span>';
+    btn.innerHTML='<span class="en">Save</span><span class="es">Guardar</span>';
   }
 }
 
 async function deleteExpense(id){
-  if(!confirm(currentLang==='es'?'¿Eliminar este gasto?':'Delete this expense?')) return;
+  if(!confirm(currentLang==='es'?'¿Eliminar este registro?':'Delete this entry?')) return;
   try{
     const{error}=await sb.from('expenses').delete().eq('id',id);
     if(error) throw error;

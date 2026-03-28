@@ -14,8 +14,6 @@ export function middleware(request) {
     '/privacy.html',
     '/terms.html',
     '/league.html',
-    '/bracket-manager.html',
-    '/tournament.html',
   ];
 
   // Pass through known pages, API routes, static files, Next internals
@@ -24,12 +22,12 @@ export function middleware(request) {
     pathname.startsWith('/api/') ||
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/favicon') ||
-    pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|css|js|webp|woff|woff2|ttf)$/)
+    pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|css|js|webp|woff|woff2|ttf|json)$/)
   ) {
     return NextResponse.next();
   }
 
-  // Everything else is treated as an operator slug → rewrite to operator.html
+  // Everything else is an operator slug → rewrite to operator.html
   const url = request.nextUrl.clone();
   url.pathname = '/operator.html';
   return NextResponse.rewrite(url);

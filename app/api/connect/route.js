@@ -64,7 +64,7 @@ export async function POST(request) {
           transfers: { requested: true }
         },
         business_profile: {
-          name: operator.business_name || 'Bookd Operator'
+          name: operator.business_name || 'Hoops Money Operator'
         }
       });
 

@@ -38,9 +38,9 @@ async function supabasePost(table, body) {
 
 export async function POST(request) {
   try {
-    const { experience_id, team_name, contact_name, contact_email, contact_phone } = await request.json();
+    const { experience_id, team_name, guest_name, guest_email, guest_phone, guest_count } = await request.json();
 
-    if (!experience_id || !team_name || !contact_email) {
+    if (!experience_id || !team_name || !guest_email) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -58,19 +58,22 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Operator has not connected payments' }, { status: 400 });
     }
 
-    const priceInCents = Math.round(experience.price * 100);
+    const count = guest_count || 1;
+    const priceInCents = Math.round(experience.price_per_person * count * 100);
     const platformFee = Math.round(priceInCents * 0.05); // 5% platform fee
 
     // Create booking record in Supabase (pending payment)
     const bookings = await supabasePost('bookings', {
       experience_id: experience.id,
       operator_id: operator.id,
-      team_name,
-      contact_name: contact_name || '',
-      contact_email,
-      contact_phone: contact_phone || '',
-      amount: experience.price,
-      payment_status: 'pending'
+      team_name: team_name || '',
+      guest_name,
+      guest_email,
+      guest_phone: guest_phone || '',
+      guest_count: count,
+      total_amount: experience.price_per_person * count,
+      payment_status: 'pending',
+      status: 'pending'
     });
 
     const booking = Array.isArray(bookings) ? bookings[0] : bookings;
@@ -82,7 +85,7 @@ export async function POST(request) {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: experience.title,
+            name: experience.title_en,
             description: `${team_name} — ${operator.business_name}`
           },
           unit_amount: priceInCents
@@ -95,14 +98,14 @@ export async function POST(request) {
           destination: operator.stripe_account_id
         }
       },
-      customer_email: contact_email,
+      customer_email: guest_email,
       metadata: {
         booking_id: booking.id,
         operator_id: operator.id,
         experience_id: experience.id,
-        team_name
+        team_name: team_name || ''
       },
-      success_url: `https://hoops.money/${operator.slug}?booked=success&team=${encodeURIComponent(team_name)}`,
+      success_url: `https://hoops.money/${operator.slug}?booked=success&team=${encodeURIComponent(team_name || '')}`,
       cancel_url: `https://hoops.money/${operator.slug}?booked=cancelled`
     });
 

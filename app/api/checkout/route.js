@@ -8,7 +8,7 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Supabase REST API
-const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPABASE_URL = 'https://rhsszirtbyvalugmbecm.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
 async function supabaseGet(table, query) {

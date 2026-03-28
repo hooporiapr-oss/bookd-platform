@@ -157,7 +157,7 @@ function setLang(lang){
     <div class="form-group">
       <label class="en">Your Page URL (slug)</label><label class="es">URL de Tu Página (slug)</label>
       <input type="text" id="slug" placeholder="e.g. reibball" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'');document.getElementById('slugText').textContent=this.value||'your-slug'">
-      <div class="hint">bookd.click/<span id="slugText">your-slug</span></div>
+      <div class="hint">hoops.money/<span id="slugText">your-slug</span></div>
     </div>
     <div class="form-group">
       <label class="en">Location</label><label class="es">Ubicación</label>
@@ -273,7 +273,7 @@ function buildReview(){
   const items=[
     {en:'Email',es:'Correo',val:document.getElementById('email').value},
     {en:'Organization',es:'Organización',val:document.getElementById('businessName').value},
-    {en:'Page URL',es:'URL',val:'bookd.click/'+document.getElementById('slug').value},
+    {en:'Page URL',es:'URL',val:'hoops.money/'+document.getElementById('slug').value},
     {en:'Location',es:'Ubicación',val:document.getElementById('location').value||'—'},
     {en:'Avatar',es:'Avatar',val:selectedEmoji},
   ];
@@ -342,7 +342,7 @@ async function submitSignup(){
     });
     if(insertErr) throw insertErr;
 
-    document.getElementById('yourLink').textContent='bookd.click/'+slug;
+    document.getElementById('yourLink').textContent='hoops.money/'+slug;
     goStep(4);
   }catch(e){
     btn.disabled=false;

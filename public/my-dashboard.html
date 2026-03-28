@@ -69,7 +69,6 @@ html[lang="es"] .en{display:none!important}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .stat-value{font-size:1.6rem;font-weight:800;color:var(--white)}
 .stat-value.money-green{color:var(--green)}
-.stat-value.money-red{color:var(--red)}
 
 /* SECTIONS */
 .section{margin-bottom:32px}
@@ -95,19 +94,6 @@ html[lang="es"] .en{display:none!important}
 .btn-delete{background:rgba(239,68,68,.1);color:var(--red)}
 .btn-delete:hover{background:rgba(239,68,68,.2)}
 
-/* P&L CARDS */
-.pl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.pl-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
-.pl-card h4{font-size:.95rem;font-weight:700;margin-bottom:12px;color:var(--white)}
-.pl-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:.85rem}
-.pl-label{color:var(--gray)}
-.pl-val{font-weight:700}
-.pl-val.revenue{color:var(--green)}
-.pl-val.expense{color:var(--red)}
-.pl-val.profit{color:var(--green)}
-.pl-val.loss{color:var(--red)}
-.pl-divider{border-top:1px solid rgba(255,255,255,.08);margin:8px 0}
-
 /* BOOKINGS TABLE */
 .table-wrap{overflow-x:auto}
 .data-table{width:100%;border-collapse:collapse}
@@ -116,7 +102,6 @@ html[lang="es"] .en{display:none!important}
 .payment-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
 .payment-badge.paid{background:rgba(34,197,94,.12);color:var(--green)}
 .payment-badge.pending{background:rgba(234,179,8,.12);color:var(--yellow)}
-.btn-del-sm{background:rgba(239,68,68,.1);color:var(--red);border:none;padding:4px 10px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer}
 
 /* EMPTY STATE */
 .empty-state{text-align:center;padding:48px 24px;color:var(--gray)}
@@ -143,7 +128,7 @@ html[lang="es"] .en{display:none!important}
   .sidebar{display:none}
   .main{margin-left:0;padding:20px 16px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
-  .exp-grid,.pl-grid{grid-template-columns:1fr}
+  .exp-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .mobile-header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--black2);border-bottom:1px solid rgba(255,255,255,.06);margin:-20px -16px 20px}
   .mobile-logo{font-weight:800;font-size:1.2rem;color:var(--orange)}
@@ -176,8 +161,6 @@ html[lang="es"] .en{display:none!important}
     <div class="sidebar-item active" onclick="showSection('overview')"><span class="icon">📊</span><span class="en">Overview</span><span class="es">Resumen</span></div>
     <div class="sidebar-item" onclick="showSection('experiences')"><span class="icon">🏀</span><span class="en">Experiences</span><span class="es">Experiencias</span></div>
     <div class="sidebar-item" onclick="showSection('bookings')"><span class="icon">📋</span><span class="en">Bookings</span><span class="es">Reservas</span></div>
-    <div class="sidebar-item" onclick="showSection('expenses')"><span class="icon">💸</span><span class="en">Expenses</span><span class="es">Gastos</span></div>
-    <div class="sidebar-item" onclick="showSection('pnl')"><span class="icon">📈</span><span class="en">P&L</span><span class="es">P&L</span></div>
     <div class="sidebar-item" onclick="showSection('payments')"><span class="icon">💰</span><span class="en">Payments</span><span class="es">Pagos</span></div>
     <div class="sidebar-item" onclick="window.location.href='/'"><span class="icon">🏠</span><span class="en">Home</span><span class="es">Inicio</span></div>
     <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span><span class="en">Logout</span><span class="es">Salir</span></div>
@@ -218,26 +201,12 @@ html[lang="es"] .en{display:none!important}
         <div class="stat-value money-green" id="statRevenue">$0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label"><span class="en">Expenses</span><span class="es">Gastos</span></div>
-        <div class="stat-value money-red" id="statExpenses">$0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label"><span class="en">Profit</span><span class="es">Ganancia</span></div>
-        <div class="stat-value" id="statProfit">$0</div>
-      </div>
-    </div>
-    <div class="stats-row">
-      <div class="stat-card">
         <div class="stat-label"><span class="en">Experiences</span><span class="es">Experiencias</span></div>
         <div class="stat-value" id="statExperiences">0</div>
       </div>
       <div class="stat-card">
         <div class="stat-label"><span class="en">Bookings</span><span class="es">Reservas</span></div>
         <div class="stat-value" id="statBookings">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label"><span class="en">Paid</span><span class="es">Pagados</span></div>
-        <div class="stat-value" id="statPaid">0</div>
       </div>
     </div>
   </div>
@@ -275,43 +244,6 @@ html[lang="es"] .en{display:none!important}
             <tr><td colspan="6" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- EXPENSES -->
-  <div id="sec-expenses" style="display:none">
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title"><span class="en">Expenses</span><span class="es">Gastos</span></div>
-        <button class="add-btn" onclick="openModal('expense')">+ <span class="en">Add Expense</span><span class="es">Agregar Gasto</span></button>
-      </div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr>
-            <th><span class="en">Category</span><span class="es">Categoría</span></th>
-            <th><span class="en">Description</span><span class="es">Descripción</span></th>
-            <th><span class="en">Experience</span><span class="es">Experiencia</span></th>
-            <th><span class="en">Date</span><span class="es">Fecha</span></th>
-            <th><span class="en">Amount</span><span class="es">Monto</span></th>
-            <th></th>
-          </tr></thead>
-          <tbody id="expensesBody">
-            <tr><td colspan="6" class="empty-state"><div class="icon">💸</div><p><span class="en">No expenses yet</span><span class="es">Sin gastos</span></p></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- P&L -->
-  <div id="sec-pnl" style="display:none">
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title"><span class="en">Profit & Loss by Experience</span><span class="es">Ganancias y Pérdidas por Experiencia</span></div>
-      </div>
-      <div class="pl-grid" id="plGrid">
-        <div class="empty-state"><div class="icon">📈</div><p><span class="en">Add experiences and bookings to see P&L</span><span class="es">Agrega experiencias y reservas para ver P&L</span></p></div>
       </div>
     </div>
   </div>
@@ -382,59 +314,12 @@ html[lang="es"] .en{display:none!important}
 </div>
 </div>
 
-<!-- ADD EXPENSE MODAL -->
-<div class="modal-overlay" id="expenseModal">
-<div class="modal">
-  <div class="modal-title"><span class="en">Add Expense</span><span class="es">Agregar Gasto</span></div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Category</span><span class="es">Categoría</span></label>
-    <select class="form-input" id="exCat">
-      <option value="Court/Venue">Court/Venue</option>
-      <option value="Referees">Referees</option>
-      <option value="Trophies/Awards">Trophies/Awards</option>
-      <option value="Equipment">Equipment</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Insurance">Insurance</option>
-      <option value="Staff">Staff</option>
-      <option value="Food/Drinks">Food/Drinks</option>
-      <option value="Concessions">Concessions</option>
-      <option value="Parking">Parking</option>
-      <option value="Other">Other</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Experience</span><span class="es">Experiencia</span></label>
-    <select class="form-input" id="exExp">
-      <option value=""><span class="en">General (no specific experience)</span></option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Description</span><span class="es">Descripción</span></label>
-    <input class="form-input" id="exDesc" placeholder="e.g. Court rental for Saturday tournament">
-  </div>
-  <div class="form-row">
-    <div class="form-group">
-      <label class="form-label"><span class="en">Amount ($)</span><span class="es">Monto ($)</span></label>
-      <input class="form-input" id="exAmount" type="number" step="0.01" placeholder="0.00">
-    </div>
-    <div class="form-group">
-      <label class="form-label"><span class="en">Date</span><span class="es">Fecha</span></label>
-      <input class="form-input" id="exDate" type="date">
-    </div>
-  </div>
-  <div class="form-actions">
-    <button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button>
-    <button class="btn-save" onclick="saveExpense()"><span class="en">Save Expense</span><span class="es">Guardar Gasto</span></button>
-  </div>
-</div>
-</div>
-
 <div class="toast" id="toast"></div>
 
-<script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-var SB_URL='https://xdlmajajjnsnipsapmls.supabase.co';
-var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+<script>
+var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
 var sbClient=null;
 var isLive=true;
 
@@ -450,11 +335,9 @@ function loadSB(){
 var operatorData=null;
 var experiencesData=[];
 var bookingsData=[];
-var expensesData=[];
 
 document.addEventListener('DOMContentLoaded',async function(){
   try{var sl=localStorage.getItem('hoops-lang');if(sl)setLang(sl)}catch(e){}
-  document.getElementById('exDate').value=new Date().toISOString().split('T')[0];
 
   var params=new URLSearchParams(window.location.search);
   if(params.get('stripe')==='success') showToast('Stripe connected successfully!','success');
@@ -477,10 +360,8 @@ document.addEventListener('DOMContentLoaded',async function(){
 
     await loadExperiences(client);
     await loadBookings(client);
-    await loadExpenses(client);
     updateStats();
     updateStripeBanner();
-    renderPnL();
   }catch(e){console.error('Init error:',e)}
 });
 
@@ -489,7 +370,6 @@ async function loadExperiences(client){
   var{data}=await client.from('experiences').select('*').eq('operator_id',operatorData.id).order('sort_order',{ascending:true});
   experiencesData=data||[];
   renderExperiences();
-  populateExpDropdown();
 }
 
 async function loadBookings(client){
@@ -497,13 +377,6 @@ async function loadBookings(client){
   var{data}=await client.from('bookings').select('*,experiences(title_en,title_es)').eq('operator_id',operatorData.id).order('created_at',{ascending:false}).limit(50);
   bookingsData=data||[];
   renderBookings();
-}
-
-async function loadExpenses(client){
-  if(!client)client=await loadSB();
-  var{data}=await client.from('expenses').select('*,experiences(title_en)').eq('operator_id',operatorData.id).order('expense_date',{ascending:false});
-  expensesData=data||[];
-  renderExpenses();
 }
 
 function renderExperiences(){
@@ -549,78 +422,12 @@ function renderBookings(){
   setLang(currentLang);
 }
 
-function renderExpenses(){
-  var tbody=document.getElementById('expensesBody');
-  if(expensesData.length===0){
-    tbody.innerHTML='<tr><td colspan="6" class="empty-state"><div class="icon">💸</div><p><span class="en">No expenses yet</span><span class="es">Sin gastos</span></p></td></tr>';
-    setLang(currentLang);return;
-  }
-  tbody.innerHTML=expensesData.map(function(ex){
-    var expName=ex.experiences?ex.experiences.title_en:'General';
-    var date=ex.expense_date||'—';
-    return '<tr>'+
-      '<td>'+esc(ex.category)+'</td>'+
-      '<td>'+esc(ex.description||'—')+'</td>'+
-      '<td>'+esc(expName)+'</td>'+
-      '<td>'+date+'</td>'+
-      '<td style="color:var(--red);font-weight:700">-$'+Number(ex.amount).toFixed(2)+'</td>'+
-      '<td><button class="btn-del-sm" onclick="deleteExpense(\''+ex.id+'\')">✕</button></td></tr>';
-  }).join('');
-  setLang(currentLang);
-}
-
-function renderPnL(){
-  var grid=document.getElementById('plGrid');
-  if(experiencesData.length===0){
-    grid.innerHTML='<div class="empty-state"><div class="icon">📈</div><p><span class="en">Add experiences to see P&L</span><span class="es">Agrega experiencias para ver P&L</span></p></div>';
-    setLang(currentLang);return;
-  }
-
-  var paidBookings=bookingsData.filter(function(b){return b.payment_status==='paid'});
-  var html=experiencesData.map(function(exp){
-    var expRev=paidBookings.filter(function(b){return b.experience_id===exp.id}).reduce(function(s,b){return s+Number(b.total_amount||0)},0);
-    var expCost=expensesData.filter(function(e){return e.experience_id===exp.id}).reduce(function(s,e){return s+Number(e.amount||0)},0);
-    var expProfit=expRev-expCost;
-    var cls=expProfit>=0?'profit':'loss';
-    return '<div class="pl-card">'+
-      '<h4>'+esc(exp.title_en)+'</h4>'+
-      '<div class="pl-row"><span class="pl-label"><span class="en">Revenue</span><span class="es">Ingresos</span></span><span class="pl-val revenue">$'+expRev.toFixed(2)+'</span></div>'+
-      '<div class="pl-row"><span class="pl-label"><span class="en">Expenses</span><span class="es">Gastos</span></span><span class="pl-val expense">-$'+expCost.toFixed(2)+'</span></div>'+
-      '<div class="pl-divider"></div>'+
-      '<div class="pl-row"><span class="pl-label"><span class="en">Profit</span><span class="es">Ganancia</span></span><span class="pl-val '+cls+'">'+(expProfit>=0?'':'-')+'$'+Math.abs(expProfit).toFixed(2)+'</span></div>'+
-    '</div>';
-  }).join('');
-
-  // General expenses (not linked to any experience)
-  var generalCost=expensesData.filter(function(e){return !e.experience_id}).reduce(function(s,e){return s+Number(e.amount||0)},0);
-  if(generalCost>0){
-    html+='<div class="pl-card"><h4><span class="en">General Expenses</span><span class="es">Gastos Generales</span></h4>'+
-      '<div class="pl-row"><span class="pl-label"><span class="en">Expenses</span><span class="es">Gastos</span></span><span class="pl-val expense">-$'+generalCost.toFixed(2)+'</span></div></div>';
-  }
-
-  grid.innerHTML=html;
-  setLang(currentLang);
-}
-
 function updateStats(){
   document.getElementById('statExperiences').textContent=experiencesData.length;
   document.getElementById('statBookings').textContent=bookingsData.length;
   var paid=bookingsData.filter(function(b){return b.payment_status==='paid'});
-  document.getElementById('statPaid').textContent=paid.length;
   var revenue=paid.reduce(function(s,b){return s+Number(b.total_amount||0)},0);
-  var totalExp=expensesData.reduce(function(s,e){return s+Number(e.amount||0)},0);
-  var profit=revenue-totalExp;
   document.getElementById('statRevenue').textContent='$'+revenue.toFixed(2);
-  document.getElementById('statExpenses').textContent='$'+totalExp.toFixed(2);
-  document.getElementById('statProfit').textContent=(profit>=0?'':'-')+'$'+Math.abs(profit).toFixed(2);
-  document.getElementById('statProfit').className='stat-value '+(profit>=0?'money-green':'money-red');
-}
-
-function populateExpDropdown(){
-  var sel=document.getElementById('exExp');
-  sel.innerHTML='<option value="">General</option>'+experiencesData.map(function(e){
-    return '<option value="'+e.id+'">'+esc(e.title_en)+'</option>';
-  }).join('');
 }
 
 // STRIPE
@@ -634,7 +441,6 @@ function updateStripeBanner(){
     btn.innerHTML='<span class="en">Stripe Dashboard</span><span class="es">Panel de Stripe</span>';
     btn.className='stripe-btn manage';
     btn.onclick=function(){window.open('https://dashboard.stripe.com','_blank')};
-    // Update payment section too
     document.getElementById('paymentContent').innerHTML='<div style="font-size:3rem;margin-bottom:12px">✅</div><h3 style="font-size:1.2rem;font-weight:800;color:var(--green);margin-bottom:8px"><span class="en">Payments Active</span><span class="es">Pagos Activos</span></h3><p style="color:var(--gray);font-size:.85rem;margin-bottom:20px"><span class="en">You receive 95% of every booking.</span><span class="es">Recibes 95% de cada reserva.</span></p><button class="stripe-btn manage" onclick="window.open(\'https://dashboard.stripe.com\',\'_blank\')"><span class="en">Open Stripe Dashboard</span><span class="es">Abrir Panel de Stripe</span></button>';
   } else if(operatorData.stripe_account_id){
     txt.innerHTML='<h3 style="color:var(--orange)"><span class="en">⏳ Stripe Pending</span><span class="es">⏳ Stripe Pendiente</span></h3><p><span class="en">Complete Stripe setup to receive payments.</span><span class="es">Completa la configuración para recibir pagos.</span></p>';
@@ -657,7 +463,7 @@ async function setupStripe(){
 function showSection(name){
   document.querySelectorAll('.sidebar-item').forEach(function(el){el.classList.remove('active')});
   if(event&&event.currentTarget) event.currentTarget.classList.add('active');
-  ['overview','experiences','bookings','expenses','pnl','payments'].forEach(function(s){
+  ['overview','experiences','bookings','payments'].forEach(function(s){
     var el=document.getElementById('sec-'+s);
     if(el) el.style.display='none';
   });
@@ -678,11 +484,6 @@ function openModal(type){
     document.getElementById('expModalTitle').innerHTML='<span class="en">Add Experience</span><span class="es">Agregar Experiencia</span>';
     ['expTitleEn','expTitleEs','expDescEn','expDescEs','expPrice','expDuration','expMin','expMax'].forEach(function(id){document.getElementById(id).value=''});
     document.getElementById('expModal').classList.add('show');
-  } else if(type==='expense'){
-    document.getElementById('exDesc').value='';
-    document.getElementById('exAmount').value='';
-    document.getElementById('exDate').value=new Date().toISOString().split('T')[0];
-    document.getElementById('expenseModal').classList.add('show');
   }
   setLang(currentLang);
 }
@@ -725,7 +526,6 @@ async function saveExperience(){
     closeAllModals();
     await loadExperiences(client);
     updateStats();
-    renderPnL();
   }catch(e){showToast(e.message||'Failed','error')}
 }
 
@@ -757,45 +557,6 @@ async function deleteExperience(id){
     showToast('Deleted','success');
     await loadExperiences(client);
     updateStats();
-    renderPnL();
-  }catch(e){showToast(e.message,'error')}
-}
-
-// SAVE EXPENSE
-async function saveExpense(){
-  var amount=parseFloat(document.getElementById('exAmount').value);
-  if(!amount||amount<=0){showToast('Amount is required','error');return}
-  var payload={
-    operator_id:operatorData.id,
-    experience_id:document.getElementById('exExp').value||null,
-    category:document.getElementById('exCat').value,
-    description:document.getElementById('exDesc').value.trim(),
-    amount:amount,
-    expense_date:document.getElementById('exDate').value||new Date().toISOString().split('T')[0]
-  };
-  try{
-    var client=await loadSB();
-    var{error}=await client.from('expenses').insert(payload);
-    if(error)throw error;
-    closeAllModals();
-    showToast('Expense saved!','success');
-    await loadExpenses(client);
-    updateStats();
-    renderPnL();
-  }catch(e){showToast(e.message,'error')}
-}
-
-// DELETE EXPENSE
-async function deleteExpense(id){
-  if(!confirm(currentLang==='es'?'¿Eliminar este gasto?':'Delete this expense?'))return;
-  try{
-    var client=await loadSB();
-    var{error}=await client.from('expenses').delete().eq('id',id);
-    if(error)throw error;
-    showToast('Deleted','success');
-    await loadExpenses(client);
-    updateStats();
-    renderPnL();
   }catch(e){showToast(e.message,'error')}
 }
 

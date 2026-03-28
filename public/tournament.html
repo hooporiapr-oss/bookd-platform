@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tournament — Bookd</title>
-<link rel="icon" href="/bookd.png">
+<title>Tournament — HOOP$.MONEY</title>
+<link rel="icon" href="/hoops.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
@@ -116,7 +116,7 @@ function setLang(lang){
 <body>
 
 <div class="nav">
-  <a href="/" class="nav-logo">book<span>d</span></a>
+  <a href="/" class="nav-logo">HOOP$<span>.MONEY</span></a>
   <div class="nav-right">
     <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
     <div class="lang-toggle">
@@ -134,7 +134,7 @@ function setLang(lang){
   <h2 class="en">Tournament Not Found</h2><h2 class="es">Torneo No Encontrado</h2>
   <p class="en">This tournament doesn't exist or hasn't started yet.</p>
   <p class="es">Este torneo no existe o no ha comenzado aún.</p>
-  <a href="/" class="en">← Back to Bookd</a><a href="/" class="es">← Volver a Bookd</a>
+  <a href="/" class="en">← Back to HOOP$.MONEY</a><a href="/" class="es">← Volver a HOOP$.MONEY</a>
 </div>
 
 <!-- MAIN -->
@@ -174,8 +174,8 @@ function setLang(lang){
 </div>
 
 <script>
-const SUPA_URL='https://xdlmajajjnsnipsapmls.supabase.co';
-const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbG1hamFqam5zbmlwc2FwbWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODA5MTAsImV4cCI6MjA4OTc1NjkxMH0._Mq45D1RJxbdRWX1tL9JoucwQ_6mPLxO8m-itGXqNhg';
+const SUPA_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
 
 let sb=null,tournament=null,teams=[],matches=[];
 
@@ -218,7 +218,7 @@ function teamName(id){
       return;
     }
     tournament=t;
-    document.title=(t.name_en||'Tournament')+' — Bookd';
+    document.title=(t.name_en||'Tournament')+' — HOOP$.MONEY';
     document.getElementById('tName').textContent=t.name_en||'Tournament';
 
     const formatLabels={single_elimination:'Single Elimination',double_elimination:'Double Elimination',round_robin:'Round Robin'};

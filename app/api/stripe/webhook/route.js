@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 // Supabase REST API
-const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
+const SUPABASE_URL = 'https://rhsszirtbyvalugmbecm.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
 async function supabasePatch(table, query, body) {

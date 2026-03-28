@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  const SUPABASE_URL = 'https://xdlmajajjnsnipsapmls.supabase.co';
+  const SUPABASE_URL = 'https://rhsszirtbyvalugmbecm.supabase.co';
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   try {

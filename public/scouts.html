@@ -164,6 +164,10 @@ html[lang="es"] .en{display:none!important}
         <option value="grad"><span class="en">Sort: Grad Year</span></option>
         <option value="recent"><span class="en">Sort: Recently Added</span></option>
       </select>
+      <select class="filter-input" id="fNIL" onchange="filterPlayers()">
+        <option value=""><span class="en">All Players</span></option>
+        <option value="nil"><span class="en">📣 NIL Available Only</span></option>
+      </select>
     </div>
     <div class="results-count" id="resultsCount"></div>
     <div id="playerGrid" class="player-grid">
@@ -249,11 +253,13 @@ function filterPlayers(){
   var pos=document.getElementById('fPosition').value;
   var grad=document.getElementById('fGradYear').value;
   var sort=document.getElementById('fSort').value;
+  var nilOnly=document.getElementById('fNIL').value;
 
   var filtered=allPlayers.filter(function(p){
     if(search&&!(p.first_name+' '+p.last_name).toLowerCase().includes(search)&&!(p.school||'').toLowerCase().includes(search)&&!(p._teamName||'').toLowerCase().includes(search))return false;
     if(pos&&p.position!==pos)return false;
     if(grad&&String(p.grad_year)!==grad)return false;
+    if(nilOnly==='nil'&&!p.instagram&&!p.tiktok&&!p.twitter&&!p.nil_contact_email)return false;
     return true;
   });
 
@@ -298,6 +304,18 @@ function renderPlayers(players){
         (p.highlight_link?'<a href="'+esc(p.highlight_link)+'" target="_blank" class="highlight-link">🎥 <span class="en">Highlights</span><span class="es">Videos</span></a>':'')+
         (p._orgSlug?'<a href="/'+esc(p._orgSlug)+'" class="team-link">👤 <span class="en">Organizer</span><span class="es">Organizador</span></a>':'')+
       '</div>'+
+      ((p.instagram||p.tiktok||p.twitter||p.youtube||p.nil_contact_email)?
+        '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">'+
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><span style="background:rgba(168,85,247,.12);color:var(--purple);font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px">📣 NIL Available</span></div>'+
+          (p.nil_bio?'<div style="font-size:.8rem;color:var(--gray);margin-bottom:8px">'+esc(p.nil_bio)+'</div>':'')+
+          '<div style="display:flex;flex-wrap:wrap;gap:6px">'+
+            (p.instagram?'<a href="https://instagram.com/'+esc(p.instagram.replace('@','')).trim()+'" target="_blank" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(232,97,26,.1);color:var(--orange)">IG '+esc(p.instagram)+'</a>':'')+
+            (p.tiktok?'<a href="https://tiktok.com/@'+esc(p.tiktok.replace('@','')).trim()+'" target="_blank" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(255,255,255,.06);color:var(--white)">TikTok '+esc(p.tiktok)+'</a>':'')+
+            (p.twitter?'<a href="https://x.com/'+esc(p.twitter.replace('@','')).trim()+'" target="_blank" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(59,130,246,.1);color:var(--blue)">X '+esc(p.twitter)+'</a>':'')+
+            (p.youtube?'<a href="'+esc(p.youtube)+'" target="_blank" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(239,68,68,.1);color:#ef4444">YouTube</a>':'')+
+            (p.nil_contact_email?'<a href="mailto:'+esc(p.nil_contact_email)+'" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(34,197,94,.1);color:var(--green)">✉ Contact</a>':'')+
+          '</div>'+
+        '</div>':'')+
       (p.notes?'<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);font-size:.8rem;color:var(--gray);font-style:italic">"'+esc(p.notes)+'"</div>':'')+
     '</div>';
   }).join('');

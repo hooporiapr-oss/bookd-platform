@@ -471,6 +471,19 @@ html[lang="es"] .en{display:none!important}
     <div class="form-group"><label class="form-label">APG</label><input class="form-input" id="plAPG" type="number" step="0.1" placeholder="3.1"></div>
     <div class="form-group"><label class="form-label"><span class="en">Highlight Link</span><span class="es">Video Highlights</span></label><input class="form-input" id="plHighlight" placeholder="https://youtube.com/..."></div>
   </div>
+  <div style="border-top:1px solid rgba(255,255,255,.08);margin:16px 0;padding-top:16px">
+    <div style="font-size:.85rem;font-weight:700;color:var(--purple);margin-bottom:12px">📣 NIL Profile</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Instagram</label><input class="form-input" id="plInstagram" placeholder="@handle"></div>
+      <div class="form-group"><label class="form-label">TikTok</label><input class="form-input" id="plTiktok" placeholder="@handle"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Twitter / X</label><input class="form-input" id="plTwitter" placeholder="@handle"></div>
+      <div class="form-group"><label class="form-label">YouTube</label><input class="form-input" id="plYoutube" placeholder="Channel URL"></div>
+    </div>
+    <div class="form-group"><label class="form-label"><span class="en">NIL Contact Email</span><span class="es">Email de Contacto NIL</span></label><input class="form-input" id="plNilEmail" type="email" placeholder="athlete@email.com"></div>
+    <div class="form-group"><label class="form-label"><span class="en">NIL Bio</span><span class="es">Bio NIL</span></label><textarea class="form-input" id="plNilBio" rows="2" placeholder="Quick bio for brands and scouts..."></textarea></div>
+  </div>
   <div class="form-group"><label class="form-label"><span class="en">Notes</span><span class="es">Notas</span></label><textarea class="form-input" id="plNotes" rows="2" placeholder="Quick scouting notes..."></textarea></div>
   <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="savePlayer()"><span class="en">Add Player</span><span class="es">Agregar</span></button></div>
 </div></div>
@@ -649,6 +662,7 @@ function renderTeams(){
         '<div style="display:flex;align-items:center;gap:8px">'+
           (p.stats_ppg?'<span style="color:var(--green);font-size:.7rem;font-weight:700">'+p.stats_ppg+'ppg</span>':'')+
           (p.highlight_link?'<a href="'+esc(p.highlight_link)+'" target="_blank" style="color:var(--blue);font-size:.7rem;font-weight:700">🎥</a>':'')+
+          (p.instagram||p.tiktok||p.nil_contact_email?'<span style="background:rgba(168,85,247,.12);color:var(--purple);font-size:.6rem;font-weight:800;padding:2px 6px;border-radius:10px">NIL</span>':'')+
           (p.grad_year?'<span style="color:var(--gray);font-size:.7rem">\''+String(p.grad_year).slice(-2)+'</span>':'')+
           '<button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.7rem;font-weight:700" onclick="removePlayer(\''+p.id+'\',\''+t.id+'\')">✕</button>'+
         '</div></div>'
@@ -674,7 +688,7 @@ function renderTeams(){
 var addingToTeamId=null;
 function openPlayerModal(teamId){
   addingToTeamId=teamId;
-  ['plFirstName','plLastName','plJersey','plPosition','plHeight','plWeight','plAge','plSchool','plGradYear','plPPG','plRPG','plAPG','plHighlight','plNotes'].forEach(function(id){document.getElementById(id).value=''});
+  ['plFirstName','plLastName','plJersey','plPosition','plHeight','plWeight','plAge','plSchool','plGradYear','plPPG','plRPG','plAPG','plHighlight','plInstagram','plTiktok','plTwitter','plYoutube','plNilEmail','plNilBio','plNotes'].forEach(function(id){document.getElementById(id).value=''});
   document.getElementById('playerModal').classList.add('show');
   setLang(currentLang);
 }
@@ -697,6 +711,13 @@ async function savePlayer(){
       stats_rpg:parseFloat(document.getElementById('plRPG').value)||0,
       stats_apg:parseFloat(document.getElementById('plAPG').value)||0,
       highlight_link:document.getElementById('plHighlight').value.trim(),
+      instagram:document.getElementById('plInstagram').value.trim(),
+      tiktok:document.getElementById('plTiktok').value.trim(),
+      twitter:document.getElementById('plTwitter').value.trim(),
+      youtube:document.getElementById('plYoutube').value.trim(),
+      nil_available:true,
+      nil_contact_email:document.getElementById('plNilEmail').value.trim(),
+      nil_bio:document.getElementById('plNilBio').value.trim(),
       notes:document.getElementById('plNotes').value.trim()
     });
     if(error)throw error;

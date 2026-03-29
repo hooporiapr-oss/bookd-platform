@@ -336,9 +336,13 @@ async function submitReg(){
     });
     if(error)throw error;
 
-    document.getElementById('regSuccess').innerHTML=currentLang==='es'
+    var successHtml=currentLang==='es'
       ?'¡Inscripción exitosa! El organizador se comunicará contigo.'
       :'Registration submitted! The organizer will be in touch.';
+    if(operatorData.payment_link){
+      successHtml+='<div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)"><p style="font-size:.8rem;color:var(--gray);margin-bottom:8px"><span class="en">Pay the organizer directly:</span><span class="es">Paga al organizador directamente:</span></p><a href="'+esc(operatorData.payment_link)+'" target="_blank" style="display:inline-block;padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--green);color:#fff;text-decoration:none">'+esc(operatorData.payment_label||'Pay Now')+' →</a></div>';
+    }
+    document.getElementById('regSuccess').innerHTML=successHtml;
     document.getElementById('regSuccess').style.display='block';
     btn.style.display='none';
 

@@ -11,9 +11,9 @@ export function middleware(request) {
     '/login.html',
     '/my-dashboard.html',
     '/operator.html',
+    '/scouts.html',
     '/privacy.html',
     '/terms.html',
-    '/league.html',
   ];
 
   // Pass through known pages, API routes, static files, Next internals

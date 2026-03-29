@@ -3,216 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — HOOP$.MONEY</title>
-<link rel="icon" href="/hoops.png">
+<title>Terms of Service — GoStar Digital</title>
+<link rel="icon" href="/gostar.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;min-height:100vh;line-height:1.6}
 a{text-decoration:none;color:inherit}
-button{cursor:pointer;border:none;font-family:inherit}
-
-:root{
-  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
-  --orange:#e8611a;--orange-light:#f4832f;
-  --white:#fafaf9;--gray:#8a8a8a;
-}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a}
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
-
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 24px 8px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-logo{font-weight:900;font-size:1.4rem;letter-spacing:.02em;color:var(--orange);text-transform:uppercase}
-.nav-logo span{color:#f4c542}
-.nav-row{display:flex;align-items:center;gap:12px}
-.nav-row a{font-size:.8rem;color:var(--gray);font-weight:600}
-.nav-row a:hover{color:var(--white)}
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{display:block;height:36px}
+.nav-logo img{height:36px;width:auto}
 .lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
-.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
 .lang-btn.active{background:var(--orange);color:#fff}
-
-.content{max-width:720px;margin:0 auto;padding:100px 24px 80px}
-.card{background:#fff;border-radius:16px;padding:48px 40px;color:#000}
-.card h1{font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;letter-spacing:-.01em}
-.card .updated{font-size:.8rem;color:#888;margin-bottom:32px}
-.card h2{font-size:1.1rem;font-weight:800;margin-top:28px;margin-bottom:10px;color:#000}
-.card p{font-size:.9rem;color:#333;margin-bottom:14px;line-height:1.7}
-.card ul{margin:0 0 14px 20px;font-size:.9rem;color:#333;line-height:1.8}
-.card a{color:var(--orange);font-weight:600}
-.card strong{color:#000}
-
-@media(max-width:520px){.card{padding:32px 20px}}
+.content{max-width:700px;margin:0 auto;padding:100px 24px 60px}
+.content h1{font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.content .updated{font-size:.8rem;color:var(--gray);margin-bottom:32px}
+.content h2{font-size:1.1rem;font-weight:700;margin-top:32px;margin-bottom:8px;color:var(--orange)}
+.content p,.content li{font-size:.9rem;color:#ccc;margin-bottom:12px}
+.content ul{padding-left:20px}
+.content li{margin-bottom:6px}
+.content a{color:var(--orange)}
 </style>
 <script>
-let currentLang='en';
-function setLang(lang){
-  currentLang=lang;
-  document.documentElement.lang=lang;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-}
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)})}
 </script>
 </head>
 <body>
-
-<div class="nav">
-  <a href="/" class="nav-logo">HOOP<span>$</span>.MONEY</a>
-  <div class="nav-row">
-    <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
-    <a href="/privacy.html" class="en">Privacy</a><a href="/privacy.html" class="es">Privacidad</a>
-    <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
-    </div>
+<div class="top-bar">
+  <a href="/" class="nav-logo"><img src="/gostar.png" alt="GoStar Digital"></a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
   </div>
 </div>
 
 <div class="content">
-  <div class="card">
+  <div class="en">
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: March 2026</p>
 
-    <!-- ENGLISH -->
-    <div class="en">
-      <h1>Terms of Service</h1>
-      <p class="updated">Last updated: January 2025</p>
+    <p>These Terms of Service ("Terms") govern your use of the GoStar Digital platform operated by GoStar Digital LLC ("GoStar", "we", "us") at gostar.digital. By using GoStar Digital, you agree to these Terms.</p>
 
-      <p>These Terms of Service ("Terms") govern your use of the Bookd platform operated by GoStar Digital LLC ("GoStar", "we", "us") at bookd.click. By using Bookd, you agree to these Terms.</p>
+    <h2>1. Platform Role</h2>
+    <p>GoStar Digital is a <strong>technology platform only</strong>. We provide software tools that allow tournament organizers and league operators ("Organizers") to create events, manage brackets, accept team registrations, and showcase talent. GoStar Digital LLC is not an event organizer, sports league, team manager, or athletic association. We do not organize, run, supervise, or have any involvement in the events created by Organizers on our platform.</p>
 
-      <h2>1. Platform Role</h2>
-      <p>Bookd is a <strong>technology platform only</strong>. We provide software tools that allow tournament organizers and league operators ("Organizers") to create events, accept team registrations, and receive payments. GoStar Digital LLC is not an event organizer, sports league, team manager, or payment processor. We do not organize, run, supervise, or have any involvement in the events created by Organizers on our platform.</p>
+    <h2>2. Accounts</h2>
+    <p>To use GoStar Digital as an Organizer, you must create an account with a valid email address and password. You are responsible for maintaining the security of your account and all activity that occurs under it. You must be at least 18 years old to create an Organizer account.</p>
 
-      <h2>2. Accounts</h2>
-      <p>To use Bookd as an Organizer, you must create an account with a valid email address and password. You are responsible for maintaining the security of your account and all activity that occurs under it. You must be at least 18 years old to create an Organizer account.</p>
+    <h2>3. Organizer Responsibilities</h2>
+    <p>Organizers are solely responsible for:</p>
+    <ul>
+      <li>The accuracy of event information (dates, locations, formats, rules)</li>
+      <li>Compliance with all local laws, permits, and regulations for their events</li>
+      <li>Safety and conduct at their events</li>
+      <li>Communication with registered teams and participants</li>
+      <li>Any disputes with teams, players, or venues</li>
+    </ul>
 
-      <h2>3. Payments</h2>
-      <p>All payments on Bookd are processed through <strong>Stripe Connect</strong>. When a team registers and pays for an event:</p>
-      <ul>
-        <li>The payment goes <strong>directly</strong> from the team to the Organizer's connected bank account</li>
-        <li>GoStar Digital LLC <strong>never holds, touches, controls, or has access to any funds</strong></li>
-        <li>A <strong>5% platform fee</strong> is automatically deducted by Stripe before funds reach the Organizer</li>
-        <li>Standard Stripe processing fees also apply (set by Stripe, not by GoStar)</li>
-        <li>Organizers are responsible for connecting their own Stripe account</li>
-      </ul>
-      <p>GoStar Digital LLC is not responsible for payment disputes, chargebacks, refunds, or any financial transactions between Organizers and teams. All payment-related issues must be resolved between the parties involved and/or through Stripe.</p>
+    <h2>4. Team & Participant Responsibilities</h2>
+    <p>Teams and participants who register through GoStar Digital are responsible for:</p>
+    <ul>
+      <li>Providing accurate registration information</li>
+      <li>Communicating directly with the Organizer about event details</li>
+      <li>Following event rules set by the Organizer</li>
+      <li>Understanding that GoStar Digital is not the event organizer</li>
+    </ul>
 
-      <h2>4. Organizer Responsibilities</h2>
-      <p>Organizers are solely responsible for:</p>
-      <ul>
-        <li>The accuracy of their event listings (dates, prices, descriptions, rules)</li>
-        <li>Running their events safely and in compliance with local laws</li>
-        <li>Communicating with registered teams</li>
-        <li>Handling refunds, cancellations, and disputes with teams</li>
-        <li>Obtaining any required permits, insurance, or licenses for their events</li>
-        <li>Compliance with all applicable tax obligations</li>
-      </ul>
+    <h2>5. Subscription Plans</h2>
+    <p>GoStar Digital offers free and paid subscription plans. Free plans include limited features. Paid plans (Pro) include expanded features and can be cancelled at any time. Plan details and pricing are available on the platform.</p>
 
-      <h2>5. Team / Guest Responsibilities</h2>
-      <p>Teams and guests who register through Bookd are responsible for:</p>
-      <ul>
-        <li>Providing accurate registration information</li>
-        <li>Understanding and agreeing to the Organizer's event rules and policies</li>
-        <li>Directing any questions, refund requests, or complaints to the Organizer</li>
-      </ul>
+    <h2>6. Content & Data</h2>
+    <p>Organizers retain ownership of their event content. By using the platform, you grant GoStar Digital a license to display your content on the platform. We may remove content that violates these Terms.</p>
 
-      <h2>6. Fees</h2>
-      <p>Bookd charges <strong>no monthly fees</strong> to Organizers. The platform operates on a 5% fee per transaction, automatically deducted by Stripe. There are no setup fees, hidden charges, or minimum commitments. Organizers may cancel their account at any time.</p>
+    <h2>7. Limitation of Liability</h2>
+    <p>GoStar Digital LLC is not liable for any injuries, damages, losses, or disputes arising from events organized through our platform. We are a technology provider only. Use the platform at your own risk.</p>
 
-      <h2>7. Prohibited Use</h2>
-      <p>You may not use Bookd to:</p>
-      <ul>
-        <li>Create fraudulent or misleading event listings</li>
-        <li>Collect payments for events you do not intend to run</li>
-        <li>Violate any applicable laws or regulations</li>
-        <li>Harass, abuse, or harm other users</li>
-        <li>Interfere with or disrupt the platform</li>
-      </ul>
+    <h2>8. Termination</h2>
+    <p>We may suspend or terminate accounts that violate these Terms. Organizers may delete their accounts at any time.</p>
 
-      <h2>8. Limitation of Liability</h2>
-      <p>GoStar Digital LLC provides Bookd "as is" without warranties of any kind. We are not liable for any damages arising from the use of the platform, including but not limited to: event cancellations, payment disputes, injuries at events, losses due to platform downtime, or any disputes between Organizers and teams. Our total liability shall not exceed the fees paid by you to GoStar in the 12 months preceding the claim.</p>
+    <h2>9. Changes</h2>
+    <p>We may update these Terms. Continued use of the platform constitutes acceptance of updated Terms.</p>
 
-      <h2>9. Termination</h2>
-      <p>We may suspend or terminate your account at any time for violation of these Terms. You may delete your account at any time by contacting us.</p>
+    <h2>10. Contact</h2>
+    <p>Questions? Contact us at <a href="mailto:hello@gostar.digital">hello@gostar.digital</a></p>
+  </div>
 
-      <h2>10. Changes to Terms</h2>
-      <p>We may update these Terms from time to time. Continued use of Bookd after changes constitutes acceptance of the updated Terms.</p>
+  <div class="es">
+    <h1>Términos de Servicio</h1>
+    <p class="updated">Última actualización: Marzo 2026</p>
 
-      <h2>11. Governing Law</h2>
-      <p>These Terms are governed by the laws of the Commonwealth of Puerto Rico. Any disputes shall be resolved in the courts of San Juan, Puerto Rico.</p>
+    <p>Estos Términos de Servicio ("Términos") rigen tu uso de la plataforma GoStar Digital operada por GoStar Digital LLC ("GoStar", "nosotros") en gostar.digital. Al usar GoStar Digital, aceptas estos Términos.</p>
 
-      <h2>12. Contact</h2>
-      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
-    </div>
+    <h2>1. Rol de la Plataforma</h2>
+    <p>GoStar Digital es <strong>únicamente una plataforma tecnológica</strong>. Proporcionamos herramientas de software que permiten a organizadores de torneos y ligas ("Organizadores") crear eventos, gestionar llaves, aceptar inscripciones de equipos y exhibir talento. GoStar Digital LLC no es un organizador de eventos, liga deportiva, gerente de equipo ni asociación atlética. No organizamos, dirigimos, supervisamos ni tenemos participación alguna en los eventos creados por los Organizadores en nuestra plataforma.</p>
 
-    <!-- SPANISH -->
-    <div class="es">
-      <h1>Términos de Servicio</h1>
-      <p class="updated">Última actualización: enero 2025</p>
+    <h2>2. Cuentas</h2>
+    <p>Para usar GoStar Digital como Organizador, debes crear una cuenta con un correo electrónico válido y contraseña. Eres responsable de mantener la seguridad de tu cuenta y toda la actividad que ocurra bajo ella. Debes tener al menos 18 años para crear una cuenta de Organizador.</p>
 
-      <p>Estos Términos de Servicio ("Términos") gobiernan el uso de la plataforma Bookd operada por GoStar Digital LLC ("GoStar", "nosotros") en bookd.click. Al usar Bookd, aceptas estos Términos.</p>
+    <h2>3. Responsabilidades del Organizador</h2>
+    <p>Los Organizadores son los únicos responsables de:</p>
+    <ul>
+      <li>La precisión de la información del evento (fechas, ubicaciones, formatos, reglas)</li>
+      <li>Cumplimiento con todas las leyes locales, permisos y regulaciones para sus eventos</li>
+      <li>Seguridad y conducta en sus eventos</li>
+      <li>Comunicación con equipos y participantes registrados</li>
+      <li>Cualquier disputa con equipos, jugadores o sedes</li>
+    </ul>
 
-      <h2>1. Rol de la Plataforma</h2>
-      <p>Bookd es una <strong>plataforma tecnológica únicamente</strong>. Proveemos herramientas de software que permiten a organizadores de torneos y operadores de ligas ("Organizadores") crear eventos, aceptar inscripciones de equipos y recibir pagos. GoStar Digital LLC no es un organizador de eventos, liga deportiva, gestor de equipos, ni procesador de pagos. No organizamos, dirigimos, supervisamos ni tenemos ninguna participación en los eventos creados por los Organizadores en nuestra plataforma.</p>
+    <h2>4. Responsabilidades de Equipos y Participantes</h2>
+    <p>Los equipos y participantes que se inscriben a través de GoStar Digital son responsables de:</p>
+    <ul>
+      <li>Proporcionar información de inscripción precisa</li>
+      <li>Comunicarse directamente con el Organizador sobre los detalles del evento</li>
+      <li>Seguir las reglas del evento establecidas por el Organizador</li>
+      <li>Entender que GoStar Digital no es el organizador del evento</li>
+    </ul>
 
-      <h2>2. Cuentas</h2>
-      <p>Para usar Bookd como Organizador, debes crear una cuenta con un correo electrónico válido y contraseña. Eres responsable de mantener la seguridad de tu cuenta y toda la actividad que ocurra en ella. Debes tener al menos 18 años para crear una cuenta de Organizador.</p>
+    <h2>5. Planes de Suscripción</h2>
+    <p>GoStar Digital ofrece planes de suscripción gratuitos y de pago. Los planes gratuitos incluyen funciones limitadas. Los planes de pago (Pro) incluyen funciones ampliadas y se pueden cancelar en cualquier momento. Los detalles y precios de los planes están disponibles en la plataforma.</p>
 
-      <h2>3. Pagos</h2>
-      <p>Todos los pagos en Bookd son procesados a través de <strong>Stripe Connect</strong>. Cuando un equipo se registra y paga por un evento:</p>
-      <ul>
-        <li>El pago va <strong>directamente</strong> del equipo a la cuenta bancaria conectada del Organizador</li>
-        <li>GoStar Digital LLC <strong>nunca retiene, toca, controla ni tiene acceso a ningún fondo</strong></li>
-        <li>Una <strong>comisión de plataforma del 5%</strong> es automáticamente deducida por Stripe antes de que los fondos lleguen al Organizador</li>
-        <li>Las tarifas estándar de procesamiento de Stripe también aplican (establecidas por Stripe, no por GoStar)</li>
-        <li>Los Organizadores son responsables de conectar su propia cuenta de Stripe</li>
-      </ul>
-      <p>GoStar Digital LLC no es responsable de disputas de pago, contracargos, reembolsos, ni de ninguna transacción financiera entre Organizadores y equipos. Todos los problemas relacionados con pagos deben resolverse entre las partes involucradas y/o a través de Stripe.</p>
+    <h2>6. Contenido y Datos</h2>
+    <p>Los Organizadores conservan la propiedad de su contenido de eventos. Al usar la plataforma, otorgas a GoStar Digital una licencia para mostrar tu contenido en la plataforma. Podemos eliminar contenido que viole estos Términos.</p>
 
-      <h2>4. Responsabilidades del Organizador</h2>
-      <p>Los Organizadores son los únicos responsables de:</p>
-      <ul>
-        <li>La exactitud de sus listados de eventos (fechas, precios, descripciones, reglas)</li>
-        <li>Ejecutar sus eventos de forma segura y en cumplimiento con las leyes locales</li>
-        <li>Comunicarse con los equipos registrados</li>
-        <li>Manejar reembolsos, cancelaciones y disputas con equipos</li>
-        <li>Obtener cualquier permiso, seguro o licencia requerida para sus eventos</li>
-        <li>Cumplimiento con todas las obligaciones fiscales aplicables</li>
-      </ul>
+    <h2>7. Limitación de Responsabilidad</h2>
+    <p>GoStar Digital LLC no es responsable de lesiones, daños, pérdidas o disputas que surjan de eventos organizados a través de nuestra plataforma. Somos únicamente un proveedor de tecnología. Usa la plataforma bajo tu propio riesgo.</p>
 
-      <h2>5. Responsabilidades del Equipo / Invitado</h2>
-      <p>Los equipos e invitados que se registran a través de Bookd son responsables de:</p>
-      <ul>
-        <li>Proporcionar información de registro precisa</li>
-        <li>Entender y aceptar las reglas y políticas del evento del Organizador</li>
-        <li>Dirigir cualquier pregunta, solicitud de reembolso o queja al Organizador</li>
-      </ul>
+    <h2>8. Terminación</h2>
+    <p>Podemos suspender o terminar cuentas que violen estos Términos. Los Organizadores pueden eliminar sus cuentas en cualquier momento.</p>
 
-      <h2>6. Tarifas</h2>
-      <p>Bookd no cobra <strong>tarifas mensuales</strong> a los Organizadores. La plataforma opera con una tarifa del 5% por transacción, automáticamente deducida por Stripe. No hay tarifas de configuración, cargos ocultos, ni compromisos mínimos. Los Organizadores pueden cancelar su cuenta en cualquier momento.</p>
+    <h2>9. Cambios</h2>
+    <p>Podemos actualizar estos Términos. El uso continuado de la plataforma constituye la aceptación de los Términos actualizados.</p>
 
-      <h2>7. Uso Prohibido</h2>
-      <p>No puedes usar Bookd para:</p>
-      <ul>
-        <li>Crear listados de eventos fraudulentos o engañosos</li>
-        <li>Cobrar pagos por eventos que no tienes intención de realizar</li>
-        <li>Violar cualquier ley o regulación aplicable</li>
-        <li>Acosar, abusar o dañar a otros usuarios</li>
-        <li>Interferir con o interrumpir la plataforma</li>
-      </ul>
-
-      <h2>8. Limitación de Responsabilidad</h2>
-      <p>GoStar Digital LLC provee Bookd "tal cual" sin garantías de ningún tipo. No somos responsables de ningún daño que surja del uso de la plataforma, incluyendo pero no limitado a: cancelaciones de eventos, disputas de pago, lesiones en eventos, pérdidas por tiempo de inactividad de la plataforma, o cualquier disputa entre Organizadores y equipos. Nuestra responsabilidad total no excederá las tarifas que nos hayas pagado en los 12 meses anteriores a la reclamación.</p>
-
-      <h2>9. Terminación</h2>
-      <p>Podemos suspender o terminar tu cuenta en cualquier momento por violación de estos Términos. Puedes eliminar tu cuenta en cualquier momento contactándonos.</p>
-
-      <h2>10. Cambios a los Términos</h2>
-      <p>Podemos actualizar estos Términos periódicamente. El uso continuado de Bookd después de los cambios constituye aceptación de los Términos actualizados.</p>
-
-      <h2>11. Ley Aplicable</h2>
-      <p>Estos Términos se rigen por las leyes del Estado Libre Asociado de Puerto Rico. Cualquier disputa será resuelta en los tribunales de San Juan, Puerto Rico.</p>
-
-      <h2>12. Contacto</h2>
-      <p>GoStar Digital LLC<br>San Juan, Puerto Rico<br>Email: <a href="mailto:gostardigital@gmail.com">gostardigital@gmail.com</a></p>
-    </div>
-
+    <h2>10. Contacto</h2>
+    <p>¿Preguntas? Contáctanos en <a href="mailto:hello@gostar.digital">hello@gostar.digital</a></p>
   </div>
 </div>
-
 </body>
 </html>

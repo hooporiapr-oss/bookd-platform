@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HOOP$.MONEY</title>
-<link rel="icon" href="/hoops.png">
+<title>GoStar Digital</title>
+<link rel="icon" href="/gostar.png">
 <script>
 var currentLang='en';
-function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('hoops-lang',l)}catch(e){}}
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('gostar-lang',l)}catch(e){}}
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -27,8 +27,8 @@ html[lang="es"] .en{display:none!important}
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-logo{font-weight:800;font-size:1.3rem;color:var(--orange);cursor:pointer}
-.nav-logo span{color:var(--white)}
+.nav-logo{display:block;height:36px;cursor:pointer}
+.nav-logo img{height:36px;width:auto}
 .nav-right{display:flex;align-items:center;gap:12px}
 .lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
 .lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
@@ -50,15 +50,14 @@ html[lang="es"] .en{display:none!important}
 .op-location{color:var(--gray);font-size:.85rem;margin-bottom:8px}
 .op-desc{color:var(--gray);font-size:.9rem;max-width:480px;margin:0 auto}
 
-/* EXPERIENCE CARDS */
+/* EVENT CARDS */
 .exp-list{display:flex;flex-direction:column;gap:16px}
 .exp-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:all .2s}
 .exp-card:hover{border-color:rgba(232,97,26,.2)}
 .exp-info h3{font-size:1rem;font-weight:700;margin-bottom:4px}
 .exp-info .meta{font-size:.8rem;color:var(--gray)}
-.exp-info .meta .price{color:var(--green);font-weight:800;font-size:.95rem;margin-right:8px}
-.book-btn{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:all .2s}
-.book-btn:hover{background:var(--orange-light)}
+.register-btn{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:all .2s}
+.register-btn:hover{background:var(--orange-light)}
 
 /* SUCCESS BANNER */
 .success-banner{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;text-align:center;display:none}
@@ -89,7 +88,7 @@ html[lang="es"] .en{display:none!important}
 
 @media(max-width:600px){
   .exp-card{flex-direction:column;align-items:stretch;text-align:center}
-  .book-btn{width:100%}
+  .register-btn{width:100%}
   .form-row{grid-template-columns:1fr}
 }
 </style>
@@ -98,7 +97,7 @@ html[lang="es"] .en{display:none!important}
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-logo" onclick="window.location.href='/'">HOOP$<span>.MONEY</span></div>
+  <a href="/" class="nav-logo"><img src="/gostar.png" alt="GoStar Digital"></a>
   <div class="nav-right">
     <div class="lang-toggle">
       <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
@@ -117,16 +116,16 @@ html[lang="es"] .en{display:none!important}
   <div class="icon">🏀</div>
   <h2><span class="en">Page Not Found</span><span class="es">Página No Encontrada</span></h2>
   <p><span class="en">This organizer page doesn't exist.</span><span class="es">Esta página de organizador no existe.</span></p>
-  <a href="/" style="margin-top:20px;color:var(--orange);font-weight:700;font-size:.9rem"><span class="en">← Back to HOOP$.MONEY</span><span class="es">← Volver a HOOP$.MONEY</span></a>
+  <a href="/" style="margin-top:20px;color:var(--orange);font-weight:700;font-size:.9rem"><span class="en">← Back to GoStar Digital</span><span class="es">← Volver a GoStar Digital</span></a>
 </div>
 
 <!-- MAIN CONTENT -->
 <div id="content" style="display:none">
   <div class="container">
 
-    <!-- SUCCESS BANNER (after checkout return) -->
+    <!-- SUCCESS BANNER -->
     <div class="success-banner" id="successBanner">
-      <h3><span class="en">✅ Registration Confirmed!</span><span class="es">✅ ¡Registro Confirmado!</span></h3>
+      <h3><span class="en">✅ Registration Confirmed!</span><span class="es">✅ ¡Inscripción Confirmada!</span></h3>
       <p id="successMsg"></p>
     </div>
 
@@ -138,57 +137,57 @@ html[lang="es"] .en{display:none!important}
       <p class="op-desc" id="opDesc"></p>
     </div>
 
-    <!-- EXPERIENCES -->
+    <!-- EVENTS -->
     <div class="exp-list" id="expList"></div>
 
   </div>
 
   <div class="footer">
-    <span class="en">Powered by</span><span class="es">Impulsado por</span> <a href="/">HOOP$.MONEY</a> · <a href="/privacy.html"><span class="en">Privacy</span><span class="es">Privacidad</span></a> · <a href="/terms.html"><span class="en">Terms</span><span class="es">Términos</span></a>
+    <span class="en">Powered by</span><span class="es">Impulsado por</span> <a href="/">GoStar Digital</a> · <a href="/privacy.html"><span class="en">Privacy</span><span class="es">Privacidad</span></a> · <a href="/terms.html"><span class="en">Terms</span><span class="es">Términos</span></a>
   </div>
 </div>
 
-<!-- BOOKING MODAL -->
-<div class="modal-overlay" id="bookModal">
+<!-- REGISTRATION MODAL -->
+<div class="modal-overlay" id="regModal">
 <div class="modal">
   <div class="modal-title"><span class="en">Register Your Team</span><span class="es">Registra Tu Equipo</span></div>
   <div class="modal-sub" id="modalExpName"></div>
-  <div class="msg-error" id="bookError"></div>
-  <div class="msg-success" id="bookSuccess"></div>
-  <input type="hidden" id="bookExpId">
+  <div class="msg-error" id="regError"></div>
+  <div class="msg-success" id="regSuccess"></div>
+  <input type="hidden" id="regExpId">
   <div class="form-group">
     <label class="form-label"><span class="en">Your Name</span><span class="es">Tu Nombre</span></label>
-    <input class="form-input" id="bkName" placeholder="Coach John Smith">
+    <input class="form-input" id="regName" placeholder="Coach John Smith">
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Email</span><span class="es">Correo</span></label>
-    <input class="form-input" id="bkEmail" type="email" placeholder="coach@email.com">
+    <input class="form-input" id="regEmail" type="email" placeholder="coach@email.com">
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Phone</span><span class="es">Teléfono</span></label>
-    <input class="form-input" id="bkPhone" type="tel" placeholder="(787) 555-0123">
+    <input class="form-input" id="regPhone" type="tel" placeholder="(787) 555-0123">
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Team Name</span><span class="es">Nombre del Equipo</span></label>
-    <input class="form-input" id="bkTeam" placeholder="e.g. San Juan Warriors">
+    <input class="form-input" id="regTeam" placeholder="e.g. San Juan Warriors">
   </div>
   <div class="form-row">
     <div class="form-group">
       <label class="form-label"><span class="en">Players</span><span class="es">Jugadores</span></label>
-      <input class="form-input" id="bkCount" type="number" min="1" value="1">
+      <input class="form-input" id="regCount" type="number" min="1" value="1">
     </div>
     <div class="form-group">
       <label class="form-label"><span class="en">Preferred Date</span><span class="es">Fecha Preferida</span></label>
-      <input class="form-input" id="bkDate" type="date">
+      <input class="form-input" id="regDate" type="date">
     </div>
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Notes</span><span class="es">Notas</span></label>
-    <textarea class="form-input" id="bkNotes" rows="2" placeholder="Any special requests..."></textarea>
+    <textarea class="form-input" id="regNotes" rows="2" placeholder="Any special requests..."></textarea>
   </div>
   <div class="form-actions">
-    <button class="btn-cancel" onclick="closeBook()"><span class="en">Cancel</span><span class="es">Cancelar</span></button>
-    <button class="btn-submit" id="bookBtn" onclick="submitBooking()"><span class="en">Submit Registration</span><span class="es">Enviar Registro</span></button>
+    <button class="btn-cancel" onclick="closeReg()"><span class="en">Cancel</span><span class="es">Cancelar</span></button>
+    <button class="btn-submit" id="regBtn" onclick="submitReg()"><span class="en">Submit Registration</span><span class="es">Enviar Inscripción</span></button>
   </div>
 </div>
 </div>
@@ -202,9 +201,8 @@ var allExps=[];
 var selectedExp=null;
 
 (async function init(){
-  try{var sl=localStorage.getItem('hoops-lang');if(sl)setLang(sl)}catch(e){}
+  try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl)}catch(e){}
 
-  // Get slug from URL path
   var slug=window.location.pathname.replace(/^\//,'').replace(/\/$/,'').split('/')[0];
   if(!slug||slug==='operator.html'||slug==='index.html'){
     document.getElementById('loading').style.display='none';
@@ -212,13 +210,11 @@ var selectedExp=null;
     return;
   }
 
-  // Check for booking success return
   var params=new URLSearchParams(window.location.search);
-  var bookedStatus=params.get('booked');
-  var bookedTeam=params.get('team');
+  var regStatus=params.get('registered');
+  var regTeam=params.get('team');
 
   try{
-    // Load Supabase
     await new Promise(function(res,rej){
       var s=document.createElement('script');
       s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
@@ -227,7 +223,6 @@ var selectedExp=null;
     });
     sb=window.supabase.createClient(SB_URL,SB_KEY);
 
-    // Load operator by slug
     var{data:op}=await sb.from('operators').select('*').eq('slug',slug).eq('active',true).maybeSingle();
     if(!op){
       document.getElementById('loading').style.display='none';
@@ -235,30 +230,26 @@ var selectedExp=null;
       return;
     }
     operatorData=op;
-    document.title=op.business_name+' — HOOP$.MONEY';
+    document.title=op.business_name+' — GoStar Digital';
 
-    // Populate profile
     document.getElementById('opAvatar').textContent=op.avatar_emoji||'🏀';
     document.getElementById('opName').textContent=op.business_name;
     document.getElementById('opLoc').textContent=op.location||'';
     document.getElementById('opDesc').textContent=op.description||'';
 
-    // Load experiences
     var{data:exps}=await sb.from('experiences').select('*').eq('operator_id',op.id).eq('active',true).order('sort_order',{ascending:true});
     allExps=exps||[];
     renderExps();
 
-    // Show success banner if returning from checkout
-    if(bookedStatus==='success'){
+    if(regStatus==='success'){
       var banner=document.getElementById('successBanner');
       banner.style.display='block';
-      document.getElementById('successMsg').innerHTML=bookedTeam
-        ?('<span class="en">'+decodeURIComponent(bookedTeam)+' is registered! The organizer will be in touch.</span><span class="es">¡'+decodeURIComponent(bookedTeam)+' está registrado! El organizador se comunicará contigo.</span>')
-        :'<span class="en">Your registration is confirmed!</span><span class="es">¡Tu registro está confirmado!</span>';
+      document.getElementById('successMsg').innerHTML=regTeam
+        ?('<span class="en">'+decodeURIComponent(regTeam)+' is registered! The organizer will be in touch.</span><span class="es">¡'+decodeURIComponent(regTeam)+' está inscrito! El organizador se comunicará contigo.</span>')
+        :'<span class="en">Your registration is confirmed!</span><span class="es">¡Tu inscripción está confirmada!</span>';
       setLang(currentLang);
     }
 
-    // Show content
     document.getElementById('loading').style.display='none';
     document.getElementById('content').style.display='';
 
@@ -277,86 +268,58 @@ function renderExps(){
     return;
   }
   list.innerHTML=allExps.map(function(e){
-    var price=parseFloat(e.price_per_person)>0?'$'+parseFloat(e.price_per_person).toFixed(0):(currentLang==='es'?'Gratis':'Free');
     return '<div class="exp-card">'+
       '<div class="exp-info">'+
         '<h3><span class="en">'+(e.title_en||'—')+'</span><span class="es">'+(e.title_es||e.title_en||'—')+'</span></h3>'+
-        '<div class="meta"><span class="price">'+price+'</span>'+
+        '<div class="meta">'+
         '<span>'+e.duration_minutes+' min · '+(e.min_guests||1)+'-'+(e.max_guests||16)+' <span class="en">players</span><span class="es">jugadores</span></span></div>'+
         (e.description_en?'<p style="margin-top:6px;font-size:.8rem;color:var(--gray)"><span class="en">'+esc(e.description_en)+'</span>'+(e.description_es?'<span class="es">'+esc(e.description_es)+'</span>':'')+'</p>':'')+
       '</div>'+
-      '<button class="book-btn" onclick="openBook(\''+e.id+'\')"><span class="en">Book</span><span class="es">Reservar</span></button>'+
+      '<button class="register-btn" onclick="openReg(\''+e.id+'\')"><span class="en">Register</span><span class="es">Inscribir</span></button>'+
     '</div>';
   }).join('');
   setLang(currentLang);
 }
 
-function openBook(expId){
+function openReg(expId){
   selectedExp=allExps.find(function(e){return e.id===expId});
   if(!selectedExp)return;
-  document.getElementById('bookExpId').value=expId;
+  document.getElementById('regExpId').value=expId;
   var title=currentLang==='es'?(selectedExp.title_es||selectedExp.title_en):selectedExp.title_en;
-  document.getElementById('modalExpName').innerHTML='<strong>'+esc(title)+'</strong> — $'+(selectedExp.price_per_person||0);
-  document.getElementById('bookError').style.display='none';
-  document.getElementById('bookSuccess').style.display='none';
-  document.getElementById('bookBtn').disabled=false;
-  document.getElementById('bookBtn').innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Registro</span>';
-  // Clear form
-  ['bkName','bkEmail','bkPhone','bkTeam','bkNotes'].forEach(function(id){document.getElementById(id).value=''});
-  document.getElementById('bkCount').value='1';
-  document.getElementById('bkDate').value='';
-  document.getElementById('bookModal').classList.add('open');
+  document.getElementById('modalExpName').innerHTML='<strong>'+esc(title)+'</strong>';
+  document.getElementById('regError').style.display='none';
+  document.getElementById('regSuccess').style.display='none';
+  document.getElementById('regBtn').disabled=false;
+  document.getElementById('regBtn').innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Inscripción</span>';
+  ['regName','regEmail','regPhone','regTeam','regNotes'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('regCount').value='1';
+  document.getElementById('regDate').value='';
+  document.getElementById('regModal').classList.add('open');
   setLang(currentLang);
 }
 
-function closeBook(){document.getElementById('bookModal').classList.remove('open')}
-document.getElementById('bookModal').addEventListener('click',function(e){if(e.target===this)closeBook()});
+function closeReg(){document.getElementById('regModal').classList.remove('open')}
+document.getElementById('regModal').addEventListener('click',function(e){if(e.target===this)closeReg()});
 
-async function submitBooking(){
-  var name=document.getElementById('bkName').value.trim();
-  var email=document.getElementById('bkEmail').value.trim();
-  var phone=document.getElementById('bkPhone').value.trim();
-  var team=document.getElementById('bkTeam').value.trim();
-  var count=parseInt(document.getElementById('bkCount').value)||1;
-  var date=document.getElementById('bkDate').value;
-  var notes=document.getElementById('bkNotes').value.trim();
+async function submitReg(){
+  var name=document.getElementById('regName').value.trim();
+  var email=document.getElementById('regEmail').value.trim();
+  var phone=document.getElementById('regPhone').value.trim();
+  var team=document.getElementById('regTeam').value.trim();
+  var count=parseInt(document.getElementById('regCount').value)||1;
+  var date=document.getElementById('regDate').value;
+  var notes=document.getElementById('regNotes').value.trim();
 
-  if(!name){showBookError(currentLang==='es'?'Nombre requerido':'Name is required');return}
-  if(!email||!email.includes('@')){showBookError(currentLang==='es'?'Correo inválido':'Valid email required');return}
-  if(!team){showBookError(currentLang==='es'?'Nombre del equipo requerido':'Team name is required');return}
+  if(!name){showRegError(currentLang==='es'?'Nombre requerido':'Name is required');return}
+  if(!email||!email.includes('@')){showRegError(currentLang==='es'?'Correo inválido':'Valid email required');return}
+  if(!team){showRegError(currentLang==='es'?'Nombre del equipo requerido':'Team name is required');return}
 
-  var btn=document.getElementById('bookBtn');
+  var btn=document.getElementById('regBtn');
   btn.disabled=true;
   btn.textContent=currentLang==='es'?'Enviando...':'Submitting...';
-  document.getElementById('bookError').style.display='none';
+  document.getElementById('regError').style.display='none';
 
   try{
-    var totalAmount=(selectedExp.price_per_person||0)*count;
-
-    // If paid experience + operator has Stripe → go through checkout API
-    if(totalAmount>0&&operatorData.stripe_account_id&&operatorData.stripe_charges_enabled){
-      var res=await fetch('/api/checkout',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          experience_id:selectedExp.id,
-          team_name:team,
-          guest_name:name,
-          guest_email:email,
-          guest_phone:phone,
-          guest_count:count
-        })
-      });
-      var data=await res.json();
-      if(data.url){
-        window.location.href=data.url;
-        return;
-      } else {
-        throw new Error(data.error||'Checkout failed');
-      }
-    }
-
-    // Free or no Stripe → direct booking in Supabase
     var{error}=await sb.from('bookings').insert({
       operator_id:operatorData.id,
       experience_id:selectedExp.id,
@@ -367,28 +330,28 @@ async function submitBooking(){
       guest_count:count,
       booking_date:date||null,
       notes:notes,
-      total_amount:totalAmount,
-      payment_status:totalAmount>0?'pending':'paid',
+      total_amount:0,
+      payment_status:'paid',
       status:'pending'
     });
     if(error)throw error;
 
-    document.getElementById('bookSuccess').innerHTML=currentLang==='es'
-      ?'¡Registro exitoso! El organizador se comunicará contigo.'
+    document.getElementById('regSuccess').innerHTML=currentLang==='es'
+      ?'¡Inscripción exitosa! El organizador se comunicará contigo.'
       :'Registration submitted! The organizer will be in touch.';
-    document.getElementById('bookSuccess').style.display='block';
+    document.getElementById('regSuccess').style.display='block';
     btn.style.display='none';
 
   }catch(e){
     btn.disabled=false;
-    btn.innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Registro</span>';
+    btn.innerHTML='<span class="en">Submit Registration</span><span class="es">Enviar Inscripción</span>';
     setLang(currentLang);
-    showBookError(e.message||'Something went wrong');
+    showRegError(e.message||'Something went wrong');
   }
 }
 
-function showBookError(msg){
-  var el=document.getElementById('bookError');
+function showRegError(msg){
+  var el=document.getElementById('regError');
   el.textContent=msg;
   el.style.display='block';
 }

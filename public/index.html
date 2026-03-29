@@ -60,8 +60,8 @@ a{text-decoration:none;color:inherit}
 /* STATS BAR */
 .stats-bar{padding:40px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
 .stats-featured{text-align:center;margin-bottom:28px}
-.stats-featured .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--orange);margin-bottom:2px}
-.stats-featured .stat-label{font-size:.85rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stats-featured .stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);color:var(--orange);margin-bottom:2px}
+.stats-featured .stat-label{font-size:clamp(.7rem,2vw,.85rem);color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
 .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--orange);margin-bottom:4px}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
@@ -115,11 +115,21 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 .footer-copy{font-size:.7rem;color:#555}
 
 @media(max-width:768px){
-  .stats-grid{grid-template-columns:repeat(3,1fr);gap:16px}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:12px}
+  .stats-grid .stat-num{font-size:1.6rem}
   .steps,.audience-grid{grid-template-columns:1fr}
   .features-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;text-align:center}
   .nav-link{display:none}
+  .hero{padding:80px 20px 40px}
+  .hero h1{font-size:clamp(2.5rem,8vw,5rem)}
+  .hero-sub{font-size:.95rem}
+  .hero-logo{max-width:200px}
+  .hero-btns{flex-direction:column;width:100%;max-width:300px}
+  .btn-p,.btn-s{width:100%;text-align:center}
+  .cta-box{padding:40px 24px}
+  .section{padding:48px 0}
+  .section-title{font-size:1.5rem}
 }
 </style>
 </head>
@@ -130,6 +140,8 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/gostar.png" alt="GoStar Digital"></a>
     <div class="nav-right">
+      <a href="/scouts.html" class="nav-link en">Scout Hub</a>
+      <a href="/scouts.html" class="nav-link es">Scout Hub</a>
       <a href="/login.html" class="nav-link en">Log In</a>
       <a href="/login.html" class="nav-link es">Entrar</a>
       <div class="lang-toggle">

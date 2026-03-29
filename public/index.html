@@ -59,7 +59,10 @@ a{text-decoration:none;color:inherit}
 
 /* STATS BAR */
 .stats-bar{padding:40px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stats-featured{text-align:center;margin-bottom:28px}
+.stats-featured .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--orange);margin-bottom:2px}
+.stats-featured .stat-label{font-size:.85rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
 .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--orange);margin-bottom:4px}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 
@@ -112,7 +115,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 .footer-copy{font-size:.7rem;color:#555}
 
 @media(max-width:768px){
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:16px}
   .steps,.audience-grid{grid-template-columns:1fr}
   .features-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;text-align:center}
@@ -153,8 +156,11 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="wrap">
+    <div class="stats-featured">
+      <div class="stat-num"><span class="en">3Man Basketball</span><span class="es">Baloncesto 3Man</span></div>
+      <div class="stat-label"><span class="en">& 5Man Formats</span><span class="es">y Formatos 5Man</span></div>
+    </div>
     <div class="stats-grid">
-      <div><div class="stat-num">3v3</div><div class="stat-label"><span class="en">& 5v5 Formats</span><span class="es">y Formatos 5v5</span></div></div>
       <div><div class="stat-num">EN/ES</div><div class="stat-label"><span class="en">Bilingual</span><span class="es">Bilingüe</span></div></div>
       <div><div class="stat-num">PR + US</div><div class="stat-label"><span class="en">Markets</span><span class="es">Mercados</span></div></div>
       <div><div class="stat-num">FREE</div><div class="stat-label"><span class="en">To Start</span><span class="es">Para Comenzar</span></div></div>
@@ -235,7 +241,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
       <div class="audience-card">
         <div class="audience-icon">🏀</div>
         <h4><span class="en">Tournament Organizers</span><span class="es">Organizadores de Torneos</span></h4>
-        <p><span class="en">3v3, 5v5, youth, adult — any format. Registration, brackets, rosters, all in one place.</span><span class="es">3v3, 5v5, juvenil, adulto — cualquier formato. Inscripción, llaves, rosters, todo en un lugar.</span></p>
+        <p><span class="en">3Man, 5Man, youth, adult — any format. Registration, brackets, rosters, all in one place.</span><span class="es">3Man, 5Man, juvenil, adulto — cualquier formato. Inscripción, llaves, rosters, todo en un lugar.</span></p>
       </div>
       <div class="audience-card">
         <div class="audience-icon">📋</div>

@@ -220,7 +220,7 @@ html[lang="es"] .en{display:none!important}
   <div id="tierBanner" class="tier-banner free-tier">
     <div class="tier-banner-text">
       <h3><span class="en">🏀 Free Plan</span><span class="es">🏀 Plan Gratis</span></h3>
-      <p><span class="en">2 events + 1 tournament. Upgrade to Pro for unlimited.</span><span class="es">2 eventos + 1 torneo. Actualiza a Pro para ilimitado.</span></p>
+      <p><span class="en">2 events + 1 tournament. Unlock Pro for $49/tournament.</span><span class="es">2 eventos + 1 torneo. Desbloquea Pro por $49/torneo.</span></p>
     </div>
     <button class="upgrade-btn" onclick="openUpgradeModal()"><span class="en">Upgrade to Pro</span><span class="es">Actualizar a Pro</span></button>
   </div>
@@ -496,7 +496,7 @@ html[lang="es"] .en{display:none!important}
     <li><span class="en">Season leaderboards</span><span class="es">Tabla de posiciones</span></li>
     <li><span class="en">Scout visibility</span><span class="es">Visibilidad para scouts</span></li>
     <li><span class="en">Custom branding</span><span class="es">Marca personalizada</span></li>
-  </ul><div class="upgrade-price">$19 <span>/ <span class="en">month</span><span class="es">mes</span></span></div></div>
+  </ul><div class="upgrade-price">$49 <span>/ <span class="en">tournament</span><span class="es">torneo</span></span></div></div>
   <button class="upgrade-btn" style="width:100%;padding:16px;font-size:1rem" onclick="handleUpgrade()"><span class="en">Get Pro Now</span><span class="es">Obtener Pro</span></button>
   <button class="btn-cancel" style="width:100%;margin-top:8px" onclick="closeAllModals()"><span class="en">Maybe Later</span><span class="es">Quizás Después</span></button>
 </div></div>
@@ -517,6 +517,10 @@ function maxTrn(){return isPro()?999:1}
 
 document.addEventListener('DOMContentLoaded',async function(){
   try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl)}catch(e){}
+  // Check for pro upgrade return
+  var params=new URLSearchParams(window.location.search);
+  if(params.get('pro')==='success') setTimeout(function(){showToast('🎉 Pro activated! Welcome to the big league.','success')},500);
+  if(params.get('pro')==='cancelled') setTimeout(function(){showToast('Upgrade cancelled','error')},500);
   try{
     var client=loadSB();
     var{data:{user}}=await client.auth.getUser();
@@ -819,7 +823,21 @@ async function saveScore(){
 // MODALS
 function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('show')})}
 function openUpgradeModal(){document.getElementById('upgradeModal').classList.add('show');setLang(currentLang)}
-function handleUpgrade(){window.open('https://gostar.digital/upgrade','_blank');closeAllModals()}
+async function handleUpgrade(){
+  var btn=document.querySelector('#upgradeModal .upgrade-btn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Redirigiendo...':'Redirecting...';
+  try{
+    var res=await fetch('/api/unlock-pro',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({operator_id:op.id,tournament_id:''})
+    });
+    var data=await res.json();
+    if(data.url){window.location.href=data.url}
+    else{showToast(data.error||'Failed','error');btn.disabled=false;btn.innerHTML='<span class="en">Get Pro Now</span><span class="es">Obtener Pro</span>'}
+  }catch(e){showToast('Connection error','error');btn.disabled=false;btn.innerHTML='<span class="en">Get Pro Now</span><span class="es">Obtener Pro</span>'}
+}
 
 // SETTINGS
 function initSettings(){

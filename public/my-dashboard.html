@@ -15,20 +15,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:none;font-family:inherit}
 input,select,textarea{font-family:inherit}
-
-:root{
-  --black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;
-  --orange:#e8611a;--orange-light:#f4832f;
-  --white:#fafaf9;--gray:#8a8a8a;
-  --green:#22c55e;--red:#ef4444;--yellow:#eab308;
-  --purple:#a855f7;--blue:#3b82f6;
-}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a855f7;--blue:#3b82f6}
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
-
 .layout{display:flex;min-height:100vh}
 
-/* SIDEBAR */
 .sidebar{width:260px;background:var(--black2);border-right:1px solid rgba(255,255,255,.06);padding:24px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50}
 .sidebar-logo{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
 .sidebar-logo img{height:38px;width:auto}
@@ -49,12 +40,10 @@ html[lang="es"] .en{display:none!important}
 .tier-badge.free{background:rgba(255,255,255,.06);color:var(--gray)}
 .tier-badge.pro{background:rgba(168,85,247,.15);color:var(--purple)}
 
-/* MAIN */
 .main{margin-left:260px;flex:1;padding:32px 40px;min-height:100vh}
 .page-title{font-size:1.8rem;font-weight:800;margin-bottom:8px}
 .page-sub{color:var(--gray);font-size:.9rem;margin-bottom:32px}
 
-/* TIER BANNER */
 .tier-banner{padding:20px 24px;border-radius:12px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .tier-banner.free-tier{background:linear-gradient(135deg,rgba(232,97,26,.12),rgba(168,85,247,.08));border:1px solid rgba(232,97,26,.2)}
 .tier-banner.pro-tier{background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(168,85,247,.04));border:1px solid rgba(168,85,247,.3)}
@@ -65,53 +54,81 @@ html[lang="es"] .en{display:none!important}
 .upgrade-btn{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;background:linear-gradient(135deg,var(--orange),var(--purple));color:#fff}
 .upgrade-btn:hover{opacity:.9;transform:translateY(-1px)}
 
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
 .stat-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .stat-value{font-size:1.6rem;font-weight:800;color:var(--white)}
 .stat-sub{font-size:.7rem;color:var(--gray);margin-top:4px}
 
-/* SECTIONS */
 .section{margin-bottom:32px}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
 .section-title{font-size:1.1rem;font-weight:700}
 .add-btn{padding:8px 20px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer;transition:all .2s}
 .add-btn:hover{background:var(--orange-light)}
 .add-btn:disabled{opacity:.4;cursor:not-allowed}
-.add-btn:disabled:hover{background:var(--orange)}
 .limit-text{font-size:.75rem;color:var(--gray);font-weight:600}
 
-/* EVENT CARDS */
-.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.exp-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px;transition:all .2s}
-.exp-card:hover{border-color:rgba(232,97,26,.3)}
-.exp-title{font-size:1rem;font-weight:700;margin-bottom:6px}
-.exp-meta{font-size:.8rem;color:var(--gray);margin-bottom:4px}
-.exp-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:8px}
-.exp-status.active{background:rgba(34,197,94,.12);color:var(--green)}
-.exp-status.inactive{background:rgba(255,255,255,.06);color:var(--gray)}
-.exp-actions{display:flex;gap:8px;margin-top:12px}
-.exp-actions button{padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;border:none;cursor:pointer}
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px;transition:all .2s}
+.card:hover{border-color:rgba(232,97,26,.3)}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px}
+.card-meta{font-size:.8rem;color:var(--gray);margin-bottom:4px}
+.card-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:8px}
+.card-status.active{background:rgba(34,197,94,.12);color:var(--green)}
+.card-status.draft{background:rgba(234,179,8,.12);color:var(--yellow)}
+.card-status.completed{background:rgba(168,85,247,.12);color:var(--purple)}
+.card-actions{display:flex;gap:8px;margin-top:12px}
+.card-actions button{padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;border:none;cursor:pointer}
+.btn-manage{background:rgba(232,97,26,.12);color:var(--orange)}
+.btn-manage:hover{background:rgba(232,97,26,.2)}
 .btn-edit{background:rgba(255,255,255,.06);color:var(--gray)}
 .btn-edit:hover{background:rgba(255,255,255,.1);color:var(--white)}
 .btn-delete{background:rgba(239,68,68,.1);color:var(--red)}
 .btn-delete:hover{background:rgba(239,68,68,.2)}
 
-/* PRO FEATURE CARDS */
-.pro-feature{background:var(--black2);border:1px dashed rgba(168,85,247,.3);border-radius:12px;padding:24px;text-align:center;opacity:.7}
-.pro-feature .icon{font-size:2rem;margin-bottom:8px}
-.pro-feature h4{font-size:.9rem;font-weight:700;color:var(--purple);margin-bottom:4px}
-.pro-feature p{font-size:.8rem;color:var(--gray);margin-bottom:12px}
-.pro-badge-sm{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;background:rgba(168,85,247,.12);color:var(--purple)}
+/* TOURNAMENT DETAIL */
+.tourney-detail{display:none}
+.back-btn{font-size:.85rem;color:var(--orange);font-weight:700;cursor:pointer;margin-bottom:16px;display:inline-block}
+.back-btn:hover{text-decoration:underline}
+.tourney-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.tourney-name{font-size:1.4rem;font-weight:800}
+.tourney-tabs{display:flex;gap:4px;margin-bottom:24px}
+.t-tab{padding:8px 20px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--black2);color:var(--gray);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s}
+.t-tab:hover{color:var(--white)}
+.t-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.t-panel{display:none}
+.t-panel.active{display:block}
 
-/* REGISTRATIONS TABLE */
+/* TEAMS LIST */
+.team-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:10px;margin-bottom:8px}
+.team-item .seed{width:30px;font-size:.8rem;font-weight:800;color:var(--orange)}
+.team-item .name{flex:1;font-weight:600;font-size:.9rem}
+.team-item .record{font-size:.8rem;color:var(--gray);margin-right:12px}
+.team-item .actions{display:flex;gap:6px}
+.team-item .actions button{padding:4px 10px;border-radius:5px;font-size:.7rem;font-weight:700;border:none;cursor:pointer}
+
+/* BRACKET */
+.bracket-scroll{overflow-x:auto;padding-bottom:16px}
+.rounds{display:flex;gap:24px}
+.round{min-width:220px;flex-shrink:0}
+.round-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray);margin-bottom:12px;text-align:center}
+.match-box{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-bottom:12px;cursor:pointer;transition:border-color .2s}
+.match-box:hover{border-color:rgba(232,97,26,.3)}
+.match-box.completed{border-color:rgba(34,197,94,.15)}
+.match-slot{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:.85rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,.04)}
+.match-slot:last-child{border-bottom:none}
+.match-slot.winner{color:var(--orange);font-weight:800}
+.match-slot.tbd{color:#555;font-style:italic}
+.match-slot .score{font-weight:800;min-width:24px;text-align:right}
+.match-num{font-size:.6rem;color:#444;text-align:center;padding:2px;font-weight:600}
+
+/* TABLE */
 .table-wrap{overflow-x:auto}
 .data-table{width:100%;border-collapse:collapse}
 .data-table th{text-align:left;padding:12px 16px;font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(255,255,255,.06)}
 .data-table td{padding:12px 16px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
 
-/* EMPTY STATE */
 .empty-state{text-align:center;padding:48px 24px;color:var(--gray)}
 .empty-state .icon{font-size:2.5rem;margin-bottom:12px}
 .empty-state p{font-size:.9rem}
@@ -131,7 +148,6 @@ html[lang="es"] .en{display:none!important}
 .btn-save{flex:1;padding:12px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer}
 .btn-save:hover{background:var(--orange-light)}
 
-/* UPGRADE MODAL */
 .upgrade-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(232,97,26,.08));border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:24px;margin-bottom:16px}
 .upgrade-card h3{font-size:1.1rem;font-weight:800;color:var(--purple);margin-bottom:12px}
 .upgrade-card ul{list-style:none;padding:0}
@@ -140,13 +156,14 @@ html[lang="es"] .en{display:none!important}
 .upgrade-price{font-size:2rem;font-weight:900;color:var(--white);margin:16px 0 4px}
 .upgrade-price span{font-size:.9rem;font-weight:500;color:var(--gray)}
 
-/* MOBILE */
 @media(max-width:768px){
   .sidebar{display:none}
   .main{margin-left:0;padding:20px 16px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
-  .exp-grid{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
+  .rounds{flex-direction:column;gap:16px}
+  .round{min-width:auto}
   .mobile-header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--black2);border-bottom:1px solid rgba(255,255,255,.06);margin:-20px -16px 20px}
   .mobile-logo img{height:32px;width:auto}
   .mobile-lang{display:flex;gap:4px}
@@ -161,7 +178,6 @@ html[lang="es"] .en{display:none!important}
 </head>
 <body>
 
-<!-- MOBILE HEADER -->
 <div class="mobile-header">
   <div class="mobile-logo"><img src="/gostar.png" alt="GoStar Digital"></div>
   <div class="mobile-lang">
@@ -176,6 +192,7 @@ html[lang="es"] .en{display:none!important}
   <nav class="sidebar-nav">
     <div class="sidebar-item active" onclick="showSection('overview')"><span class="icon">📊</span><span class="en">Overview</span><span class="es">Resumen</span></div>
     <div class="sidebar-item" onclick="showSection('events')"><span class="icon">🏀</span><span class="en">Events</span><span class="es">Eventos</span></div>
+    <div class="sidebar-item" onclick="showSection('tournaments')"><span class="icon">🏆</span><span class="en">Tournaments</span><span class="es">Torneos</span></div>
     <div class="sidebar-item" onclick="showSection('registrations')"><span class="icon">📋</span><span class="en">Registrations</span><span class="es">Inscripciones</span></div>
     <div class="sidebar-item" onclick="window.location.href='/'"><span class="icon">🏠</span><span class="en">Home</span><span class="es">Inicio</span></div>
     <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span><span class="en">Logout</span><span class="es">Salir</span></div>
@@ -199,11 +216,10 @@ html[lang="es"] .en{display:none!important}
   <h1 class="page-title"><span class="en">Dashboard</span><span class="es">Panel</span></h1>
   <p class="page-sub"><span class="en">Welcome back</span><span class="es">Bienvenido</span></p>
 
-  <!-- TIER BANNER -->
   <div id="tierBanner" class="tier-banner free-tier">
     <div class="tier-banner-text">
-      <h3><span class="en">🏀 Free Plan — 2 Events</span><span class="es">🏀 Plan Gratis — 2 Eventos</span></h3>
-      <p><span class="en">Upgrade to Pro for unlimited events, tournaments, live scoring & more.</span><span class="es">Actualiza a Pro para eventos ilimitados, torneos, puntaje en vivo y más.</span></p>
+      <h3><span class="en">🏀 Free Plan</span><span class="es">🏀 Plan Gratis</span></h3>
+      <p><span class="en">2 events + 1 tournament. Upgrade to Pro for unlimited.</span><span class="es">2 eventos + 1 torneo. Actualiza a Pro para ilimitado.</span></p>
     </div>
     <button class="upgrade-btn" onclick="openUpgradeModal()"><span class="en">Upgrade to Pro</span><span class="es">Actualizar a Pro</span></button>
   </div>
@@ -214,15 +230,18 @@ html[lang="es"] .en{display:none!important}
       <div class="stat-card">
         <div class="stat-label"><span class="en">Plan</span><span class="es">Plan</span></div>
         <div class="stat-value" id="statPlan">Free</div>
-        <div class="stat-sub" id="statPlanSub"><span class="en">2 events max</span><span class="es">Máximo 2 eventos</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label"><span class="en">Events</span><span class="es">Eventos</span></div>
-        <div class="stat-value" id="statExperiences">0 / 2</div>
+        <div class="stat-value" id="statEvents">0 / 2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><span class="en">Tournaments</span><span class="es">Torneos</span></div>
+        <div class="stat-value" id="statTournaments">0 / 1</div>
       </div>
       <div class="stat-card">
         <div class="stat-label"><span class="en">Registrations</span><span class="es">Inscripciones</span></div>
-        <div class="stat-value" id="statBookings">0</div>
+        <div class="stat-value" id="statRegs">0</div>
       </div>
     </div>
   </div>
@@ -231,29 +250,74 @@ html[lang="es"] .en{display:none!important}
   <div id="sec-events">
     <div class="section">
       <div class="section-header">
-        <div>
-          <span class="section-title"><span class="en">Your Events</span><span class="es">Tus Eventos</span></span>
-          <span class="limit-text" id="expLimitText"></span>
-        </div>
-        <button class="add-btn" id="addExpBtn" onclick="openModal('exp')">+ <span class="en">Add Event</span><span class="es">Agregar Evento</span></button>
+        <div><span class="section-title"><span class="en">Your Events</span><span class="es">Tus Eventos</span></span><span class="limit-text" id="evtLimit"></span></div>
+        <button class="add-btn" id="addEvtBtn" onclick="openEvtModal()">+ <span class="en">Add Event</span><span class="es">Agregar Evento</span></button>
       </div>
-      <div class="exp-grid" id="expGrid">
-        <div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div>
+      <div class="card-grid" id="evtGrid"><div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div></div>
+    </div>
+  </div>
+
+  <!-- TOURNAMENTS LIST -->
+  <div id="sec-tournaments" style="display:none">
+    <div class="section">
+      <div class="section-header">
+        <div><span class="section-title"><span class="en">Your Tournaments</span><span class="es">Tus Torneos</span></span><span class="limit-text" id="trnLimit"></span></div>
+        <button class="add-btn" id="addTrnBtn" onclick="openTrnModal()">+ <span class="en">Create Tournament</span><span class="es">Crear Torneo</span></button>
       </div>
-      <!-- PRO FEATURES PREVIEW -->
-      <div id="proPreview" style="margin-top:24px;display:none">
-        <div style="font-size:.9rem;font-weight:700;color:var(--gray);margin-bottom:12px"><span class="en">Unlock with Pro</span><span class="es">Desbloquea con Pro</span></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
-          <div class="pro-feature"><div class="icon">🏆</div><h4><span class="en">Tournaments</span><span class="es">Torneos</span></h4><p><span class="en">Brackets, seeding, live scores</span><span class="es">Llaves, siembra, puntaje en vivo</span></p><span class="pro-badge-sm">PRO</span></div>
-          <div class="pro-feature"><div class="icon">📊</div><h4><span class="en">Season Leaderboards</span><span class="es">Tabla de Posiciones</span></h4><p><span class="en">Track teams across events</span><span class="es">Seguimiento entre eventos</span></p><span class="pro-badge-sm">PRO</span></div>
-          <div class="pro-feature"><div class="icon">🎨</div><h4><span class="en">Custom Branding</span><span class="es">Marca Personalizada</span></h4><p><span class="en">Logo, colors, your style</span><span class="es">Logo, colores, tu estilo</span></p><span class="pro-badge-sm">PRO</span></div>
-        </div>
+      <div class="card-grid" id="trnGrid"><div class="empty-state"><div class="icon">🏆</div><p><span class="en">No tournaments yet</span><span class="es">No hay torneos</span></p></div></div>
+    </div>
+  </div>
+
+  <!-- TOURNAMENT DETAIL -->
+  <div id="sec-tourney-detail" class="tourney-detail">
+    <span class="back-btn" onclick="closeTourneyDetail()">← <span class="en">Back to Tournaments</span><span class="es">Volver a Torneos</span></span>
+    <div class="tourney-header-bar">
+      <div>
+        <div class="tourney-name" id="tdName"></div>
+        <div class="card-meta" id="tdMeta"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="add-btn" onclick="openAddTeamModal()">+ <span class="en">Add Team</span><span class="es">Agregar Equipo</span></button>
+        <button class="add-btn" style="background:var(--green)" onclick="generateBracket()" id="genBracketBtn"><span class="en">Generate Bracket</span><span class="es">Generar Llave</span></button>
+      </div>
+    </div>
+    <div class="tourney-tabs">
+      <button class="t-tab active" onclick="showTTab('teams',this)"><span class="en">Teams</span><span class="es">Equipos</span></button>
+      <button class="t-tab" onclick="showTTab('bracket',this)"><span class="en">Bracket</span><span class="es">Llave</span></button>
+      <button class="t-tab" onclick="showTTab('schedule',this)"><span class="en">Schedule</span><span class="es">Calendario</span></button>
+    </div>
+
+    <!-- TEAMS TAB -->
+    <div class="t-panel active" id="tp-teams">
+      <div id="teamsList"><div class="empty-state"><div class="icon">👥</div><p><span class="en">No teams added yet</span><span class="es">No hay equipos</span></p></div></div>
+    </div>
+
+    <!-- BRACKET TAB -->
+    <div class="t-panel" id="tp-bracket">
+      <div class="bracket-scroll"><div class="rounds" id="bracketRounds"><div class="empty-state"><div class="icon">🏆</div><p><span class="en">Generate bracket after adding teams</span><span class="es">Genera la llave después de agregar equipos</span></p></div></div></div>
+    </div>
+
+    <!-- SCHEDULE TAB -->
+    <div class="t-panel" id="tp-schedule">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr>
+            <th><span class="en">Game</span><span class="es">Juego</span></th>
+            <th><span class="en">Round</span><span class="es">Ronda</span></th>
+            <th><span class="en">Team A</span><span class="es">Equipo A</span></th>
+            <th><span class="en">Score</span><span class="es">Marcador</span></th>
+            <th><span class="en">Team B</span><span class="es">Equipo B</span></th>
+            <th><span class="en">Status</span><span class="es">Estado</span></th>
+            <th></th>
+          </tr></thead>
+          <tbody id="schedBody"><tr><td colspan="7" class="empty-state"><div class="icon">📋</div><p><span class="en">No games yet</span><span class="es">Sin juegos</span></p></td></tr></tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <!-- REGISTRATIONS -->
-  <div id="sec-registrations">
+  <div id="sec-registrations" style="display:none">
     <div class="section">
       <div class="section-header">
         <div class="section-title"><span class="en">Recent Registrations</span><span class="es">Inscripciones Recientes</span></div>
@@ -267,94 +331,88 @@ html[lang="es"] .en{display:none!important}
             <th><span class="en">Players</span><span class="es">Jugadores</span></th>
             <th><span class="en">Date</span><span class="es">Fecha</span></th>
           </tr></thead>
-          <tbody id="bookingsBody">
-            <tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr>
-          </tbody>
+          <tbody id="regsBody"><tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr></tbody>
         </table>
       </div>
     </div>
   </div>
-
 </main>
 </div>
 
-<!-- ADD EVENT MODAL -->
-<div class="modal-overlay" id="expModal">
-<div class="modal">
-  <div class="modal-title" id="expModalTitle"><span class="en">Add Event</span><span class="es">Agregar Evento</span></div>
-  <input type="hidden" id="editExpId">
-  <div class="form-group">
-    <label class="form-label"><span class="en">Event Name (English)</span><span class="es">Nombre del Evento (Inglés)</span></label>
-    <input class="form-input" id="expTitleEn" placeholder="e.g. 3v3 Basketball Tournament">
-  </div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Event Name (Spanish)</span><span class="es">Nombre del Evento (Español)</span></label>
-    <input class="form-input" id="expTitleEs" placeholder="e.g. Torneo de Baloncesto 3v3">
-  </div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Description (English)</span><span class="es">Descripción (Inglés)</span></label>
-    <textarea class="form-input" id="expDescEn" rows="3" placeholder="Describe the event..."></textarea>
-  </div>
-  <div class="form-group">
-    <label class="form-label"><span class="en">Description (Spanish)</span><span class="es">Descripción (Español)</span></label>
-    <textarea class="form-input" id="expDescEs" rows="3" placeholder="Describe el evento..."></textarea>
+<!-- EVENT MODAL -->
+<div class="modal-overlay" id="evtModal"><div class="modal">
+  <div class="modal-title" id="evtModalTitle"><span class="en">Add Event</span><span class="es">Agregar Evento</span></div>
+  <input type="hidden" id="editEvtId">
+  <div class="form-group"><label class="form-label"><span class="en">Event Name (English)</span><span class="es">Nombre (Inglés)</span></label><input class="form-input" id="evtTitleEn" placeholder="e.g. 3v3 Summer Shootout"></div>
+  <div class="form-group"><label class="form-label"><span class="en">Event Name (Spanish)</span><span class="es">Nombre (Español)</span></label><input class="form-input" id="evtTitleEs" placeholder="e.g. Torneo de Verano 3v3"></div>
+  <div class="form-group"><label class="form-label"><span class="en">Description (English)</span><span class="es">Descripción (Inglés)</span></label><textarea class="form-input" id="evtDescEn" rows="2"></textarea></div>
+  <div class="form-group"><label class="form-label"><span class="en">Description (Spanish)</span><span class="es">Descripción (Español)</span></label><textarea class="form-input" id="evtDescEs" rows="2"></textarea></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Duration (min)</span><span class="es">Duración (min)</span></label><input class="form-input" id="evtDuration" type="number" placeholder="120"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Format</span><span class="es">Formato</span></label><select class="form-input" id="evtFormat"><option value="3v3">3v3</option><option value="5v5">5v5</option><option value="1v1">1v1</option><option value="showcase">Showcase</option><option value="camp">Camp</option><option value="league">League</option></select></div>
   </div>
   <div class="form-row">
-    <div class="form-group">
-      <label class="form-label"><span class="en">Duration (min)</span><span class="es">Duración (min)</span></label>
-      <input class="form-input" id="expDuration" type="number" placeholder="120">
-    </div>
-    <div class="form-group">
-      <label class="form-label"><span class="en">Format</span><span class="es">Formato</span></label>
-      <select class="form-input" id="expFormat">
-        <option value="3v3">3v3</option>
-        <option value="5v5">5v5</option>
-        <option value="1v1">1v1</option>
-        <option value="showcase">Showcase</option>
-        <option value="camp">Camp</option>
-        <option value="league">League</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
+    <div class="form-group"><label class="form-label"><span class="en">Min Players</span><span class="es">Mín Jugadores</span></label><input class="form-input" id="evtMin" type="number" placeholder="4"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Max Players</span><span class="es">Máx Jugadores</span></label><input class="form-input" id="evtMax" type="number" placeholder="16"></div>
+  </div>
+  <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="saveEvent()"><span class="en">Save</span><span class="es">Guardar</span></button></div>
+</div></div>
+
+<!-- TOURNAMENT MODAL -->
+<div class="modal-overlay" id="trnModal"><div class="modal">
+  <div class="modal-title"><span class="en">Create Tournament</span><span class="es">Crear Torneo</span></div>
+  <div class="form-group"><label class="form-label"><span class="en">Tournament Name</span><span class="es">Nombre del Torneo</span></label><input class="form-input" id="trnName" placeholder="e.g. Summer Slam 2026"></div>
+  <div class="form-group"><label class="form-label"><span class="en">Slug (URL)</span><span class="es">Slug (URL)</span></label><input class="form-input" id="trnSlug" placeholder="e.g. summer-slam-2026" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Format</span><span class="es">Formato</span></label><select class="form-input" id="trnFormat"><option value="single_elimination">Single Elimination</option><option value="double_elimination">Double Elimination</option><option value="round_robin">Round Robin</option></select></div>
+    <div class="form-group"><label class="form-label"><span class="en">Max Teams</span><span class="es">Máx Equipos</span></label><input class="form-input" id="trnMax" type="number" value="8"></div>
   </div>
   <div class="form-row">
-    <div class="form-group">
-      <label class="form-label"><span class="en">Min Players</span><span class="es">Mín Jugadores</span></label>
-      <input class="form-input" id="expMin" type="number" placeholder="4">
-    </div>
-    <div class="form-group">
-      <label class="form-label"><span class="en">Max Players</span><span class="es">Máx Jugadores</span></label>
-      <input class="form-input" id="expMax" type="number" placeholder="16">
-    </div>
+    <div class="form-group"><label class="form-label"><span class="en">Start Date</span><span class="es">Fecha Inicio</span></label><input class="form-input" id="trnStart" type="date"></div>
+    <div class="form-group"><label class="form-label"><span class="en">End Date</span><span class="es">Fecha Fin</span></label><input class="form-input" id="trnEnd" type="date"></div>
   </div>
-  <div class="form-actions">
-    <button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button>
-    <button class="btn-save" id="expSaveBtn" onclick="saveEvent()"><span class="en">Save</span><span class="es">Guardar</span></button>
+  <div class="form-group"><label class="form-label"><span class="en">Location</span><span class="es">Ubicación</span></label><input class="form-input" id="trnLocation" placeholder="e.g. Coliseo Roberto Clemente, San Juan"></div>
+  <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="saveTournament()"><span class="en">Create</span><span class="es">Crear</span></button></div>
+</div></div>
+
+<!-- ADD TEAM MODAL -->
+<div class="modal-overlay" id="teamModal"><div class="modal">
+  <div class="modal-title"><span class="en">Add Team</span><span class="es">Agregar Equipo</span></div>
+  <div class="form-group"><label class="form-label"><span class="en">Team Name</span><span class="es">Nombre del Equipo</span></label><input class="form-input" id="teamName" placeholder="e.g. San Juan Warriors"></div>
+  <div class="form-group"><label class="form-label"><span class="en">Coach Name</span><span class="es">Nombre del Coach</span></label><input class="form-input" id="teamCoach" placeholder="Coach name"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Coach Email</span><span class="es">Email del Coach</span></label><input class="form-input" id="teamEmail" type="email" placeholder="coach@email.com"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Coach Phone</span><span class="es">Teléfono</span></label><input class="form-input" id="teamPhone" type="tel" placeholder="(787) 555-0123"></div>
   </div>
-</div>
-</div>
+  <div class="form-group"><label class="form-label"><span class="en">Seed #</span><span class="es">Siembra #</span></label><input class="form-input" id="teamSeed" type="number" placeholder="Auto-assigned if blank"></div>
+  <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="saveTeam()"><span class="en">Add Team</span><span class="es">Agregar</span></button></div>
+</div></div>
+
+<!-- SCORE MODAL -->
+<div class="modal-overlay" id="scoreModal"><div class="modal">
+  <div class="modal-title"><span class="en">Enter Score</span><span class="es">Ingresar Marcador</span></div>
+  <input type="hidden" id="scoreMatchId">
+  <div class="form-row" style="margin-bottom:16px">
+    <div style="text-align:center"><div class="form-label" id="scoreTeamA">Team A</div><input class="form-input" id="scoreA" type="number" min="0" placeholder="0" style="text-align:center;font-size:1.5rem;font-weight:800"></div>
+    <div style="text-align:center"><div class="form-label" id="scoreTeamB">Team B</div><input class="form-input" id="scoreB" type="number" min="0" placeholder="0" style="text-align:center;font-size:1.5rem;font-weight:800"></div>
+  </div>
+  <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="saveScore()"><span class="en">Save Score</span><span class="es">Guardar</span></button></div>
+</div></div>
 
 <!-- UPGRADE MODAL -->
-<div class="modal-overlay" id="upgradeModal">
-<div class="modal" style="max-width:480px">
+<div class="modal-overlay" id="upgradeModal"><div class="modal" style="max-width:480px">
   <div class="modal-title"><span class="en">🚀 Upgrade to Pro</span><span class="es">🚀 Actualizar a Pro</span></div>
-  <div class="upgrade-card">
-    <h3>Pro Plan</h3>
-    <ul>
-      <li><span class="en">Unlimited events</span><span class="es">Eventos ilimitados</span></li>
-      <li><span class="en">Tournament brackets & management</span><span class="es">Llaves y gestión de torneos</span></li>
-      <li><span class="en">Live scoring</span><span class="es">Puntaje en vivo</span></li>
-      <li><span class="en">Season leaderboards</span><span class="es">Tabla de posiciones por temporada</span></li>
-      <li><span class="en">Custom branding (logo & colors)</span><span class="es">Marca personalizada (logo y colores)</span></li>
-      <li><span class="en">Scout visibility</span><span class="es">Visibilidad para scouts</span></li>
-    </ul>
-    <div class="upgrade-price">$29 <span>/ <span class="en">month</span><span class="es">mes</span></span></div>
-  </div>
-  <p style="font-size:.8rem;color:var(--gray);margin-bottom:16px;text-align:center"><span class="en">Cancel anytime. No long-term contracts.</span><span class="es">Cancela cuando quieras. Sin contratos.</span></p>
-  <button class="upgrade-btn" style="width:100%;padding:16px;font-size:1rem" onclick="handleUpgrade()"><span class="en">Get Pro Now</span><span class="es">Obtener Pro Ahora</span></button>
+  <div class="upgrade-card"><h3>Pro Plan</h3><ul>
+    <li><span class="en">Unlimited events</span><span class="es">Eventos ilimitados</span></li>
+    <li><span class="en">Unlimited tournaments</span><span class="es">Torneos ilimitados</span></li>
+    <li><span class="en">Live scoring</span><span class="es">Puntaje en vivo</span></li>
+    <li><span class="en">Season leaderboards</span><span class="es">Tabla de posiciones</span></li>
+    <li><span class="en">Scout visibility</span><span class="es">Visibilidad para scouts</span></li>
+    <li><span class="en">Custom branding</span><span class="es">Marca personalizada</span></li>
+  </ul><div class="upgrade-price">$29 <span>/ <span class="en">month</span><span class="es">mes</span></span></div></div>
+  <button class="upgrade-btn" style="width:100%;padding:16px;font-size:1rem" onclick="handleUpgrade()"><span class="en">Get Pro Now</span><span class="es">Obtener Pro</span></button>
   <button class="btn-cancel" style="width:100%;margin-top:8px" onclick="closeAllModals()"><span class="en">Maybe Later</span><span class="es">Quizás Después</span></button>
-</div>
-</div>
+</div></div>
 
 <div class="toast" id="toast"></div>
 
@@ -362,284 +420,243 @@ html[lang="es"] .en{display:none!important}
 <script>
 var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
 var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
-var sbClient=null;
-var isLive=true;
+var sb=null,op=null,events=[],tourneys=[],regs=[];
+var curTourney=null,curTeams=[],curMatches=[];
 
-function loadSB(){
-  return new Promise(function(resolve,reject){
-    if(!isLive){reject(new Error('Preview mode'));return}
-    if(sbClient){resolve(sbClient);return}
-    sbClient=window.supabase.createClient(SB_URL,SB_KEY);
-    resolve(sbClient);
-  });
-}
-
-var operatorData=null;
-var experiencesData=[];
-var bookingsData=[];
-
-function isPro(){return operatorData&&operatorData.tier==='pro'}
-function maxExp(){return isPro()?999:(operatorData?operatorData.max_experiences||2:2)}
+function loadSB(){if(sb)return sb;sb=window.supabase.createClient(SB_URL,SB_KEY);return sb}
+function isPro(){return op&&op.tier==='pro'}
+function maxEvt(){return isPro()?999:(op?op.max_experiences||2:2)}
+function maxTrn(){return isPro()?999:1}
 
 document.addEventListener('DOMContentLoaded',async function(){
   try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl)}catch(e){}
-  if(!isLive){console.log('Preview mode');return}
-
   try{
-    var client=await loadSB();
+    var client=loadSB();
     var{data:{user}}=await client.auth.getUser();
     if(!user){window.location.href='/login.html';return}
-
     var{data:ops}=await client.from('operators').select('*').eq('auth_user_id',user.id);
-    if(!ops||ops.length===0){window.location.href='/signup.html';return}
-    operatorData=ops[0];
-
-    document.getElementById('sidebarName').textContent=operatorData.business_name||'Organizer';
-    document.getElementById('sidebarEmail').textContent=operatorData.email||'';
-    document.getElementById('sidebarAvatar').textContent=operatorData.avatar_emoji||'🏀';
+    if(!ops||!ops.length){window.location.href='/signup.html';return}
+    op=ops[0];
+    document.getElementById('sidebarName').textContent=op.business_name||'Organizer';
+    document.getElementById('sidebarEmail').textContent=op.email||'';
+    document.getElementById('sidebarAvatar').textContent=op.avatar_emoji||'🏀';
     updateTierUI();
-
-    await loadEvents(client);
-    await loadRegistrations(client);
-    updateStats();
-  }catch(e){console.error('Init error:',e)}
+    await loadAll();
+  }catch(e){console.error(e)}
 });
 
+async function loadAll(){await loadEvents();await loadTournaments();await loadRegs();updateStats()}
+
+async function loadEvents(){var{data}=await loadSB().from('experiences').select('*').eq('operator_id',op.id).order('sort_order');events=data||[];renderEvents()}
+async function loadTournaments(){var{data}=await loadSB().from('tournaments').select('*').eq('operator_id',op.id).order('created_at',{ascending:false});tourneys=data||[];renderTournaments()}
+async function loadRegs(){var{data}=await loadSB().from('bookings').select('*,experiences(title_en)').eq('operator_id',op.id).order('created_at',{ascending:false}).limit(50);regs=data||[];renderRegs()}
+
 function updateTierUI(){
-  var badge=document.getElementById('tierBadge');
-  var banner=document.getElementById('tierBanner');
-  var planStat=document.getElementById('statPlan');
-  var planSub=document.getElementById('statPlanSub');
-  var proPreview=document.getElementById('proPreview');
-
-  if(isPro()){
-    badge.textContent='PRO';
-    badge.className='tier-badge pro';
-    banner.className='tier-banner pro-tier';
-    banner.innerHTML='<div class="tier-banner-text"><h3 style="color:var(--purple)"><span class="en">⭐ Pro Plan Active</span><span class="es">⭐ Plan Pro Activo</span></h3><p><span class="en">Unlimited events, tournaments, and more.</span><span class="es">Eventos ilimitados, torneos y más.</span></p></div>';
-    planStat.textContent='Pro';
-    planStat.style.color='var(--purple)';
-    planSub.innerHTML='<span class="en">Unlimited</span><span class="es">Ilimitado</span>';
-    proPreview.style.display='none';
-  } else {
-    badge.textContent='FREE';
-    badge.className='tier-badge free';
-    proPreview.style.display='block';
-  }
-  setLang(currentLang);
-}
-
-async function loadEvents(client){
-  if(!client)client=await loadSB();
-  var{data}=await client.from('experiences').select('*').eq('operator_id',operatorData.id).order('sort_order',{ascending:true});
-  experiencesData=data||[];
-  renderEvents();
-  updateExpButton();
-}
-
-async function loadRegistrations(client){
-  if(!client)client=await loadSB();
-  var{data}=await client.from('bookings').select('*,experiences(title_en,title_es)').eq('operator_id',operatorData.id).order('created_at',{ascending:false}).limit(50);
-  bookingsData=data||[];
-  renderRegistrations();
-}
-
-function updateExpButton(){
-  var btn=document.getElementById('addExpBtn');
-  var limitText=document.getElementById('expLimitText');
-  var max=maxExp();
-  var count=experiencesData.length;
-
-  if(!isPro()){
-    limitText.innerHTML=' <span class="en">('+count+'/'+max+')</span><span class="es">('+count+'/'+max+')</span>';
-    if(count>=max){
-      btn.disabled=true;
-      btn.onclick=function(){openUpgradeModal()};
-      btn.innerHTML='🔒 <span class="en">Upgrade to Add More</span><span class="es">Actualiza para Agregar</span>';
-    } else {
-      btn.disabled=false;
-      btn.onclick=function(){openModal('exp')};
-      btn.innerHTML='+ <span class="en">Add Event</span><span class="es">Agregar Evento</span>';
-    }
-  } else {
-    limitText.textContent='';
-    btn.disabled=false;
-    btn.onclick=function(){openModal('exp')};
-    btn.innerHTML='+ <span class="en">Add Event</span><span class="es">Agregar Evento</span>';
-  }
-  setLang(currentLang);
-}
-
-function renderEvents(){
-  var grid=document.getElementById('expGrid');
-  if(experiencesData.length===0){
-    grid.innerHTML='<div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div>';
-    setLang(currentLang);return;
-  }
-  grid.innerHTML=experiencesData.map(function(e){
-    return '<div class="exp-card">'+
-      '<div class="exp-title">'+esc(e.title_en)+'</div>'+
-      (e.title_es?'<div class="exp-meta" style="font-style:italic">'+esc(e.title_es)+'</div>':'')+
-      '<div class="exp-meta">'+e.duration_minutes+' min · '+e.min_guests+'-'+e.max_guests+' players</div>'+
-      '<span class="exp-status '+(e.active?'active':'inactive')+'">'+(e.active?'Active':'Inactive')+'</span>'+
-      '<div class="exp-actions">'+
-        '<button class="btn-edit" onclick="editEvent(\''+e.id+'\')"><span class="en">Edit</span><span class="es">Editar</span></button>'+
-        '<button class="btn-delete" onclick="deleteEvent(\''+e.id+'\')"><span class="en">Delete</span><span class="es">Eliminar</span></button>'+
-      '</div>'+
-    '</div>';
-  }).join('');
-  setLang(currentLang);
-}
-
-function renderRegistrations(){
-  var tbody=document.getElementById('bookingsBody');
-  if(bookingsData.length===0){
-    tbody.innerHTML='<tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr>';
-    setLang(currentLang);return;
-  }
-  tbody.innerHTML=bookingsData.map(function(b){
-    var expName=b.experiences?b.experiences.title_en:'—';
-    var date=b.created_at?new Date(b.created_at).toLocaleDateString():'—';
-    return '<tr>'+
-      '<td>'+esc(b.team_name||b.guest_name||'—')+'</td>'+
-      '<td>'+esc(expName)+'</td>'+
-      '<td>'+esc(b.guest_email||'—')+'</td>'+
-      '<td>'+(b.guest_count||1)+'</td>'+
-      '<td>'+date+'</td></tr>';
-  }).join('');
+  var badge=document.getElementById('tierBadge'),banner=document.getElementById('tierBanner');
+  if(isPro()){badge.textContent='PRO';badge.className='tier-badge pro';banner.className='tier-banner pro-tier';banner.innerHTML='<div class="tier-banner-text"><h3 style="color:var(--purple)"><span class="en">⭐ Pro Plan Active</span><span class="es">⭐ Plan Pro Activo</span></h3><p><span class="en">Unlimited events & tournaments.</span><span class="es">Eventos y torneos ilimitados.</span></p></div>';document.getElementById('statPlan').textContent='Pro';document.getElementById('statPlan').style.color='var(--purple)'}
+  else{badge.textContent='FREE';badge.className='tier-badge free'}
   setLang(currentLang);
 }
 
 function updateStats(){
-  var max=maxExp();
-  document.getElementById('statExperiences').textContent=experiencesData.length+(isPro()?'':' / '+max);
-  document.getElementById('statBookings').textContent=bookingsData.length;
+  document.getElementById('statEvents').textContent=events.length+(isPro()?'':' / '+maxEvt());
+  document.getElementById('statTournaments').textContent=tourneys.length+(isPro()?'':' / '+maxTrn());
+  document.getElementById('statRegs').textContent=regs.length;
+  // Update buttons
+  var eb=document.getElementById('addEvtBtn'),el=document.getElementById('evtLimit');
+  if(!isPro()&&events.length>=maxEvt()){eb.disabled=true;eb.innerHTML='🔒 Upgrade';eb.onclick=openUpgradeModal;el.textContent=' ('+events.length+'/'+maxEvt()+')'}
+  else{eb.disabled=false;eb.innerHTML='+ <span class="en">Add Event</span><span class="es">Agregar Evento</span>';eb.onclick=openEvtModal;el.textContent=isPro()?'':' ('+events.length+'/'+maxEvt()+')'}
+  var tb=document.getElementById('addTrnBtn'),tl=document.getElementById('trnLimit');
+  if(!isPro()&&tourneys.length>=maxTrn()){tb.disabled=true;tb.innerHTML='🔒 Upgrade';tb.onclick=openUpgradeModal;tl.textContent=' ('+tourneys.length+'/'+maxTrn()+')'}
+  else{tb.disabled=false;tb.innerHTML='+ <span class="en">Create Tournament</span><span class="es">Crear Torneo</span>';tb.onclick=openTrnModal;tl.textContent=isPro()?'':' ('+tourneys.length+'/'+maxTrn()+')'}
+  setLang(currentLang);
+}
+
+function renderEvents(){
+  var g=document.getElementById('evtGrid');
+  if(!events.length){g.innerHTML='<div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div>';setLang(currentLang);return}
+  g.innerHTML=events.map(function(e){return '<div class="card"><div class="card-title">'+esc(e.title_en)+'</div>'+(e.title_es?'<div class="card-meta" style="font-style:italic">'+esc(e.title_es)+'</div>':'')+'<div class="card-meta">'+e.duration_minutes+' min · '+e.min_guests+'-'+e.max_guests+' players</div><span class="card-status active">Active</span><div class="card-actions"><button class="btn-edit" onclick="editEvent(\''+e.id+'\')">Edit</button><button class="btn-delete" onclick="deleteEvent(\''+e.id+'\')">Delete</button></div></div>'}).join('');
+  setLang(currentLang);
+}
+
+function renderTournaments(){
+  var g=document.getElementById('trnGrid');
+  if(!tourneys.length){g.innerHTML='<div class="empty-state"><div class="icon">🏆</div><p><span class="en">No tournaments yet</span><span class="es">No hay torneos</span></p></div>';setLang(currentLang);return}
+  g.innerHTML=tourneys.map(function(t){
+    var statusClass=t.status==='completed'?'completed':t.status==='active'?'active':'draft';
+    var date=t.start_date?new Date(t.start_date).toLocaleDateString():'';
+    return '<div class="card"><div class="card-title">'+esc(t.name_en)+'</div><div class="card-meta">'+(t.location||'')+' · '+date+'</div><div class="card-meta">'+t.format.replace(/_/g,' ')+' · max '+t.max_teams+' teams</div><span class="card-status '+statusClass+'">'+t.status.toUpperCase()+'</span><div class="card-actions"><button class="btn-manage" onclick="openTourneyDetail(\''+t.id+'\')">Manage</button><button class="btn-delete" onclick="deleteTourney(\''+t.id+'\')">Delete</button></div></div>'
+  }).join('');
+  setLang(currentLang);
+}
+
+function renderRegs(){
+  var tb=document.getElementById('regsBody');
+  if(!regs.length){tb.innerHTML='<tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr>';setLang(currentLang);return}
+  tb.innerHTML=regs.map(function(r){return '<tr><td>'+esc(r.team_name||r.guest_name||'—')+'</td><td>'+esc(r.experiences?r.experiences.title_en:'—')+'</td><td>'+esc(r.guest_email||'—')+'</td><td>'+(r.guest_count||1)+'</td><td>'+(r.created_at?new Date(r.created_at).toLocaleDateString():'—')+'</td></tr>'}).join('');
+  setLang(currentLang);
 }
 
 // SECTIONS
 function showSection(name){
   document.querySelectorAll('.sidebar-item').forEach(function(el){el.classList.remove('active')});
-  if(event&&event.currentTarget) event.currentTarget.classList.add('active');
-  ['overview','events','registrations'].forEach(function(s){
-    var el=document.getElementById('sec-'+s);
-    if(el) el.style.display='none';
-  });
-  if(name==='overview'){
-    document.getElementById('sec-overview').style.display='';
-    document.getElementById('sec-events').style.display='';
-    document.getElementById('sec-registrations').style.display='';
-  } else {
-    var t=document.getElementById('sec-'+name);
-    if(t) t.style.display='';
+  if(event&&event.currentTarget)event.currentTarget.classList.add('active');
+  ['overview','events','tournaments','registrations'].forEach(function(s){var el=document.getElementById('sec-'+s);if(el)el.style.display='none'});
+  document.getElementById('sec-tourney-detail').style.display='none';
+  if(name==='overview'){document.getElementById('sec-overview').style.display='';document.getElementById('sec-events').style.display='';document.getElementById('sec-tournaments').style.display=''}
+  else{var t=document.getElementById('sec-'+name);if(t)t.style.display=''}
+}
+
+// EVENT CRUD
+function openEvtModal(){if(!isPro()&&events.length>=maxEvt()){openUpgradeModal();return}document.getElementById('editEvtId').value='';document.getElementById('evtModalTitle').innerHTML='<span class="en">Add Event</span><span class="es">Agregar Evento</span>';['evtTitleEn','evtTitleEs','evtDescEn','evtDescEs','evtDuration','evtMin','evtMax'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('evtFormat').value='3v3';document.getElementById('evtModal').classList.add('show');setLang(currentLang)}
+async function saveEvent(){var t=document.getElementById('evtTitleEn').value.trim();if(!t){showToast('Name required','error');return}var p={operator_id:op.id,title_en:t,title_es:document.getElementById('evtTitleEs').value.trim(),description_en:document.getElementById('evtDescEn').value.trim(),description_es:document.getElementById('evtDescEs').value.trim(),price_per_person:0,duration_minutes:parseInt(document.getElementById('evtDuration').value)||120,min_guests:parseInt(document.getElementById('evtMin').value)||4,max_guests:parseInt(document.getElementById('evtMax').value)||16,active:true};var eid=document.getElementById('editEvtId').value;try{if(eid){var{error}=await loadSB().from('experiences').update(p).eq('id',eid);if(error)throw error;showToast('Updated!','success')}else{p.sort_order=events.length;var{error}=await loadSB().from('experiences').insert(p);if(error)throw error;showToast('Created!','success')}closeAllModals();await loadEvents();updateStats()}catch(e){showToast(e.message,'error')}}
+function editEvent(id){var e=events.find(function(x){return x.id===id});if(!e)return;document.getElementById('editEvtId').value=id;document.getElementById('evtModalTitle').innerHTML='<span class="en">Edit Event</span><span class="es">Editar Evento</span>';document.getElementById('evtTitleEn').value=e.title_en||'';document.getElementById('evtTitleEs').value=e.title_es||'';document.getElementById('evtDescEn').value=e.description_en||'';document.getElementById('evtDescEs').value=e.description_es||'';document.getElementById('evtDuration').value=e.duration_minutes||'';document.getElementById('evtMin').value=e.min_guests||'';document.getElementById('evtMax').value=e.max_guests||'';document.getElementById('evtModal').classList.add('show');setLang(currentLang)}
+async function deleteEvent(id){if(!confirm('Delete this event?'))return;try{await loadSB().from('experiences').delete().eq('id',id);showToast('Deleted','success');await loadEvents();updateStats()}catch(e){showToast(e.message,'error')}}
+
+// TOURNAMENT CRUD
+function openTrnModal(){if(!isPro()&&tourneys.length>=maxTrn()){openUpgradeModal();return}document.getElementById('trnModal').classList.add('show');setLang(currentLang)}
+async function saveTournament(){var n=document.getElementById('trnName').value.trim(),s=document.getElementById('trnSlug').value.trim();if(!n){showToast('Name required','error');return}if(!s||s.length<3){showToast('Slug required (3+ chars)','error');return}try{var{error}=await loadSB().from('tournaments').insert({operator_id:op.id,name_en:n,slug:s,format:document.getElementById('trnFormat').value,max_teams:parseInt(document.getElementById('trnMax').value)||8,start_date:document.getElementById('trnStart').value||null,end_date:document.getElementById('trnEnd').value||null,location:document.getElementById('trnLocation').value.trim(),status:'draft'});if(error)throw error;showToast('Tournament created!','success');closeAllModals();await loadTournaments();updateStats()}catch(e){showToast(e.message,'error')}}
+async function deleteTourney(id){if(!confirm('Delete this tournament and all its data?'))return;try{await loadSB().from('tournaments').delete().eq('id',id);showToast('Deleted','success');await loadTournaments();updateStats()}catch(e){showToast(e.message,'error')}}
+
+// TOURNAMENT DETAIL
+async function openTourneyDetail(id){
+  curTourney=tourneys.find(function(t){return t.id===id});if(!curTourney)return;
+  document.getElementById('tdName').textContent=curTourney.name_en;
+  document.getElementById('tdMeta').textContent=(curTourney.location||'')+(curTourney.start_date?' · '+new Date(curTourney.start_date).toLocaleDateString():'')+' · '+curTourney.format.replace(/_/g,' ');
+  ['overview','events','tournaments','registrations'].forEach(function(s){var el=document.getElementById('sec-'+s);if(el)el.style.display='none'});
+  document.getElementById('sec-tourney-detail').style.display='block';
+  await loadTourneyTeams();await loadTourneyMatches();
+  showTTab('teams',document.querySelector('.t-tab'));
+  setLang(currentLang);
+}
+function closeTourneyDetail(){document.getElementById('sec-tourney-detail').style.display='none';showSection('tournaments')}
+function showTTab(id,btn){document.querySelectorAll('.t-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.t-panel').forEach(function(p){p.classList.remove('active')});document.getElementById('tp-'+id).classList.add('active')}
+
+// TEAMS
+async function loadTourneyTeams(){var{data}=await loadSB().from('tournament_teams').select('*').eq('tournament_id',curTourney.id).order('seed');curTeams=data||[];renderTeams()}
+function renderTeams(){
+  var el=document.getElementById('teamsList');
+  if(!curTeams.length){el.innerHTML='<div class="empty-state"><div class="icon">👥</div><p><span class="en">No teams added yet</span><span class="es">No hay equipos</span></p></div>';setLang(currentLang);return}
+  el.innerHTML=curTeams.map(function(t,i){return '<div class="team-item"><span class="seed">#'+(t.seed||i+1)+'</span><span class="name">'+esc(t.team_name)+'</span><span class="record">'+t.wins+'W-'+t.losses+'L</span><div class="actions"><button class="btn-delete" onclick="removeTeam(\''+t.id+'\')">✕</button></div></div>'}).join('');
+  setLang(currentLang);
+}
+function openAddTeamModal(){if(curTeams.length>=curTourney.max_teams){showToast('Max teams reached','error');return}['teamName','teamCoach','teamEmail','teamPhone','teamSeed'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('teamModal').classList.add('show');setLang(currentLang)}
+async function saveTeam(){var n=document.getElementById('teamName').value.trim();if(!n){showToast('Team name required','error');return}try{var{error}=await loadSB().from('tournament_teams').insert({tournament_id:curTourney.id,team_name:n,coach_name:document.getElementById('teamCoach').value.trim(),coach_email:document.getElementById('teamEmail').value.trim(),coach_phone:document.getElementById('teamPhone').value.trim(),seed:parseInt(document.getElementById('teamSeed').value)||curTeams.length+1});if(error)throw error;showToast('Team added!','success');closeAllModals();await loadTourneyTeams()}catch(e){showToast(e.message,'error')}}
+async function removeTeam(id){if(!confirm('Remove this team?'))return;try{await loadSB().from('tournament_teams').delete().eq('id',id);showToast('Removed','success');await loadTourneyTeams()}catch(e){showToast(e.message,'error')}}
+
+// BRACKET GENERATION
+async function generateBracket(){
+  if(curTeams.length<2){showToast('Need at least 2 teams','error');return}
+  if(curMatches.length>0){if(!confirm('This will replace existing bracket. Continue?'))return;await loadSB().from('tournament_matches').delete().eq('tournament_id',curTourney.id)}
+  // Single elimination bracket
+  var teams=curTeams.slice().sort(function(a,b){return(a.seed||99)-(b.seed||99)});
+  var n=teams.length,rounds=Math.ceil(Math.log2(n)),totalSlots=Math.pow(2,rounds);
+  // Pad with byes
+  while(teams.length<totalSlots)teams.push(null);
+  var matches=[],matchNum=1;
+  // Round 1
+  for(var i=0;i<totalSlots;i+=2){
+    var tA=teams[i],tB=teams[i+1];
+    var m={tournament_id:curTourney.id,round:1,match_number:matchNum++,team_a_id:tA?tA.id:null,team_b_id:tB?tB.id:null,status:'scheduled'};
+    // Auto-advance byes
+    if(tA&&!tB){m.winner_id=tA.id;m.score_a=1;m.score_b=0;m.status='completed'}
+    else if(!tA&&tB){m.winner_id=tB.id;m.score_a=0;m.score_b=1;m.status='completed'}
+    matches.push(m);
   }
+  // Future rounds (empty)
+  for(var r=2;r<=rounds;r++){var gamesInRound=Math.pow(2,rounds-r);for(var j=0;j<gamesInRound;j++){matches.push({tournament_id:curTourney.id,round:r,match_number:matchNum++,team_a_id:null,team_b_id:null,status:'scheduled'})}}
+  try{var{error}=await loadSB().from('tournament_matches').insert(matches);if(error)throw error;await loadSB().from('tournaments').update({status:'active'}).eq('id',curTourney.id);curTourney.status='active';showToast('Bracket generated!','success');await loadTourneyMatches();showTTab('bracket',document.querySelectorAll('.t-tab')[1])}catch(e){showToast(e.message,'error')}
 }
 
-// MODALS
-function openModal(type){
-  if(type==='exp'){
-    if(!isPro()&&experiencesData.length>=maxExp()){
-      openUpgradeModal();
-      return;
-    }
-    document.getElementById('editExpId').value='';
-    document.getElementById('expModalTitle').innerHTML='<span class="en">Add Event</span><span class="es">Agregar Evento</span>';
-    ['expTitleEn','expTitleEs','expDescEn','expDescEs','expDuration','expMin','expMax'].forEach(function(id){document.getElementById(id).value=''});
-    document.getElementById('expFormat').value='3v3';
-    document.getElementById('expModal').classList.add('show');
-  }
+// MATCHES
+async function loadTourneyMatches(){var{data}=await loadSB().from('tournament_matches').select('*').eq('tournament_id',curTourney.id).order('round').order('match_number');curMatches=data||[];renderBracket();renderSchedule()}
+
+function teamNameById(id){if(!id)return'TBD';var t=curTeams.find(function(x){return x.id===id});return t?t.team_name:'TBD'}
+
+function renderBracket(){
+  var el=document.getElementById('bracketRounds');
+  if(!curMatches.length){el.innerHTML='<div class="empty-state"><div class="icon">🏆</div><p><span class="en">Generate bracket after adding teams</span><span class="es">Genera la llave después de agregar equipos</span></p></div>';setLang(currentLang);return}
+  var rounds={};curMatches.forEach(function(m){if(!rounds[m.round])rounds[m.round]=[];rounds[m.round].push(m)});
+  var rNums=Object.keys(rounds).sort(function(a,b){return a-b});
+  el.innerHTML=rNums.map(function(rn,ri){
+    var label=ri===rNums.length-1?'Final':ri===rNums.length-2&&rNums.length>2?'Semifinal':'Round '+rn;
+    return '<div class="round"><div class="round-title">'+label+'</div>'+rounds[rn].map(function(m){
+      var done=m.status==='completed',aW=done&&m.winner_id===m.team_a_id,bW=done&&m.winner_id===m.team_b_id;
+      return '<div class="match-box'+(done?' completed':'')+'" onclick="openScoreModal(\''+m.id+'\')"><div class="match-num">G'+m.match_number+'</div><div class="match-slot'+(aW?' winner':'')+(!m.team_a_id?' tbd':'')+'"><span>'+teamNameById(m.team_a_id)+'</span><span class="score">'+(m.score_a!==null?m.score_a:'')+'</span></div><div class="match-slot'+(bW?' winner':'')+(!m.team_b_id?' tbd':'')+'"><span>'+teamNameById(m.team_b_id)+'</span><span class="score">'+(m.score_b!==null?m.score_b:'')+'</span></div></div>'
+    }).join('')+'</div>'
+  }).join('');
   setLang(currentLang);
 }
 
-function openUpgradeModal(){
-  document.getElementById('upgradeModal').classList.add('show');
-  setLang(currentLang);
+function renderSchedule(){
+  var tb=document.getElementById('schedBody');
+  if(!curMatches.length){tb.innerHTML='<tr><td colspan="7" class="empty-state"><div class="icon">📋</div><p>No games yet</p></td></tr>';return}
+  tb.innerHTML=curMatches.map(function(m){
+    var done=m.status==='completed';
+    return '<tr><td>G'+m.match_number+'</td><td>R'+m.round+'</td><td>'+teamNameById(m.team_a_id)+'</td><td style="text-align:center;font-weight:800">'+(done?(m.score_a+' - '+m.score_b):'vs')+'</td><td>'+teamNameById(m.team_b_id)+'</td><td>'+m.status+'</td><td><button class="btn-edit" onclick="openScoreModal(\''+m.id+'\')">Score</button></td></tr>'
+  }).join('');
 }
 
-function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('show')})}
-
-function handleUpgrade(){
-  window.open('https://gostar.digital/upgrade','_blank');
-  closeAllModals();
-  showToast(currentLang==='es'?'¡Redirigiendo!':'Redirecting!','success');
+// SCORE ENTRY
+function openScoreModal(matchId){
+  var m=curMatches.find(function(x){return x.id===matchId});if(!m)return;
+  if(!m.team_a_id||!m.team_b_id){showToast('Both teams must be set','error');return}
+  document.getElementById('scoreMatchId').value=matchId;
+  document.getElementById('scoreTeamA').textContent=teamNameById(m.team_a_id);
+  document.getElementById('scoreTeamB').textContent=teamNameById(m.team_b_id);
+  document.getElementById('scoreA').value=m.score_a||'';
+  document.getElementById('scoreB').value=m.score_b||'';
+  document.getElementById('scoreModal').classList.add('show');
 }
-
-// SAVE EVENT
-async function saveEvent(){
-  var titleEn=document.getElementById('expTitleEn').value.trim();
-  if(!titleEn){showToast('Event name is required','error');return}
-
-  var payload={
-    operator_id:operatorData.id,
-    title_en:titleEn,
-    title_es:document.getElementById('expTitleEs').value.trim(),
-    description_en:document.getElementById('expDescEn').value.trim(),
-    description_es:document.getElementById('expDescEs').value.trim(),
-    price_per_person:0,
-    duration_minutes:parseInt(document.getElementById('expDuration').value)||120,
-    min_guests:parseInt(document.getElementById('expMin').value)||4,
-    max_guests:parseInt(document.getElementById('expMax').value)||16,
-    active:true
-  };
-
-  var editId=document.getElementById('editExpId').value;
-
+async function saveScore(){
+  var matchId=document.getElementById('scoreMatchId').value;
+  var sA=parseInt(document.getElementById('scoreA').value),sB=parseInt(document.getElementById('scoreB').value);
+  if(isNaN(sA)||isNaN(sB)){showToast('Enter both scores','error');return}
+  if(sA===sB){showToast('No ties — enter a winner','error');return}
+  var m=curMatches.find(function(x){return x.id===matchId});if(!m)return;
+  var winnerId=sA>sB?m.team_a_id:m.team_b_id;
+  var loserId=sA>sB?m.team_b_id:m.team_a_id;
   try{
-    var client=await loadSB();
-    if(editId){
-      var{error}=await client.from('experiences').update(payload).eq('id',editId);
-      if(error)throw error;
-      showToast('Event updated!','success');
-    } else {
-      if(!isPro()&&experiencesData.length>=maxExp()){
-        openUpgradeModal();
-        return;
-      }
-      payload.sort_order=experiencesData.length;
-      var{error}=await client.from('experiences').insert(payload);
-      if(error)throw error;
-      showToast('Event created!','success');
-    }
-    closeAllModals();
-    await loadEvents(client);
-    updateStats();
-  }catch(e){showToast(e.message||'Failed','error')}
-}
-
-// EDIT EVENT
-function editEvent(id){
-  var exp=experiencesData.find(function(e){return e.id===id});
-  if(!exp)return;
-  document.getElementById('editExpId').value=id;
-  document.getElementById('expModalTitle').innerHTML='<span class="en">Edit Event</span><span class="es">Editar Evento</span>';
-  document.getElementById('expTitleEn').value=exp.title_en||'';
-  document.getElementById('expTitleEs').value=exp.title_es||'';
-  document.getElementById('expDescEn').value=exp.description_en||'';
-  document.getElementById('expDescEs').value=exp.description_es||'';
-  document.getElementById('expDuration').value=exp.duration_minutes||'';
-  document.getElementById('expMin').value=exp.min_guests||'';
-  document.getElementById('expMax').value=exp.max_guests||'';
-  document.getElementById('expModal').classList.add('show');
-  setLang(currentLang);
-}
-
-// DELETE EVENT
-async function deleteEvent(id){
-  if(!confirm(currentLang==='es'?'¿Eliminar este evento?':'Delete this event?'))return;
-  try{
-    var client=await loadSB();
-    var{error}=await client.from('experiences').delete().eq('id',id);
+    // Update match
+    var{error}=await loadSB().from('tournament_matches').update({score_a:sA,score_b:sB,winner_id:winnerId,status:'completed'}).eq('id',matchId);
     if(error)throw error;
-    showToast('Deleted','success');
-    await loadEvents(client);
-    updateStats();
+    // Update team records
+    await loadSB().from('tournament_teams').update({wins:loadSB().rpc?undefined:undefined}).eq('id',winnerId);
+    // Advance winner to next round
+    var nextRound=m.round+1;
+    var nextMatches=curMatches.filter(function(x){return x.round===nextRound});
+    if(nextMatches.length>0){
+      // Find which next match this feeds into
+      var r1matches=curMatches.filter(function(x){return x.round===m.round}).sort(function(a,b){return a.match_number-b.match_number});
+      var idx=r1matches.indexOf(m);
+      var nextIdx=Math.floor(idx/2);
+      if(nextIdx<nextMatches.length){
+        var nm=nextMatches[nextIdx];
+        var field=idx%2===0?'team_a_id':'team_b_id';
+        var upd={};upd[field]=winnerId;
+        await loadSB().from('tournament_matches').update(upd).eq('id',nm.id);
+      }
+    }
+    // Update win/loss counts
+    var w=curTeams.find(function(t){return t.id===winnerId});
+    var l=curTeams.find(function(t){return t.id===loserId});
+    if(w)await loadSB().from('tournament_teams').update({wins:(w.wins||0)+1}).eq('id',winnerId);
+    if(l)await loadSB().from('tournament_teams').update({losses:(l.losses||0)+1}).eq('id',loserId);
+
+    showToast('Score saved!','success');
+    closeAllModals();
+    await loadTourneyTeams();
+    await loadTourneyMatches();
   }catch(e){showToast(e.message,'error')}
 }
 
+// MODALS
+function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('show')})}
+function openUpgradeModal(){document.getElementById('upgradeModal').classList.add('show');setLang(currentLang)}
+function handleUpgrade(){window.open('https://gostar.digital/upgrade','_blank');closeAllModals()}
+
 // LOGOUT
-async function doLogout(){
-  try{var client=await loadSB();await client.auth.signOut()}catch(e){}
-  window.location.href='/login.html';
-}
+async function doLogout(){try{await loadSB().auth.signOut()}catch(e){}window.location.href='/login.html'}
 
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(function(){t.classList.remove('show')},3500)}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tournament — HOOP$.MONEY</title>
-<link rel="icon" href="/hoops.png">
+<title>Tournament — GoStar Digital</title>
+<link rel="icon" href="/gostar.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
@@ -20,8 +20,8 @@ html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
 
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-logo{font-weight:800;font-size:1.4rem;color:var(--orange)}
-.nav-logo span{color:var(--white)}
+.nav-logo{display:block;height:36px}
+.nav-logo img{height:36px;width:auto}
 .nav-right{display:flex;align-items:center;gap:12px}
 .nav-right a{font-size:.8rem;color:var(--gray);font-weight:600}
 .nav-right a:hover{color:var(--white)}
@@ -116,7 +116,7 @@ function setLang(lang){
 <body>
 
 <div class="nav">
-  <a href="/" class="nav-logo">HOOP$<span>.MONEY</span></a>
+  <a href="/" class="nav-logo"><img src="/gostar.png" alt="GoStar Digital"></a>
   <div class="nav-right">
     <a href="/" class="en">Home</a><a href="/" class="es">Inicio</a>
     <div class="lang-toggle">
@@ -134,7 +134,7 @@ function setLang(lang){
   <h2 class="en">Tournament Not Found</h2><h2 class="es">Torneo No Encontrado</h2>
   <p class="en">This tournament doesn't exist or hasn't started yet.</p>
   <p class="es">Este torneo no existe o no ha comenzado aún.</p>
-  <a href="/" class="en">← Back to HOOP$.MONEY</a><a href="/" class="es">← Volver a HOOP$.MONEY</a>
+  <a href="/" class="en">← Back to GoStar Digital</a><a href="/" class="es">← Volver a GoStar Digital</a>
 </div>
 
 <!-- MAIN -->
@@ -218,7 +218,7 @@ function teamName(id){
       return;
     }
     tournament=t;
-    document.title=(t.name_en||'Tournament')+' — HOOP$.MONEY';
+    document.title=(t.name_en||'Tournament')+' — GoStar Digital';
     document.getElementById('tName').textContent=t.name_en||'Tournament';
 
     const formatLabels={single_elimination:'Single Elimination',double_elimination:'Double Elimination',round_robin:'Round Robin'};

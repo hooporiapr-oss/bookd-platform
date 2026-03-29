@@ -443,6 +443,38 @@ html[lang="es"] .en{display:none!important}
   <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="saveTeam()"><span class="en">Add Team</span><span class="es">Agregar</span></button></div>
 </div></div>
 
+<!-- PLAYER MODAL -->
+<div class="modal-overlay" id="playerModal"><div class="modal">
+  <div class="modal-title"><span class="en">Add Player</span><span class="es">Agregar Jugador</span></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">First Name</span><span class="es">Nombre</span></label><input class="form-input" id="plFirstName" placeholder="John"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Last Name</span><span class="es">Apellido</span></label><input class="form-input" id="plLastName" placeholder="Smith"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Jersey #</span><span class="es"># Camiseta</span></label><input class="form-input" id="plJersey" placeholder="23"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Position</span><span class="es">Posición</span></label><select class="form-input" id="plPosition"><option value="">--</option><option value="PG">PG</option><option value="SG">SG</option><option value="SF">SF</option><option value="PF">PF</option><option value="C">C</option><option value="G">G</option><option value="F">F</option></select></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Height</span><span class="es">Altura</span></label><input class="form-input" id="plHeight" placeholder="6'2&quot;"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Weight</span><span class="es">Peso</span></label><input class="form-input" id="plWeight" placeholder="185 lbs"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label"><span class="en">Age</span><span class="es">Edad</span></label><input class="form-input" id="plAge" type="number" placeholder="17"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Grad Year</span><span class="es">Año Graduación</span></label><input class="form-input" id="plGradYear" type="number" placeholder="2027"></div>
+  </div>
+  <div class="form-group"><label class="form-label"><span class="en">School</span><span class="es">Escuela</span></label><input class="form-input" id="plSchool" placeholder="San Juan Academy"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">PPG</label><input class="form-input" id="plPPG" type="number" step="0.1" placeholder="12.5"></div>
+    <div class="form-group"><label class="form-label">RPG</label><input class="form-input" id="plRPG" type="number" step="0.1" placeholder="5.2"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">APG</label><input class="form-input" id="plAPG" type="number" step="0.1" placeholder="3.1"></div>
+    <div class="form-group"><label class="form-label"><span class="en">Highlight Link</span><span class="es">Video Highlights</span></label><input class="form-input" id="plHighlight" placeholder="https://youtube.com/..."></div>
+  </div>
+  <div class="form-group"><label class="form-label"><span class="en">Notes</span><span class="es">Notas</span></label><textarea class="form-input" id="plNotes" rows="2" placeholder="Quick scouting notes..."></textarea></div>
+  <div class="form-actions"><button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button><button class="btn-save" onclick="savePlayer()"><span class="en">Add Player</span><span class="es">Agregar</span></button></div>
+</div></div>
+
 <!-- SCORE MODAL -->
 <div class="modal-overlay" id="scoreModal"><div class="modal">
   <div class="modal-title"><span class="en">Enter Score</span><span class="es">Ingresar Marcador</span></div>
@@ -589,12 +621,90 @@ function closeTourneyDetail(){document.getElementById('sec-tourney-detail').styl
 function showTTab(id,btn){document.querySelectorAll('.t-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.t-panel').forEach(function(p){p.classList.remove('active')});document.getElementById('tp-'+id).classList.add('active')}
 
 // TEAMS
-async function loadTourneyTeams(){var{data}=await loadSB().from('tournament_teams').select('*').eq('tournament_id',curTourney.id).order('seed');curTeams=data||[];renderTeams()}
+var curPlayers={};
+async function loadTourneyTeams(){var{data}=await loadSB().from('tournament_teams').select('*').eq('tournament_id',curTourney.id).order('seed');curTeams=data||[];await loadAllPlayers();renderTeams()}
+async function loadAllPlayers(){
+  if(!curTeams.length){curPlayers={};return}
+  var teamIds=curTeams.map(function(t){return t.id});
+  var{data}=await loadSB().from('players').select('*').in('tournament_team_id',teamIds).order('jersey_number');
+  curPlayers={};
+  (data||[]).forEach(function(p){if(!curPlayers[p.tournament_team_id])curPlayers[p.tournament_team_id]=[];curPlayers[p.tournament_team_id].push(p)});
+}
 function renderTeams(){
   var el=document.getElementById('teamsList');
   if(!curTeams.length){el.innerHTML='<div class="empty-state"><div class="icon">👥</div><p><span class="en">No teams added yet</span><span class="es">No hay equipos</span></p></div>';setLang(currentLang);return}
-  el.innerHTML=curTeams.map(function(t,i){return '<div class="team-item"><span class="seed">#'+(t.seed||i+1)+'</span><span class="name">'+esc(t.team_name)+'</span><span class="record">'+t.wins+'W-'+t.losses+'L</span><div class="actions"><button class="btn-delete" onclick="removeTeam(\''+t.id+'\')">✕</button></div></div>'}).join('');
+  el.innerHTML=curTeams.map(function(t,i){
+    var players=curPlayers[t.id]||[];
+    var rosterHtml=players.length?players.map(function(p){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--black);border-radius:6px;margin-bottom:4px;font-size:.8rem">'+
+        '<div style="display:flex;align-items:center;gap:10px">'+
+          '<span style="font-weight:800;color:var(--orange);min-width:24px">#'+(p.jersey_number||'—')+'</span>'+
+          '<span style="font-weight:600">'+esc(p.first_name)+' '+esc(p.last_name)+'</span>'+
+          '<span style="color:var(--gray);font-size:.7rem">'+(p.position||'')+(p.height?' · '+p.height:'')+'</span>'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:8px">'+
+          (p.stats_ppg?'<span style="color:var(--green);font-size:.7rem;font-weight:700">'+p.stats_ppg+'ppg</span>':'')+
+          (p.highlight_link?'<a href="'+esc(p.highlight_link)+'" target="_blank" style="color:var(--blue);font-size:.7rem;font-weight:700">🎥</a>':'')+
+          (p.grad_year?'<span style="color:var(--gray);font-size:.7rem">\''+String(p.grad_year).slice(-2)+'</span>':'')+
+          '<button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.7rem;font-weight:700" onclick="removePlayer(\''+p.id+'\',\''+t.id+'\')">✕</button>'+
+        '</div></div>'
+    }).join(''):'<div style="padding:8px 12px;font-size:.8rem;color:var(--gray);font-style:italic"><span class="en">No players added</span><span class="es">Sin jugadores</span></div>';
+
+    return '<div style="background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:12px;overflow:hidden">'+
+      '<div class="team-item" style="margin:0;border:none;border-radius:0">'+
+        '<span class="seed">#'+(t.seed||i+1)+'</span>'+
+        '<span class="name">'+esc(t.team_name)+' <span style="font-size:.75rem;color:var(--gray);font-weight:400">('+players.length+' players)</span></span>'+
+        '<span class="record">'+t.wins+'W-'+t.losses+'L</span>'+
+        '<div class="actions">'+
+          '<button class="btn-manage" onclick="openPlayerModal(\''+t.id+'\')">+ Player</button>'+
+          '<button class="btn-delete" onclick="removeTeam(\''+t.id+'\')">✕</button>'+
+        '</div>'+
+      '</div>'+
+      '<div style="padding:8px 12px 12px">'+rosterHtml+'</div>'+
+    '</div>'
+  }).join('');
   setLang(currentLang);
+}
+
+// PLAYERS
+var addingToTeamId=null;
+function openPlayerModal(teamId){
+  addingToTeamId=teamId;
+  ['plFirstName','plLastName','plJersey','plPosition','plHeight','plWeight','plAge','plSchool','plGradYear','plPPG','plRPG','plAPG','plHighlight','plNotes'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('playerModal').classList.add('show');
+  setLang(currentLang);
+}
+async function savePlayer(){
+  var fn=document.getElementById('plFirstName').value.trim(),ln=document.getElementById('plLastName').value.trim();
+  if(!fn||!ln){showToast('First and last name required','error');return}
+  try{
+    var{error}=await loadSB().from('players').insert({
+      operator_id:op.id,
+      tournament_team_id:addingToTeamId,
+      first_name:fn,last_name:ln,
+      jersey_number:document.getElementById('plJersey').value.trim(),
+      position:document.getElementById('plPosition').value,
+      height:document.getElementById('plHeight').value.trim(),
+      weight:document.getElementById('plWeight').value.trim(),
+      age:parseInt(document.getElementById('plAge').value)||null,
+      school:document.getElementById('plSchool').value.trim(),
+      grad_year:parseInt(document.getElementById('plGradYear').value)||null,
+      stats_ppg:parseFloat(document.getElementById('plPPG').value)||0,
+      stats_rpg:parseFloat(document.getElementById('plRPG').value)||0,
+      stats_apg:parseFloat(document.getElementById('plAPG').value)||0,
+      highlight_link:document.getElementById('plHighlight').value.trim(),
+      notes:document.getElementById('plNotes').value.trim()
+    });
+    if(error)throw error;
+    showToast('Player added!','success');
+    closeAllModals();
+    await loadAllPlayers();
+    renderTeams();
+  }catch(e){showToast(e.message,'error')}
+}
+async function removePlayer(playerId,teamId){
+  if(!confirm('Remove this player?'))return;
+  try{await loadSB().from('players').delete().eq('id',playerId);showToast('Removed','success');await loadAllPlayers();renderTeams()}catch(e){showToast(e.message,'error')}
 }
 function openAddTeamModal(){if(curTeams.length>=curTourney.max_teams){showToast('Max teams reached','error');return}['teamName','teamCoach','teamEmail','teamPhone','teamSeed'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('teamModal').classList.add('show');setLang(currentLang)}
 async function saveTeam(){var n=document.getElementById('teamName').value.trim();if(!n){showToast('Team name required','error');return}try{var{error}=await loadSB().from('tournament_teams').insert({tournament_id:curTourney.id,team_name:n,coach_name:document.getElementById('teamCoach').value.trim(),coach_email:document.getElementById('teamEmail').value.trim(),coach_phone:document.getElementById('teamPhone').value.trim(),seed:parseInt(document.getElementById('teamSeed').value)||curTeams.length+1});if(error)throw error;showToast('Team added!','success');closeAllModals();await loadTourneyTeams()}catch(e){showToast(e.message,'error')}}

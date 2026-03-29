@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HOOP$.MONEY — Where Basketball Meets Money</title>
-<meta name="description" content="Tournament & League platform. Create events, accept registrations, get paid directly. It all starts with a click.">
-<link rel="icon" href="/hoops.png">
+<title>GoStar Digital — Basketball Tournament Platform</title>
+<meta name="description" content="The basketball tournament platform. Create events, manage brackets, register teams, and get discovered by scouts.">
+<link rel="icon" href="/gostar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=General+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script>
 var currentLang='en';
-function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('hoops-lang',l)}catch(e){}}
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('gostar-lang',l)}catch(e){}}
 </script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--gold:#f4c542;--green:#22c55e}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--green:#22c55e;--purple:#a855f7}
 html{scroll-behavior:smooth}
 body{font-family:'General Sans',sans-serif;background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 html[lang="en"] .es{display:none!important}
@@ -28,8 +28,8 @@ html[lang="es"] .en{display:none!important}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 1.5rem}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--white);cursor:pointer}
-.nav-logo .h{color:var(--orange)}.nav-logo .dollar{color:var(--gold)}
+.nav-logo{display:block;height:38px}
+.nav-logo img{height:38px;width:auto}
 .nav-right{display:flex;align-items:center;gap:16px}
 .nav-link{font-size:.8rem;font-weight:600;color:var(--gray);transition:color .2s}
 .nav-link:hover{color:var(--white)}
@@ -43,12 +43,10 @@ a{text-decoration:none;color:inherit}
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
 .hero::before{content:'🏀';position:absolute;top:15%;left:8%;font-size:4rem;opacity:.06;animation:float 4s ease infinite}
-.hero::after{content:'💰';position:absolute;bottom:20%;right:10%;font-size:3.5rem;opacity:.06;animation:float 5s ease infinite 1s}
+.hero::after{content:'🏆';position:absolute;bottom:20%;right:10%;font-size:3.5rem;opacity:.06;animation:float 5s ease infinite 1s}
 .hero-logo{max-width:280px;margin-bottom:24px}
 .hero-badge{display:inline-block;padding:6px 18px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(232,97,26,.1);color:var(--orange);border:1px solid rgba(232,97,26,.2);margin-bottom:20px}
-.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);line-height:.95;margin-bottom:16px;letter-spacing:-.02em}
-.hero h1 .dollar{color:var(--gold)}
-.hero h1 .dot{color:var(--orange)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,9vw,6rem);line-height:.95;margin-bottom:16px;letter-spacing:-.02em}
 .hero-sub{font-size:1.1rem;color:var(--gray);max-width:520px;margin:0 auto 32px}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn-p{display:inline-block;padding:14px 32px;border-radius:10px;font-size:.9rem;font-weight:700;background:var(--orange);color:#fff;transition:all .2s}
@@ -98,35 +96,27 @@ a{text-decoration:none;color:inherit}
 
 /* CTA */
 .cta{padding:80px 0}
-.cta-box{background:linear-gradient(135deg,rgba(232,97,26,.08),rgba(232,97,26,.02));border:1px solid rgba(232,97,26,.15);border-radius:20px;padding:60px 40px;text-align:center;max-width:700px;margin:0 auto}
+.cta-box{background:linear-gradient(135deg,rgba(232,97,26,.08),rgba(168,85,247,.05));border:1px solid rgba(232,97,26,.15);border-radius:20px;padding:60px 40px;text-align:center;max-width:700px;margin:0 auto}
 .cta-box h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);margin-bottom:8px;line-height:1}
-.cta-box h2 .dollar{color:var(--gold)}
 .cta-sub{font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:8px}
 .cta-desc{color:var(--gray);font-size:.9rem;margin-bottom:32px}
 
 /* FOOTER */
 footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--white)}
-.footer-brand .dollar{color:var(--gold)}
+.footer-logo{height:28px}
+.footer-logo img{height:28px;width:auto}
 .footer-links{display:flex;gap:20px}
 .footer-links a{font-size:.8rem;color:var(--gray);transition:color .2s}
 .footer-links a:hover{color:var(--white)}
-.footer-copy{font-size:.7rem;color:var(--gray)}
+.footer-copy{font-size:.7rem;color:#555}
 
-/* MOBILE */
 @media(max-width:768px){
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .steps{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .steps,.audience-grid{grid-template-columns:1fr}
   .features-grid{grid-template-columns:1fr}
-  .audience-grid{grid-template-columns:1fr}
-  .hero-logo{max-width:200px}
-  .nav-link{display:none}
-  .cta-box{padding:40px 24px}
   .footer-inner{flex-direction:column;text-align:center}
-}
-@media(max-width:480px){
-  .hero-logo{max-width:160px}
+  .nav-link{display:none}
 }
 </style>
 </head>
@@ -135,9 +125,10 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <div class="nav-logo" onclick="window.location.href='/'"><span class="h">HOOP</span><span class="dollar">$</span>.MONEY</div>
+    <a href="/" class="nav-logo"><img src="/gostar.png" alt="GoStar Digital"></a>
     <div class="nav-right">
-      <a href="/login.html" class="nav-link"><span class="en">Log In</span><span class="es">Entrar</span></a>
+      <a href="/login.html" class="nav-link en">Log In</a>
+      <a href="/login.html" class="nav-link es">Entrar</a>
       <div class="lang-toggle">
         <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
         <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
@@ -149,57 +140,52 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="fu fd1">
-    <div class="hero-badge"><span class="en">Tournament & League Platform</span><span class="es">Plataforma de Torneos y Ligas</span></div>
-  </div>
-  <img src="/hoops.png" alt="HOOP$ MONEY" class="hero-logo fu fd2">
-  <h1 class="fu fd2">HOOP<span class="dollar">$</span><span class="dot">.</span>MONEY</h1>
-  <p class="hero-sub fu fd3">
-    <span class="en">Create tournaments. Accept registrations. Get paid directly. The platform for basketball organizers.</span>
-    <span class="es">Crea torneos. Acepta registros. Cobra directamente. La plataforma para organizadores de baloncesto.</span>
-  </p>
+  <img src="/gostar.png" alt="GoStar Digital" class="hero-logo fu fd1">
+  <div class="hero-badge fu fd2"><span class="en">Basketball Tournament Platform</span><span class="es">Plataforma de Torneos de Baloncesto</span></div>
+  <h1 class="fu fd2"><span class="en">ORGANIZE.<br>COMPETE.<br>GET DISCOVERED.</span><span class="es">ORGANIZA.<br>COMPITE.<br>SÉ DESCUBIERTO.</span></h1>
+  <p class="hero-sub fu fd3"><span class="en">The platform where organizers run events, teams compete, and scouts discover the next star.</span><span class="es">La plataforma donde organizadores crean eventos, equipos compiten, y scouts descubren la próxima estrella.</span></p>
   <div class="hero-btns fu fd4">
     <a href="/signup.html" class="btn-p"><span class="en">Create Your Page</span><span class="es">Crea Tu Página</span></a>
     <a href="#how" class="btn-s"><span class="en">How It Works</span><span class="es">Cómo Funciona</span></a>
   </div>
 </section>
 
-<!-- STATS -->
-<section class="stats-bar">
+<!-- STATS BAR -->
+<div class="stats-bar">
   <div class="wrap">
     <div class="stats-grid">
-      <div><div class="stat-num">5%</div><div class="stat-label"><span class="en">Platform Fee</span><span class="es">Comisión</span></div></div>
-      <div><div class="stat-num">$0</div><div class="stat-label"><span class="en">Monthly Cost</span><span class="es">Costo Mensual</span></div></div>
-      <div><div class="stat-num">5 min</div><div class="stat-label"><span class="en">Setup Time</span><span class="es">Tiempo de Inicio</span></div></div>
-      <div><div class="stat-num">24/7</div><div class="stat-label"><span class="en">Registrations</span><span class="es">Registros</span></div></div>
+      <div><div class="stat-num">3v3</div><div class="stat-label"><span class="en">& 5v5 Formats</span><span class="es">y Formatos 5v5</span></div></div>
+      <div><div class="stat-num">EN/ES</div><div class="stat-label"><span class="en">Bilingual</span><span class="es">Bilingüe</span></div></div>
+      <div><div class="stat-num">PR + US</div><div class="stat-label"><span class="en">Markets</span><span class="es">Mercados</span></div></div>
+      <div><div class="stat-num">FREE</div><div class="stat-label"><span class="en">To Start</span><span class="es">Para Comenzar</span></div></div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
   <div class="wrap">
     <div class="section-badge"><span class="en">How It Works</span><span class="es">Cómo Funciona</span></div>
     <h2 class="section-title"><span class="en">Three Steps to Game Time</span><span class="es">Tres Pasos al Juego</span></h2>
-    <p class="section-sub"><span class="en">Set up your page, create events, and start collecting registrations and payments.</span><span class="es">Configura tu página, crea eventos y empieza a recibir registros y pagos.</span></p>
+    <p class="section-sub"><span class="en">Set up your organizer page and start accepting team registrations in minutes.</span><span class="es">Configura tu página de organizador y empieza a recibir inscripciones en minutos.</span></p>
     <div class="steps">
       <div class="step">
         <div class="step-icon">📝</div>
         <div class="step-num">01</div>
         <h3><span class="en">Sign Up</span><span class="es">Regístrate</span></h3>
-        <p><span class="en">Create your organizer page in minutes. Your custom link — hoops.money/your-name — is live instantly.</span><span class="es">Crea tu página de organizador en minutos. Tu enlace personalizado — hoops.money/tu-nombre — activo al instante.</span></p>
+        <p><span class="en">Create your organizer page in minutes. Your custom link — gostar.digital/your-name — is live instantly.</span><span class="es">Crea tu página de organizador en minutos. Tu enlace personalizado — gostar.digital/tu-nombre — activo al instante.</span></p>
       </div>
       <div class="step">
         <div class="step-icon">🏀</div>
         <div class="step-num">02</div>
         <h3><span class="en">Create Events</span><span class="es">Crea Eventos</span></h3>
-        <p><span class="en">Add tournaments, leagues, camps — anything. Set your prices, dates, and team limits. Share your link.</span><span class="es">Agrega torneos, ligas, campamentos — lo que sea. Define precios, fechas y límites. Comparte tu enlace.</span></p>
+        <p><span class="en">Add tournaments, leagues, showcases, camps — any format. Set dates, player limits, and share your link.</span><span class="es">Agrega torneos, ligas, showcases, campamentos — cualquier formato. Define fechas, límites y comparte tu enlace.</span></p>
       </div>
       <div class="step">
-        <div class="step-icon">💰</div>
+        <div class="step-icon">🏆</div>
         <div class="step-num">03</div>
-        <h3><span class="en">Get Paid</span><span class="es">Cobra</span></h3>
-        <p><span class="en">Teams register and pay online. Money goes directly to your bank. You keep 95%. Track everything from your dashboard.</span><span class="es">Los equipos se registran y pagan en línea. El dinero va directo a tu banco. Te quedas con el 95%. Controla todo desde tu panel.</span></p>
+        <h3><span class="en">Run It</span><span class="es">Organízalo</span></h3>
+        <p><span class="en">Teams register online. Manage brackets, rosters, and scores from your dashboard. Scouts find your talent.</span><span class="es">Los equipos se inscriben en línea. Administra llaves, rosters y puntajes desde tu panel. Los scouts encuentran tu talento.</span></p>
       </div>
     </div>
   </div>
@@ -221,20 +207,20 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
         <div><h4><span class="en">League Management</span><span class="es">Gestión de Ligas</span></h4><p><span class="en">Standings, schedules, stats, rosters, playoffs. Run a full season from your phone.</span><span class="es">Posiciones, calendario, estadísticas, rosters, playoffs. Maneja toda la temporada desde tu teléfono.</span></p></div>
       </div>
       <div class="feature">
-        <div class="feature-icon">💳</div>
-        <div><h4><span class="en">Instant Payments</span><span class="es">Pagos Instantáneos</span></h4><p><span class="en">Stripe-powered. Teams pay when they register. You get paid directly. No chasing checks.</span><span class="es">Con Stripe. Los equipos pagan al registrarse. Tú cobras directo. Sin perseguir cheques.</span></p></div>
+        <div class="feature-icon">👀</div>
+        <div><h4><span class="en">Scout Visibility</span><span class="es">Visibilidad para Scouts</span></h4><p><span class="en">College scouts discover talent through your events. Player profiles, stats, and highlight access.</span><span class="es">Scouts universitarios descubren talento en tus eventos. Perfiles de jugadores, estadísticas y acceso a highlights.</span></p></div>
       </div>
       <div class="feature">
-        <div class="feature-icon">📈</div>
-        <div><h4><span class="en">P&L Dashboard</span><span class="es">Panel de Ganancias</span></h4><p><span class="en">Track revenue, expenses, and profit per event. Know exactly what you're making on every tournament.</span><span class="es">Registra ingresos, gastos y ganancias por evento. Sabe exactamente cuánto ganas en cada torneo.</span></p></div>
+        <div class="feature-icon">📋</div>
+        <div><h4><span class="en">Team Registration</span><span class="es">Inscripción de Equipos</span></h4><p><span class="en">Teams register online with rosters. No more paper forms or group chats.</span><span class="es">Los equipos se inscriben en línea con rosters. Sin formularios de papel ni chats grupales.</span></p></div>
       </div>
       <div class="feature">
         <div class="feature-icon">🔗</div>
-        <div><h4><span class="en">Your Custom Link</span><span class="es">Tu Enlace Personalizado</span></h4><p><span class="en">hoops.money/your-name — one link for everything. Share it on Instagram, WhatsApp, flyers.</span><span class="es">hoops.money/tu-nombre — un enlace para todo. Compártelo en Instagram, WhatsApp, volantes.</span></p></div>
+        <div><h4><span class="en">Your Custom Link</span><span class="es">Tu Enlace Personalizado</span></h4><p><span class="en">gostar.digital/your-name — one link for everything. Share it on Instagram, WhatsApp, flyers.</span><span class="es">gostar.digital/tu-nombre — un enlace para todo. Compártelo en Instagram, WhatsApp, volantes.</span></p></div>
       </div>
       <div class="feature">
         <div class="feature-icon">🌐</div>
-        <div><h4><span class="en">Bilingual EN/ES</span><span class="es">Bilingüe EN/ES</span></h4><p><span class="en">Every page, every form, every email — English and Spanish. Built for Puerto Rico and beyond.</span><span class="es">Cada página, cada formulario, cada email — inglés y español. Hecho para Puerto Rico y más allá.</span></p></div>
+        <div><h4><span class="en">Bilingual EN/ES</span><span class="es">Bilingüe EN/ES</span></h4><p><span class="en">Every page, every form — English and Spanish. Built for Puerto Rico and beyond.</span><span class="es">Cada página, cada formulario — inglés y español. Hecho para Puerto Rico y más allá.</span></p></div>
       </div>
     </div>
   </div>
@@ -249,7 +235,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
       <div class="audience-card">
         <div class="audience-icon">🏀</div>
         <h4><span class="en">Tournament Organizers</span><span class="es">Organizadores de Torneos</span></h4>
-        <p><span class="en">3v3, 5v5, youth, adult — any format. Registration, brackets, payments, all in one place.</span><span class="es">3v3, 5v5, juvenil, adulto — cualquier formato. Registro, llaves, pagos, todo en un lugar.</span></p>
+        <p><span class="en">3v3, 5v5, youth, adult — any format. Registration, brackets, rosters, all in one place.</span><span class="es">3v3, 5v5, juvenil, adulto — cualquier formato. Inscripción, llaves, rosters, todo en un lugar.</span></p>
       </div>
       <div class="audience-card">
         <div class="audience-icon">📋</div>
@@ -257,9 +243,9 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
         <p><span class="en">Full seasons with standings, schedules, stats, and playoffs. Your league, your rules.</span><span class="es">Temporadas completas con posiciones, calendario, estadísticas y playoffs. Tu liga, tus reglas.</span></p>
       </div>
       <div class="audience-card">
-        <div class="audience-icon">🎮</div>
-        <h4><span class="en">Esports Organizers</span><span class="es">Organizadores de Esports</span></h4>
-        <p><span class="en">NBA 2K, Fortnite, FIFA, Madden — same brackets, same payments, different court.</span><span class="es">NBA 2K, Fortnite, FIFA, Madden — mismas llaves, mismos pagos, diferente cancha.</span></p>
+        <div class="audience-icon">🎓</div>
+        <h4><span class="en">College Scouts</span><span class="es">Scouts Universitarios</span></h4>
+        <p><span class="en">Discover talent at organized events. Player profiles, game stats, and direct contact with coaches.</span><span class="es">Descubre talento en eventos organizados. Perfiles de jugadores, estadísticas y contacto directo con coaches.</span></p>
       </div>
     </div>
   </div>
@@ -268,9 +254,9 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 <!-- CTA -->
 <section class="cta">
   <div class="cta-box">
-    <h2>CASH FLOW HOOP<span class="dollar">$</span></h2>
+    <h2><span class="en">YOUR COURT.<br>YOUR RULES.</span><span class="es">TU CANCHA.<br>TUS REGLAS.</span></h2>
     <p class="cta-sub"><span class="en">It All Starts With a Click</span><span class="es">Todo Comienza Con un Click</span></p>
-    <p class="cta-desc"><span class="en">Free to start. No monthly fees. Set up in 5 minutes.</span><span class="es">Gratis para comenzar. Sin cargos mensuales. En 5 minutos.</span></p>
+    <p class="cta-desc"><span class="en">Free to start. Set up in 5 minutes. Upgrade when you're ready.</span><span class="es">Gratis para comenzar. En 5 minutos. Actualiza cuando estés listo.</span></p>
     <a href="/signup.html" class="btn-p"><span class="en">Create Your Page</span><span class="es">Crea Tu Página</span></a>
   </div>
 </section>
@@ -279,7 +265,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 <footer>
   <div class="wrap">
     <div class="footer-inner">
-      <div class="footer-brand">HOOP<span class="dollar">$</span>.MONEY</div>
+      <div class="footer-logo"><img src="/gostar.png" alt="GoStar Digital"></div>
       <div class="footer-links">
         <a href="/privacy.html"><span class="en">Privacy</span><span class="es">Privacidad</span></a>
         <a href="/terms.html"><span class="en">Terms</span><span class="es">Términos</span></a>
@@ -290,7 +276,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
 </footer>
 
 <script>
-try{var sl=localStorage.getItem('hoops-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
+try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
 </script>
 </body>
 </html>

@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard — HOOP$</title>
-<link rel="icon" href="/hoops.png">
+<title>Dashboard — GoStar Digital</title>
+<link rel="icon" href="/gostar.png">
 <script>
 var currentLang='en';
-function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('hoops-lang',l)}catch(e){}}
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('gostar-lang',l)}catch(e){}}
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -21,7 +21,7 @@ input,select,textarea{font-family:inherit}
   --orange:#e8611a;--orange-light:#f4832f;
   --white:#fafaf9;--gray:#8a8a8a;
   --green:#22c55e;--red:#ef4444;--yellow:#eab308;
-  --purple:#a855f7;
+  --purple:#a855f7;--blue:#3b82f6;
 }
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
@@ -30,8 +30,8 @@ html[lang="es"] .en{display:none!important}
 
 /* SIDEBAR */
 .sidebar{width:260px;background:var(--black2);border-right:1px solid rgba(255,255,255,.06);padding:24px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50}
-.sidebar-logo{padding:0 24px 24px;font-weight:800;font-size:1.5rem;color:var(--orange);border-bottom:1px solid rgba(255,255,255,.06)}
-.sidebar-logo span{color:var(--white)}
+.sidebar-logo{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-logo img{height:38px;width:auto}
 .sidebar-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px}
 .sidebar-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;font-size:.9rem;font-weight:600;color:var(--gray);transition:all .2s;cursor:pointer}
 .sidebar-item:hover{background:rgba(255,255,255,.04);color:var(--white)}
@@ -70,7 +70,6 @@ html[lang="es"] .en{display:none!important}
 .stat-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .stat-value{font-size:1.6rem;font-weight:800;color:var(--white)}
-.stat-value.money-green{color:var(--green)}
 .stat-sub{font-size:.7rem;color:var(--gray);margin-top:4px}
 
 /* SECTIONS */
@@ -83,13 +82,12 @@ html[lang="es"] .en{display:none!important}
 .add-btn:disabled:hover{background:var(--orange)}
 .limit-text{font-size:.75rem;color:var(--gray);font-weight:600}
 
-/* EXPERIENCE CARDS */
+/* EVENT CARDS */
 .exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .exp-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px;transition:all .2s}
 .exp-card:hover{border-color:rgba(232,97,26,.3)}
 .exp-title{font-size:1rem;font-weight:700;margin-bottom:6px}
 .exp-meta{font-size:.8rem;color:var(--gray);margin-bottom:4px}
-.exp-price{font-size:1.1rem;font-weight:800;color:var(--green)}
 .exp-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:8px}
 .exp-status.active{background:rgba(34,197,94,.12);color:var(--green)}
 .exp-status.inactive{background:rgba(255,255,255,.06);color:var(--gray)}
@@ -107,14 +105,11 @@ html[lang="es"] .en{display:none!important}
 .pro-feature p{font-size:.8rem;color:var(--gray);margin-bottom:12px}
 .pro-badge-sm{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;background:rgba(168,85,247,.12);color:var(--purple)}
 
-/* BOOKINGS TABLE */
+/* REGISTRATIONS TABLE */
 .table-wrap{overflow-x:auto}
 .data-table{width:100%;border-collapse:collapse}
 .data-table th{text-align:left;padding:12px 16px;font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(255,255,255,.06)}
 .data-table td{padding:12px 16px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
-.payment-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
-.payment-badge.paid{background:rgba(34,197,94,.12);color:var(--green)}
-.payment-badge.pending{background:rgba(234,179,8,.12);color:var(--yellow)}
 
 /* EMPTY STATE */
 .empty-state{text-align:center;padding:48px 24px;color:var(--gray)}
@@ -153,8 +148,7 @@ html[lang="es"] .en{display:none!important}
   .exp-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .mobile-header{display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--black2);border-bottom:1px solid rgba(255,255,255,.06);margin:-20px -16px 20px}
-  .mobile-logo{font-weight:800;font-size:1.2rem;color:var(--orange)}
-  .mobile-logo span{color:var(--white)}
+  .mobile-logo img{height:32px;width:auto}
   .mobile-lang{display:flex;gap:4px}
 }
 @media(min-width:769px){.mobile-header{display:none}}
@@ -169,7 +163,7 @@ html[lang="es"] .en{display:none!important}
 
 <!-- MOBILE HEADER -->
 <div class="mobile-header">
-  <div class="mobile-logo">HOOP$<span>.MONEY</span></div>
+  <div class="mobile-logo"><img src="/gostar.png" alt="GoStar Digital"></div>
   <div class="mobile-lang">
     <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
     <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
@@ -178,11 +172,11 @@ html[lang="es"] .en{display:none!important}
 
 <div class="layout">
 <aside class="sidebar">
-  <div class="sidebar-logo">HOOP$<span>.MONEY</span></div>
+  <div class="sidebar-logo"><img src="/gostar.png" alt="GoStar Digital"></div>
   <nav class="sidebar-nav">
     <div class="sidebar-item active" onclick="showSection('overview')"><span class="icon">📊</span><span class="en">Overview</span><span class="es">Resumen</span></div>
-    <div class="sidebar-item" onclick="showSection('experiences')"><span class="icon">🏀</span><span class="en">Experiences</span><span class="es">Experiencias</span></div>
-    <div class="sidebar-item" onclick="showSection('bookings')"><span class="icon">📋</span><span class="en">Bookings</span><span class="es">Reservas</span></div>
+    <div class="sidebar-item" onclick="showSection('events')"><span class="icon">🏀</span><span class="en">Events</span><span class="es">Eventos</span></div>
+    <div class="sidebar-item" onclick="showSection('registrations')"><span class="icon">📋</span><span class="en">Registrations</span><span class="es">Inscripciones</span></div>
     <div class="sidebar-item" onclick="window.location.href='/'"><span class="icon">🏠</span><span class="en">Home</span><span class="es">Inicio</span></div>
     <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span><span class="en">Logout</span><span class="es">Salir</span></div>
   </nav>
@@ -194,7 +188,7 @@ html[lang="es"] .en{display:none!important}
     <div class="sidebar-profile">
       <div class="sidebar-avatar" id="sidebarAvatar">🏀</div>
       <div>
-        <div class="sidebar-name" id="sidebarName">Operator <span class="tier-badge free" id="tierBadge">FREE</span></div>
+        <div class="sidebar-name" id="sidebarName">Organizer <span class="tier-badge free" id="tierBadge">FREE</span></div>
         <div class="sidebar-email" id="sidebarEmail">—</div>
       </div>
     </div>
@@ -208,10 +202,10 @@ html[lang="es"] .en{display:none!important}
   <!-- TIER BANNER -->
   <div id="tierBanner" class="tier-banner free-tier">
     <div class="tier-banner-text">
-      <h3><span class="en">🏀 Free Plan — 2 Experiences</span><span class="es">🏀 Plan Gratis — 2 Experiencias</span></h3>
-      <p><span class="en">Upgrade to Pro for unlimited experiences, tournaments, live scoring & more.</span><span class="es">Actualiza a Pro para experiencias ilimitadas, torneos, puntaje en vivo y más.</span></p>
+      <h3><span class="en">🏀 Free Plan — 2 Events</span><span class="es">🏀 Plan Gratis — 2 Eventos</span></h3>
+      <p><span class="en">Upgrade to Pro for unlimited events, tournaments, live scoring & more.</span><span class="es">Actualiza a Pro para eventos ilimitados, torneos, puntaje en vivo y más.</span></p>
     </div>
-    <button class="upgrade-btn" onclick="openUpgradeModal()"><span class="en">Upgrade to Pro — $29/mo</span><span class="es">Actualizar a Pro — $29/mes</span></button>
+    <button class="upgrade-btn" onclick="openUpgradeModal()"><span class="en">Upgrade to Pro</span><span class="es">Actualizar a Pro</span></button>
   </div>
 
   <!-- OVERVIEW -->
@@ -220,31 +214,31 @@ html[lang="es"] .en{display:none!important}
       <div class="stat-card">
         <div class="stat-label"><span class="en">Plan</span><span class="es">Plan</span></div>
         <div class="stat-value" id="statPlan">Free</div>
-        <div class="stat-sub" id="statPlanSub"><span class="en">2 experiences max</span><span class="es">Máximo 2 experiencias</span></div>
+        <div class="stat-sub" id="statPlanSub"><span class="en">2 events max</span><span class="es">Máximo 2 eventos</span></div>
       </div>
       <div class="stat-card">
-        <div class="stat-label"><span class="en">Experiences</span><span class="es">Experiencias</span></div>
+        <div class="stat-label"><span class="en">Events</span><span class="es">Eventos</span></div>
         <div class="stat-value" id="statExperiences">0 / 2</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label"><span class="en">Bookings</span><span class="es">Reservas</span></div>
+        <div class="stat-label"><span class="en">Registrations</span><span class="es">Inscripciones</span></div>
         <div class="stat-value" id="statBookings">0</div>
       </div>
     </div>
   </div>
 
-  <!-- EXPERIENCES -->
-  <div id="sec-experiences">
+  <!-- EVENTS -->
+  <div id="sec-events">
     <div class="section">
       <div class="section-header">
         <div>
-          <span class="section-title"><span class="en">Your Experiences</span><span class="es">Tus Experiencias</span></span>
+          <span class="section-title"><span class="en">Your Events</span><span class="es">Tus Eventos</span></span>
           <span class="limit-text" id="expLimitText"></span>
         </div>
-        <button class="add-btn" id="addExpBtn" onclick="openModal('exp')">+ <span class="en">Add Experience</span><span class="es">Agregar</span></button>
+        <button class="add-btn" id="addExpBtn" onclick="openModal('exp')">+ <span class="en">Add Event</span><span class="es">Agregar Evento</span></button>
       </div>
       <div class="exp-grid" id="expGrid">
-        <div class="empty-state"><div class="icon">🏀</div><p><span class="en">No experiences yet</span><span class="es">No hay experiencias</span></p></div>
+        <div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div>
       </div>
       <!-- PRO FEATURES PREVIEW -->
       <div id="proPreview" style="margin-top:24px;display:none">
@@ -258,23 +252,23 @@ html[lang="es"] .en{display:none!important}
     </div>
   </div>
 
-  <!-- BOOKINGS -->
-  <div id="sec-bookings">
+  <!-- REGISTRATIONS -->
+  <div id="sec-registrations">
     <div class="section">
       <div class="section-header">
-        <div class="section-title"><span class="en">Recent Bookings</span><span class="es">Reservas Recientes</span></div>
+        <div class="section-title"><span class="en">Recent Registrations</span><span class="es">Inscripciones Recientes</span></div>
       </div>
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr>
             <th><span class="en">Team</span><span class="es">Equipo</span></th>
-            <th><span class="en">Experience</span><span class="es">Experiencia</span></th>
+            <th><span class="en">Event</span><span class="es">Evento</span></th>
             <th><span class="en">Contact</span><span class="es">Contacto</span></th>
             <th><span class="en">Players</span><span class="es">Jugadores</span></th>
             <th><span class="en">Date</span><span class="es">Fecha</span></th>
           </tr></thead>
           <tbody id="bookingsBody">
-            <tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>
+            <tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr>
           </tbody>
         </table>
       </div>
@@ -284,35 +278,43 @@ html[lang="es"] .en{display:none!important}
 </main>
 </div>
 
-<!-- ADD EXPERIENCE MODAL -->
+<!-- ADD EVENT MODAL -->
 <div class="modal-overlay" id="expModal">
 <div class="modal">
-  <div class="modal-title" id="expModalTitle"><span class="en">Add Experience</span><span class="es">Agregar Experiencia</span></div>
+  <div class="modal-title" id="expModalTitle"><span class="en">Add Event</span><span class="es">Agregar Evento</span></div>
   <input type="hidden" id="editExpId">
   <div class="form-group">
-    <label class="form-label"><span class="en">Title (English)</span><span class="es">Título (Inglés)</span></label>
+    <label class="form-label"><span class="en">Event Name (English)</span><span class="es">Nombre del Evento (Inglés)</span></label>
     <input class="form-input" id="expTitleEn" placeholder="e.g. 3v3 Basketball Tournament">
   </div>
   <div class="form-group">
-    <label class="form-label"><span class="en">Title (Spanish)</span><span class="es">Título (Español)</span></label>
+    <label class="form-label"><span class="en">Event Name (Spanish)</span><span class="es">Nombre del Evento (Español)</span></label>
     <input class="form-input" id="expTitleEs" placeholder="e.g. Torneo de Baloncesto 3v3">
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Description (English)</span><span class="es">Descripción (Inglés)</span></label>
-    <textarea class="form-input" id="expDescEn" rows="3" placeholder="Describe the experience..."></textarea>
+    <textarea class="form-input" id="expDescEn" rows="3" placeholder="Describe the event..."></textarea>
   </div>
   <div class="form-group">
     <label class="form-label"><span class="en">Description (Spanish)</span><span class="es">Descripción (Español)</span></label>
-    <textarea class="form-input" id="expDescEs" rows="3" placeholder="Describe la experiencia..."></textarea>
+    <textarea class="form-input" id="expDescEs" rows="3" placeholder="Describe el evento..."></textarea>
   </div>
   <div class="form-row">
     <div class="form-group">
-      <label class="form-label"><span class="en">Price per Person ($)</span><span class="es">Precio por Persona ($)</span></label>
-      <input class="form-input" id="expPrice" type="number" step="0.01" placeholder="25.00">
-    </div>
-    <div class="form-group">
       <label class="form-label"><span class="en">Duration (min)</span><span class="es">Duración (min)</span></label>
       <input class="form-input" id="expDuration" type="number" placeholder="120">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span class="en">Format</span><span class="es">Formato</span></label>
+      <select class="form-input" id="expFormat">
+        <option value="3v3">3v3</option>
+        <option value="5v5">5v5</option>
+        <option value="1v1">1v1</option>
+        <option value="showcase">Showcase</option>
+        <option value="camp">Camp</option>
+        <option value="league">League</option>
+        <option value="other">Other</option>
+      </select>
     </div>
   </div>
   <div class="form-row">
@@ -327,7 +329,7 @@ html[lang="es"] .en{display:none!important}
   </div>
   <div class="form-actions">
     <button class="btn-cancel" onclick="closeAllModals()"><span class="en">Cancel</span><span class="es">Cancelar</span></button>
-    <button class="btn-save" id="expSaveBtn" onclick="saveExperience()"><span class="en">Save</span><span class="es">Guardar</span></button>
+    <button class="btn-save" id="expSaveBtn" onclick="saveEvent()"><span class="en">Save</span><span class="es">Guardar</span></button>
   </div>
 </div>
 </div>
@@ -339,12 +341,12 @@ html[lang="es"] .en{display:none!important}
   <div class="upgrade-card">
     <h3>Pro Plan</h3>
     <ul>
-      <li><span class="en">Unlimited experiences</span><span class="es">Experiencias ilimitadas</span></li>
+      <li><span class="en">Unlimited events</span><span class="es">Eventos ilimitados</span></li>
       <li><span class="en">Tournament brackets & management</span><span class="es">Llaves y gestión de torneos</span></li>
       <li><span class="en">Live scoring</span><span class="es">Puntaje en vivo</span></li>
       <li><span class="en">Season leaderboards</span><span class="es">Tabla de posiciones por temporada</span></li>
       <li><span class="en">Custom branding (logo & colors)</span><span class="es">Marca personalizada (logo y colores)</span></li>
-      <li><span class="en">Priority support</span><span class="es">Soporte prioritario</span></li>
+      <li><span class="en">Scout visibility</span><span class="es">Visibilidad para scouts</span></li>
     </ul>
     <div class="upgrade-price">$29 <span>/ <span class="en">month</span><span class="es">mes</span></span></div>
   </div>
@@ -380,7 +382,7 @@ function isPro(){return operatorData&&operatorData.tier==='pro'}
 function maxExp(){return isPro()?999:(operatorData?operatorData.max_experiences||2:2)}
 
 document.addEventListener('DOMContentLoaded',async function(){
-  try{var sl=localStorage.getItem('hoops-lang');if(sl)setLang(sl)}catch(e){}
+  try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl)}catch(e){}
   if(!isLive){console.log('Preview mode');return}
 
   try{
@@ -392,13 +394,13 @@ document.addEventListener('DOMContentLoaded',async function(){
     if(!ops||ops.length===0){window.location.href='/signup.html';return}
     operatorData=ops[0];
 
-    document.getElementById('sidebarName').textContent=operatorData.business_name||'Operator';
+    document.getElementById('sidebarName').textContent=operatorData.business_name||'Organizer';
     document.getElementById('sidebarEmail').textContent=operatorData.email||'';
     document.getElementById('sidebarAvatar').textContent=operatorData.avatar_emoji||'🏀';
     updateTierUI();
 
-    await loadExperiences(client);
-    await loadBookings(client);
+    await loadEvents(client);
+    await loadRegistrations(client);
     updateStats();
   }catch(e){console.error('Init error:',e)}
 });
@@ -414,7 +416,7 @@ function updateTierUI(){
     badge.textContent='PRO';
     badge.className='tier-badge pro';
     banner.className='tier-banner pro-tier';
-    banner.innerHTML='<div class="tier-banner-text"><h3 style="color:var(--purple)"><span class="en">⭐ Pro Plan Active</span><span class="es">⭐ Plan Pro Activo</span></h3><p><span class="en">Unlimited experiences, tournaments, and more.</span><span class="es">Experiencias ilimitadas, torneos y más.</span></p></div>';
+    banner.innerHTML='<div class="tier-banner-text"><h3 style="color:var(--purple)"><span class="en">⭐ Pro Plan Active</span><span class="es">⭐ Plan Pro Activo</span></h3><p><span class="en">Unlimited events, tournaments, and more.</span><span class="es">Eventos ilimitados, torneos y más.</span></p></div>';
     planStat.textContent='Pro';
     planStat.style.color='var(--purple)';
     planSub.innerHTML='<span class="en">Unlimited</span><span class="es">Ilimitado</span>';
@@ -427,19 +429,19 @@ function updateTierUI(){
   setLang(currentLang);
 }
 
-async function loadExperiences(client){
+async function loadEvents(client){
   if(!client)client=await loadSB();
   var{data}=await client.from('experiences').select('*').eq('operator_id',operatorData.id).order('sort_order',{ascending:true});
   experiencesData=data||[];
-  renderExperiences();
+  renderEvents();
   updateExpButton();
 }
 
-async function loadBookings(client){
+async function loadRegistrations(client){
   if(!client)client=await loadSB();
   var{data}=await client.from('bookings').select('*,experiences(title_en,title_es)').eq('operator_id',operatorData.id).order('created_at',{ascending:false}).limit(50);
   bookingsData=data||[];
-  renderBookings();
+  renderRegistrations();
 }
 
 function updateExpButton(){
@@ -457,21 +459,21 @@ function updateExpButton(){
     } else {
       btn.disabled=false;
       btn.onclick=function(){openModal('exp')};
-      btn.innerHTML='+ <span class="en">Add Experience</span><span class="es">Agregar</span>';
+      btn.innerHTML='+ <span class="en">Add Event</span><span class="es">Agregar Evento</span>';
     }
   } else {
     limitText.textContent='';
     btn.disabled=false;
     btn.onclick=function(){openModal('exp')};
-    btn.innerHTML='+ <span class="en">Add Experience</span><span class="es">Agregar</span>';
+    btn.innerHTML='+ <span class="en">Add Event</span><span class="es">Agregar Evento</span>';
   }
   setLang(currentLang);
 }
 
-function renderExperiences(){
+function renderEvents(){
   var grid=document.getElementById('expGrid');
   if(experiencesData.length===0){
-    grid.innerHTML='<div class="empty-state"><div class="icon">🏀</div><p><span class="en">No experiences yet</span><span class="es">No hay experiencias</span></p></div>';
+    grid.innerHTML='<div class="empty-state"><div class="icon">🏀</div><p><span class="en">No events yet</span><span class="es">No hay eventos</span></p></div>';
     setLang(currentLang);return;
   }
   grid.innerHTML=experiencesData.map(function(e){
@@ -479,21 +481,20 @@ function renderExperiences(){
       '<div class="exp-title">'+esc(e.title_en)+'</div>'+
       (e.title_es?'<div class="exp-meta" style="font-style:italic">'+esc(e.title_es)+'</div>':'')+
       '<div class="exp-meta">'+e.duration_minutes+' min · '+e.min_guests+'-'+e.max_guests+' players</div>'+
-      '<div class="exp-price">$'+Number(e.price_per_person).toFixed(2)+' <span style="font-size:.75rem;font-weight:400;color:var(--gray)">/person</span></div>'+
       '<span class="exp-status '+(e.active?'active':'inactive')+'">'+(e.active?'Active':'Inactive')+'</span>'+
       '<div class="exp-actions">'+
-        '<button class="btn-edit" onclick="editExperience(\''+e.id+'\')"><span class="en">Edit</span><span class="es">Editar</span></button>'+
-        '<button class="btn-delete" onclick="deleteExperience(\''+e.id+'\')"><span class="en">Delete</span><span class="es">Eliminar</span></button>'+
+        '<button class="btn-edit" onclick="editEvent(\''+e.id+'\')"><span class="en">Edit</span><span class="es">Editar</span></button>'+
+        '<button class="btn-delete" onclick="deleteEvent(\''+e.id+'\')"><span class="en">Delete</span><span class="es">Eliminar</span></button>'+
       '</div>'+
     '</div>';
   }).join('');
   setLang(currentLang);
 }
 
-function renderBookings(){
+function renderRegistrations(){
   var tbody=document.getElementById('bookingsBody');
   if(bookingsData.length===0){
-    tbody.innerHTML='<tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>';
+    tbody.innerHTML='<tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No registrations yet</span><span class="es">Sin inscripciones</span></p></td></tr>';
     setLang(currentLang);return;
   }
   tbody.innerHTML=bookingsData.map(function(b){
@@ -519,14 +520,14 @@ function updateStats(){
 function showSection(name){
   document.querySelectorAll('.sidebar-item').forEach(function(el){el.classList.remove('active')});
   if(event&&event.currentTarget) event.currentTarget.classList.add('active');
-  ['overview','experiences','bookings'].forEach(function(s){
+  ['overview','events','registrations'].forEach(function(s){
     var el=document.getElementById('sec-'+s);
     if(el) el.style.display='none';
   });
   if(name==='overview'){
     document.getElementById('sec-overview').style.display='';
-    document.getElementById('sec-experiences').style.display='';
-    document.getElementById('sec-bookings').style.display='';
+    document.getElementById('sec-events').style.display='';
+    document.getElementById('sec-registrations').style.display='';
   } else {
     var t=document.getElementById('sec-'+name);
     if(t) t.style.display='';
@@ -536,14 +537,14 @@ function showSection(name){
 // MODALS
 function openModal(type){
   if(type==='exp'){
-    // Check limit for free tier
     if(!isPro()&&experiencesData.length>=maxExp()){
       openUpgradeModal();
       return;
     }
     document.getElementById('editExpId').value='';
-    document.getElementById('expModalTitle').innerHTML='<span class="en">Add Experience</span><span class="es">Agregar Experiencia</span>';
-    ['expTitleEn','expTitleEs','expDescEn','expDescEs','expPrice','expDuration','expMin','expMax'].forEach(function(id){document.getElementById(id).value=''});
+    document.getElementById('expModalTitle').innerHTML='<span class="en">Add Event</span><span class="es">Agregar Evento</span>';
+    ['expTitleEn','expTitleEs','expDescEn','expDescEs','expDuration','expMin','expMax'].forEach(function(id){document.getElementById(id).value=''});
+    document.getElementById('expFormat').value='3v3';
     document.getElementById('expModal').classList.add('show');
   }
   setLang(currentLang);
@@ -557,17 +558,15 @@ function openUpgradeModal(){
 function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('show')})}
 
 function handleUpgrade(){
-  // For now, redirect to a payment link or contact
-  window.open('https://hoops.money/upgrade','_blank');
+  window.open('https://gostar.digital/upgrade','_blank');
   closeAllModals();
-  showToast(currentLang==='es'?'¡Redirigiendo a upgrade!':'Redirecting to upgrade!','success');
+  showToast(currentLang==='es'?'¡Redirigiendo!':'Redirecting!','success');
 }
 
-// SAVE EXPERIENCE
-async function saveExperience(){
+// SAVE EVENT
+async function saveEvent(){
   var titleEn=document.getElementById('expTitleEn').value.trim();
-  if(!titleEn){showToast('Title is required','error');return}
-  var price=parseFloat(document.getElementById('expPrice').value)||0;
+  if(!titleEn){showToast('Event name is required','error');return}
 
   var payload={
     operator_id:operatorData.id,
@@ -575,7 +574,7 @@ async function saveExperience(){
     title_es:document.getElementById('expTitleEs').value.trim(),
     description_en:document.getElementById('expDescEn').value.trim(),
     description_es:document.getElementById('expDescEs').value.trim(),
-    price_per_person:price,
+    price_per_person:0,
     duration_minutes:parseInt(document.getElementById('expDuration').value)||120,
     min_guests:parseInt(document.getElementById('expMin').value)||4,
     max_guests:parseInt(document.getElementById('expMax').value)||16,
@@ -589,9 +588,8 @@ async function saveExperience(){
     if(editId){
       var{error}=await client.from('experiences').update(payload).eq('id',editId);
       if(error)throw error;
-      showToast('Experience updated!','success');
+      showToast('Event updated!','success');
     } else {
-      // Double-check limit
       if(!isPro()&&experiencesData.length>=maxExp()){
         openUpgradeModal();
         return;
@@ -599,25 +597,24 @@ async function saveExperience(){
       payload.sort_order=experiencesData.length;
       var{error}=await client.from('experiences').insert(payload);
       if(error)throw error;
-      showToast('Experience created!','success');
+      showToast('Event created!','success');
     }
     closeAllModals();
-    await loadExperiences(client);
+    await loadEvents(client);
     updateStats();
   }catch(e){showToast(e.message||'Failed','error')}
 }
 
-// EDIT EXPERIENCE
-function editExperience(id){
+// EDIT EVENT
+function editEvent(id){
   var exp=experiencesData.find(function(e){return e.id===id});
   if(!exp)return;
   document.getElementById('editExpId').value=id;
-  document.getElementById('expModalTitle').innerHTML='<span class="en">Edit Experience</span><span class="es">Editar Experiencia</span>';
+  document.getElementById('expModalTitle').innerHTML='<span class="en">Edit Event</span><span class="es">Editar Evento</span>';
   document.getElementById('expTitleEn').value=exp.title_en||'';
   document.getElementById('expTitleEs').value=exp.title_es||'';
   document.getElementById('expDescEn').value=exp.description_en||'';
   document.getElementById('expDescEs').value=exp.description_es||'';
-  document.getElementById('expPrice').value=exp.price_per_person||'';
   document.getElementById('expDuration').value=exp.duration_minutes||'';
   document.getElementById('expMin').value=exp.min_guests||'';
   document.getElementById('expMax').value=exp.max_guests||'';
@@ -625,15 +622,15 @@ function editExperience(id){
   setLang(currentLang);
 }
 
-// DELETE EXPERIENCE
-async function deleteExperience(id){
-  if(!confirm(currentLang==='es'?'¿Eliminar esta experiencia?':'Delete this experience?'))return;
+// DELETE EVENT
+async function deleteEvent(id){
+  if(!confirm(currentLang==='es'?'¿Eliminar este evento?':'Delete this event?'))return;
   try{
     var client=await loadSB();
     var{error}=await client.from('experiences').delete().eq('id',id);
     if(error)throw error;
     showToast('Deleted','success');
-    await loadExperiences(client);
+    await loadEvents(client);
     updateStats();
   }catch(e){showToast(e.message,'error')}
 }

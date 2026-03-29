@@ -21,6 +21,7 @@ input,select,textarea{font-family:inherit}
   --orange:#e8611a;--orange-light:#f4832f;
   --white:#fafaf9;--gray:#8a8a8a;
   --green:#22c55e;--red:#ef4444;--yellow:#eab308;
+  --purple:#a855f7;
 }
 html[lang="en"] .es{display:none!important}
 html[lang="es"] .en{display:none!important}
@@ -44,24 +45,25 @@ html[lang="es"] .en{display:none!important}
 .sidebar-lang{display:flex;gap:4px;padding:8px 12px}
 .lang-btn{padding:6px 12px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;cursor:pointer;border:none}
 .lang-btn.active{background:rgba(232,97,26,.15);color:var(--orange)}
+.tier-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-left:8px}
+.tier-badge.free{background:rgba(255,255,255,.06);color:var(--gray)}
+.tier-badge.pro{background:rgba(168,85,247,.15);color:var(--purple)}
 
 /* MAIN */
 .main{margin-left:260px;flex:1;padding:32px 40px;min-height:100vh}
 .page-title{font-size:1.8rem;font-weight:800;margin-bottom:8px}
 .page-sub{color:var(--gray);font-size:.9rem;margin-bottom:32px}
 
-/* STRIPE BANNER */
-.stripe-banner{padding:20px 24px;border-radius:12px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.stripe-banner.needs-setup{background:linear-gradient(135deg,rgba(232,97,26,.15),rgba(232,97,26,.05));border:1px solid rgba(232,97,26,.3)}
-.stripe-banner.connected{background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));border:1px solid rgba(34,197,94,.3)}
-.stripe-banner-text h3{font-size:1rem;font-weight:700;margin-bottom:4px}
-.stripe-banner.needs-setup .stripe-banner-text h3{color:var(--orange)}
-.stripe-banner.connected .stripe-banner-text h3{color:var(--green)}
-.stripe-banner-text p{font-size:.8rem;color:var(--gray)}
-.stripe-btn{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:all .2s}
-.stripe-btn.setup{background:var(--orange);color:#fff}
-.stripe-btn.setup:hover{background:var(--orange-light)}
-.stripe-btn.manage{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+/* TIER BANNER */
+.tier-banner{padding:20px 24px;border-radius:12px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tier-banner.free-tier{background:linear-gradient(135deg,rgba(232,97,26,.12),rgba(168,85,247,.08));border:1px solid rgba(232,97,26,.2)}
+.tier-banner.pro-tier{background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(168,85,247,.04));border:1px solid rgba(168,85,247,.3)}
+.tier-banner-text h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.tier-banner.free-tier .tier-banner-text h3{color:var(--orange)}
+.tier-banner.pro-tier .tier-banner-text h3{color:var(--purple)}
+.tier-banner-text p{font-size:.8rem;color:var(--gray)}
+.upgrade-btn{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;background:linear-gradient(135deg,var(--orange),var(--purple));color:#fff}
+.upgrade-btn:hover{opacity:.9;transform:translateY(-1px)}
 
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
@@ -69,6 +71,7 @@ html[lang="es"] .en{display:none!important}
 .stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .stat-value{font-size:1.6rem;font-weight:800;color:var(--white)}
 .stat-value.money-green{color:var(--green)}
+.stat-sub{font-size:.7rem;color:var(--gray);margin-top:4px}
 
 /* SECTIONS */
 .section{margin-bottom:32px}
@@ -76,6 +79,9 @@ html[lang="es"] .en{display:none!important}
 .section-title{font-size:1.1rem;font-weight:700}
 .add-btn{padding:8px 20px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer;transition:all .2s}
 .add-btn:hover{background:var(--orange-light)}
+.add-btn:disabled{opacity:.4;cursor:not-allowed}
+.add-btn:disabled:hover{background:var(--orange)}
+.limit-text{font-size:.75rem;color:var(--gray);font-weight:600}
 
 /* EXPERIENCE CARDS */
 .exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
@@ -93,6 +99,13 @@ html[lang="es"] .en{display:none!important}
 .btn-edit:hover{background:rgba(255,255,255,.1);color:var(--white)}
 .btn-delete{background:rgba(239,68,68,.1);color:var(--red)}
 .btn-delete:hover{background:rgba(239,68,68,.2)}
+
+/* PRO FEATURE CARDS */
+.pro-feature{background:var(--black2);border:1px dashed rgba(168,85,247,.3);border-radius:12px;padding:24px;text-align:center;opacity:.7}
+.pro-feature .icon{font-size:2rem;margin-bottom:8px}
+.pro-feature h4{font-size:.9rem;font-weight:700;color:var(--purple);margin-bottom:4px}
+.pro-feature p{font-size:.8rem;color:var(--gray);margin-bottom:12px}
+.pro-badge-sm{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;background:rgba(168,85,247,.12);color:var(--purple)}
 
 /* BOOKINGS TABLE */
 .table-wrap{overflow-x:auto}
@@ -122,6 +135,15 @@ html[lang="es"] .en{display:none!important}
 .btn-cancel{flex:1;padding:12px;border-radius:8px;font-size:.85rem;font-weight:700;background:rgba(255,255,255,.06);color:var(--gray);border:none;cursor:pointer}
 .btn-save{flex:1;padding:12px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer}
 .btn-save:hover{background:var(--orange-light)}
+
+/* UPGRADE MODAL */
+.upgrade-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(232,97,26,.08));border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:24px;margin-bottom:16px}
+.upgrade-card h3{font-size:1.1rem;font-weight:800;color:var(--purple);margin-bottom:12px}
+.upgrade-card ul{list-style:none;padding:0}
+.upgrade-card li{padding:6px 0;font-size:.85rem;color:var(--white)}
+.upgrade-card li::before{content:'✓ ';color:var(--green);font-weight:800}
+.upgrade-price{font-size:2rem;font-weight:900;color:var(--white);margin:16px 0 4px}
+.upgrade-price span{font-size:.9rem;font-weight:500;color:var(--gray)}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -161,7 +183,6 @@ html[lang="es"] .en{display:none!important}
     <div class="sidebar-item active" onclick="showSection('overview')"><span class="icon">📊</span><span class="en">Overview</span><span class="es">Resumen</span></div>
     <div class="sidebar-item" onclick="showSection('experiences')"><span class="icon">🏀</span><span class="en">Experiences</span><span class="es">Experiencias</span></div>
     <div class="sidebar-item" onclick="showSection('bookings')"><span class="icon">📋</span><span class="en">Bookings</span><span class="es">Reservas</span></div>
-    <div class="sidebar-item" onclick="showSection('payments')"><span class="icon">💰</span><span class="en">Payments</span><span class="es">Pagos</span></div>
     <div class="sidebar-item" onclick="window.location.href='/'"><span class="icon">🏠</span><span class="en">Home</span><span class="es">Inicio</span></div>
     <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span><span class="en">Logout</span><span class="es">Salir</span></div>
   </nav>
@@ -173,7 +194,7 @@ html[lang="es"] .en{display:none!important}
     <div class="sidebar-profile">
       <div class="sidebar-avatar" id="sidebarAvatar">🏀</div>
       <div>
-        <div class="sidebar-name" id="sidebarName">Operator</div>
+        <div class="sidebar-name" id="sidebarName">Operator <span class="tier-badge free" id="tierBadge">FREE</span></div>
         <div class="sidebar-email" id="sidebarEmail">—</div>
       </div>
     </div>
@@ -184,25 +205,26 @@ html[lang="es"] .en{display:none!important}
   <h1 class="page-title"><span class="en">Dashboard</span><span class="es">Panel</span></h1>
   <p class="page-sub"><span class="en">Welcome back</span><span class="es">Bienvenido</span></p>
 
-  <!-- STRIPE BANNER -->
-  <div id="stripeBanner" class="stripe-banner needs-setup">
-    <div class="stripe-banner-text">
-      <h3><span class="en">💰 Set Up Payments</span><span class="es">💰 Configurar Pagos</span></h3>
-      <p><span class="en">Connect Stripe to accept online payments. You get 95%, platform fee is 5%.</span><span class="es">Conecta Stripe para aceptar pagos. Recibes 95%, comisión 5%.</span></p>
+  <!-- TIER BANNER -->
+  <div id="tierBanner" class="tier-banner free-tier">
+    <div class="tier-banner-text">
+      <h3><span class="en">🏀 Free Plan — 2 Experiences</span><span class="es">🏀 Plan Gratis — 2 Experiencias</span></h3>
+      <p><span class="en">Upgrade to Pro for unlimited experiences, tournaments, live scoring & more.</span><span class="es">Actualiza a Pro para experiencias ilimitadas, torneos, puntaje en vivo y más.</span></p>
     </div>
-    <button class="stripe-btn setup" onclick="setupStripe()"><span class="en">Set Up Payments</span><span class="es">Configurar Pagos</span></button>
+    <button class="upgrade-btn" onclick="openUpgradeModal()"><span class="en">Upgrade to Pro — $29/mo</span><span class="es">Actualizar a Pro — $29/mes</span></button>
   </div>
 
   <!-- OVERVIEW -->
   <div id="sec-overview">
     <div class="stats-row">
       <div class="stat-card">
-        <div class="stat-label"><span class="en">Revenue</span><span class="es">Ingresos</span></div>
-        <div class="stat-value money-green" id="statRevenue">$0</div>
+        <div class="stat-label"><span class="en">Plan</span><span class="es">Plan</span></div>
+        <div class="stat-value" id="statPlan">Free</div>
+        <div class="stat-sub" id="statPlanSub"><span class="en">2 experiences max</span><span class="es">Máximo 2 experiencias</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label"><span class="en">Experiences</span><span class="es">Experiencias</span></div>
-        <div class="stat-value" id="statExperiences">0</div>
+        <div class="stat-value" id="statExperiences">0 / 2</div>
       </div>
       <div class="stat-card">
         <div class="stat-label"><span class="en">Bookings</span><span class="es">Reservas</span></div>
@@ -215,11 +237,23 @@ html[lang="es"] .en{display:none!important}
   <div id="sec-experiences">
     <div class="section">
       <div class="section-header">
-        <div class="section-title"><span class="en">Your Experiences</span><span class="es">Tus Experiencias</span></div>
-        <button class="add-btn" onclick="openModal('exp')">+ <span class="en">Add Experience</span><span class="es">Agregar</span></button>
+        <div>
+          <span class="section-title"><span class="en">Your Experiences</span><span class="es">Tus Experiencias</span></span>
+          <span class="limit-text" id="expLimitText"></span>
+        </div>
+        <button class="add-btn" id="addExpBtn" onclick="openModal('exp')">+ <span class="en">Add Experience</span><span class="es">Agregar</span></button>
       </div>
       <div class="exp-grid" id="expGrid">
         <div class="empty-state"><div class="icon">🏀</div><p><span class="en">No experiences yet</span><span class="es">No hay experiencias</span></p></div>
+      </div>
+      <!-- PRO FEATURES PREVIEW -->
+      <div id="proPreview" style="margin-top:24px;display:none">
+        <div style="font-size:.9rem;font-weight:700;color:var(--gray);margin-bottom:12px"><span class="en">Unlock with Pro</span><span class="es">Desbloquea con Pro</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+          <div class="pro-feature"><div class="icon">🏆</div><h4><span class="en">Tournaments</span><span class="es">Torneos</span></h4><p><span class="en">Brackets, seeding, live scores</span><span class="es">Llaves, siembra, puntaje en vivo</span></p><span class="pro-badge-sm">PRO</span></div>
+          <div class="pro-feature"><div class="icon">📊</div><h4><span class="en">Season Leaderboards</span><span class="es">Tabla de Posiciones</span></h4><p><span class="en">Track teams across events</span><span class="es">Seguimiento entre eventos</span></p><span class="pro-badge-sm">PRO</span></div>
+          <div class="pro-feature"><div class="icon">🎨</div><h4><span class="en">Custom Branding</span><span class="es">Marca Personalizada</span></h4><p><span class="en">Logo, colors, your style</span><span class="es">Logo, colores, tu estilo</span></p><span class="pro-badge-sm">PRO</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -236,29 +270,13 @@ html[lang="es"] .en{display:none!important}
             <th><span class="en">Team</span><span class="es">Equipo</span></th>
             <th><span class="en">Experience</span><span class="es">Experiencia</span></th>
             <th><span class="en">Contact</span><span class="es">Contacto</span></th>
-            <th><span class="en">Amount</span><span class="es">Monto</span></th>
-            <th><span class="en">Payment</span><span class="es">Pago</span></th>
+            <th><span class="en">Players</span><span class="es">Jugadores</span></th>
             <th><span class="en">Date</span><span class="es">Fecha</span></th>
           </tr></thead>
           <tbody id="bookingsBody">
-            <tr><td colspan="6" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>
+            <tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAYMENTS -->
-  <div id="sec-payments" style="display:none">
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title"><span class="en">Payment Settings</span><span class="es">Configuración de Pagos</span></div>
-      </div>
-      <div id="paymentContent" style="background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:32px;text-align:center">
-        <div style="font-size:3rem;margin-bottom:12px">💰</div>
-        <h3 style="font-size:1.2rem;font-weight:800;color:var(--orange);margin-bottom:8px"><span class="en">Connect Stripe to Get Paid</span><span class="es">Conecta Stripe para Recibir Pagos</span></h3>
-        <p style="color:var(--gray);font-size:.85rem;margin-bottom:20px"><span class="en">You receive 95% · Platform fee 5%</span><span class="es">Recibes 95% · Comisión 5%</span></p>
-        <button class="stripe-btn setup" onclick="setupStripe()"><span class="en">Set Up Payments</span><span class="es">Configurar Pagos</span></button>
       </div>
     </div>
   </div>
@@ -314,6 +332,28 @@ html[lang="es"] .en{display:none!important}
 </div>
 </div>
 
+<!-- UPGRADE MODAL -->
+<div class="modal-overlay" id="upgradeModal">
+<div class="modal" style="max-width:480px">
+  <div class="modal-title"><span class="en">🚀 Upgrade to Pro</span><span class="es">🚀 Actualizar a Pro</span></div>
+  <div class="upgrade-card">
+    <h3>Pro Plan</h3>
+    <ul>
+      <li><span class="en">Unlimited experiences</span><span class="es">Experiencias ilimitadas</span></li>
+      <li><span class="en">Tournament brackets & management</span><span class="es">Llaves y gestión de torneos</span></li>
+      <li><span class="en">Live scoring</span><span class="es">Puntaje en vivo</span></li>
+      <li><span class="en">Season leaderboards</span><span class="es">Tabla de posiciones por temporada</span></li>
+      <li><span class="en">Custom branding (logo & colors)</span><span class="es">Marca personalizada (logo y colores)</span></li>
+      <li><span class="en">Priority support</span><span class="es">Soporte prioritario</span></li>
+    </ul>
+    <div class="upgrade-price">$29 <span>/ <span class="en">month</span><span class="es">mes</span></span></div>
+  </div>
+  <p style="font-size:.8rem;color:var(--gray);margin-bottom:16px;text-align:center"><span class="en">Cancel anytime. No long-term contracts.</span><span class="es">Cancela cuando quieras. Sin contratos.</span></p>
+  <button class="upgrade-btn" style="width:100%;padding:16px;font-size:1rem" onclick="handleUpgrade()"><span class="en">Get Pro Now</span><span class="es">Obtener Pro Ahora</span></button>
+  <button class="btn-cancel" style="width:100%;margin-top:8px" onclick="closeAllModals()"><span class="en">Maybe Later</span><span class="es">Quizás Después</span></button>
+</div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -336,13 +376,11 @@ var operatorData=null;
 var experiencesData=[];
 var bookingsData=[];
 
+function isPro(){return operatorData&&operatorData.tier==='pro'}
+function maxExp(){return isPro()?999:(operatorData?operatorData.max_experiences||2:2)}
+
 document.addEventListener('DOMContentLoaded',async function(){
   try{var sl=localStorage.getItem('hoops-lang');if(sl)setLang(sl)}catch(e){}
-
-  var params=new URLSearchParams(window.location.search);
-  if(params.get('stripe')==='success') showToast('Stripe connected successfully!','success');
-  if(params.get('stripe')==='refresh') showToast('Please complete Stripe setup','error');
-
   if(!isLive){console.log('Preview mode');return}
 
   try{
@@ -357,19 +395,44 @@ document.addEventListener('DOMContentLoaded',async function(){
     document.getElementById('sidebarName').textContent=operatorData.business_name||'Operator';
     document.getElementById('sidebarEmail').textContent=operatorData.email||'';
     document.getElementById('sidebarAvatar').textContent=operatorData.avatar_emoji||'🏀';
+    updateTierUI();
 
     await loadExperiences(client);
     await loadBookings(client);
     updateStats();
-    updateStripeBanner();
   }catch(e){console.error('Init error:',e)}
 });
+
+function updateTierUI(){
+  var badge=document.getElementById('tierBadge');
+  var banner=document.getElementById('tierBanner');
+  var planStat=document.getElementById('statPlan');
+  var planSub=document.getElementById('statPlanSub');
+  var proPreview=document.getElementById('proPreview');
+
+  if(isPro()){
+    badge.textContent='PRO';
+    badge.className='tier-badge pro';
+    banner.className='tier-banner pro-tier';
+    banner.innerHTML='<div class="tier-banner-text"><h3 style="color:var(--purple)"><span class="en">⭐ Pro Plan Active</span><span class="es">⭐ Plan Pro Activo</span></h3><p><span class="en">Unlimited experiences, tournaments, and more.</span><span class="es">Experiencias ilimitadas, torneos y más.</span></p></div>';
+    planStat.textContent='Pro';
+    planStat.style.color='var(--purple)';
+    planSub.innerHTML='<span class="en">Unlimited</span><span class="es">Ilimitado</span>';
+    proPreview.style.display='none';
+  } else {
+    badge.textContent='FREE';
+    badge.className='tier-badge free';
+    proPreview.style.display='block';
+  }
+  setLang(currentLang);
+}
 
 async function loadExperiences(client){
   if(!client)client=await loadSB();
   var{data}=await client.from('experiences').select('*').eq('operator_id',operatorData.id).order('sort_order',{ascending:true});
   experiencesData=data||[];
   renderExperiences();
+  updateExpButton();
 }
 
 async function loadBookings(client){
@@ -377,6 +440,32 @@ async function loadBookings(client){
   var{data}=await client.from('bookings').select('*,experiences(title_en,title_es)').eq('operator_id',operatorData.id).order('created_at',{ascending:false}).limit(50);
   bookingsData=data||[];
   renderBookings();
+}
+
+function updateExpButton(){
+  var btn=document.getElementById('addExpBtn');
+  var limitText=document.getElementById('expLimitText');
+  var max=maxExp();
+  var count=experiencesData.length;
+
+  if(!isPro()){
+    limitText.innerHTML=' <span class="en">('+count+'/'+max+')</span><span class="es">('+count+'/'+max+')</span>';
+    if(count>=max){
+      btn.disabled=true;
+      btn.onclick=function(){openUpgradeModal()};
+      btn.innerHTML='🔒 <span class="en">Upgrade to Add More</span><span class="es">Actualiza para Agregar</span>';
+    } else {
+      btn.disabled=false;
+      btn.onclick=function(){openModal('exp')};
+      btn.innerHTML='+ <span class="en">Add Experience</span><span class="es">Agregar</span>';
+    }
+  } else {
+    limitText.textContent='';
+    btn.disabled=false;
+    btn.onclick=function(){openModal('exp')};
+    btn.innerHTML='+ <span class="en">Add Experience</span><span class="es">Agregar</span>';
+  }
+  setLang(currentLang);
 }
 
 function renderExperiences(){
@@ -404,66 +493,33 @@ function renderExperiences(){
 function renderBookings(){
   var tbody=document.getElementById('bookingsBody');
   if(bookingsData.length===0){
-    tbody.innerHTML='<tr><td colspan="6" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>';
+    tbody.innerHTML='<tr><td colspan="5" class="empty-state"><div class="icon">📋</div><p><span class="en">No bookings yet</span><span class="es">Sin reservas</span></p></td></tr>';
     setLang(currentLang);return;
   }
   tbody.innerHTML=bookingsData.map(function(b){
     var expName=b.experiences?b.experiences.title_en:'—';
     var date=b.created_at?new Date(b.created_at).toLocaleDateString():'—';
-    var badge=b.payment_status==='paid'?'paid':'pending';
     return '<tr>'+
       '<td>'+esc(b.team_name||b.guest_name||'—')+'</td>'+
       '<td>'+esc(expName)+'</td>'+
       '<td>'+esc(b.guest_email||'—')+'</td>'+
-      '<td>$'+Number(b.total_amount||0).toFixed(2)+'</td>'+
-      '<td><span class="payment-badge '+badge+'">'+badge.toUpperCase()+'</span></td>'+
+      '<td>'+(b.guest_count||1)+'</td>'+
       '<td>'+date+'</td></tr>';
   }).join('');
   setLang(currentLang);
 }
 
 function updateStats(){
-  document.getElementById('statExperiences').textContent=experiencesData.length;
+  var max=maxExp();
+  document.getElementById('statExperiences').textContent=experiencesData.length+(isPro()?'':' / '+max);
   document.getElementById('statBookings').textContent=bookingsData.length;
-  var paid=bookingsData.filter(function(b){return b.payment_status==='paid'});
-  var revenue=paid.reduce(function(s,b){return s+Number(b.total_amount||0)},0);
-  document.getElementById('statRevenue').textContent='$'+revenue.toFixed(2);
-}
-
-// STRIPE
-function updateStripeBanner(){
-  var banner=document.getElementById('stripeBanner');
-  var txt=banner.querySelector('.stripe-banner-text');
-  var btn=banner.querySelector('.stripe-btn');
-  if(operatorData.stripe_charges_enabled){
-    banner.className='stripe-banner connected';
-    txt.innerHTML='<h3 style="color:var(--green)"><span class="en">✅ Payments Active</span><span class="es">✅ Pagos Activos</span></h3><p><span class="en">Stripe connected. Teams can book and pay online.</span><span class="es">Stripe conectado. Los equipos pueden reservar y pagar.</span></p>';
-    btn.innerHTML='<span class="en">Stripe Dashboard</span><span class="es">Panel de Stripe</span>';
-    btn.className='stripe-btn manage';
-    btn.onclick=function(){window.open('https://dashboard.stripe.com','_blank')};
-    document.getElementById('paymentContent').innerHTML='<div style="font-size:3rem;margin-bottom:12px">✅</div><h3 style="font-size:1.2rem;font-weight:800;color:var(--green);margin-bottom:8px"><span class="en">Payments Active</span><span class="es">Pagos Activos</span></h3><p style="color:var(--gray);font-size:.85rem;margin-bottom:20px"><span class="en">You receive 95% of every booking.</span><span class="es">Recibes 95% de cada reserva.</span></p><button class="stripe-btn manage" onclick="window.open(\'https://dashboard.stripe.com\',\'_blank\')"><span class="en">Open Stripe Dashboard</span><span class="es">Abrir Panel de Stripe</span></button>';
-  } else if(operatorData.stripe_account_id){
-    txt.innerHTML='<h3 style="color:var(--orange)"><span class="en">⏳ Stripe Pending</span><span class="es">⏳ Stripe Pendiente</span></h3><p><span class="en">Complete Stripe setup to receive payments.</span><span class="es">Completa la configuración para recibir pagos.</span></p>';
-    btn.innerHTML='<span class="en">Complete Setup</span><span class="es">Completar</span>';
-  }
-  setLang(currentLang);
-}
-
-async function setupStripe(){
-  if(!operatorData){showToast('Please log in first','error');return}
-  try{
-    var res=await fetch('/api/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({operator_id:operatorData.id})});
-    var data=await res.json();
-    if(data.url) window.location.href=data.url;
-    else showToast(data.error||'Failed','error');
-  }catch(e){showToast('Connection error','error')}
 }
 
 // SECTIONS
 function showSection(name){
   document.querySelectorAll('.sidebar-item').forEach(function(el){el.classList.remove('active')});
   if(event&&event.currentTarget) event.currentTarget.classList.add('active');
-  ['overview','experiences','bookings','payments'].forEach(function(s){
+  ['overview','experiences','bookings'].forEach(function(s){
     var el=document.getElementById('sec-'+s);
     if(el) el.style.display='none';
   });
@@ -480,6 +536,11 @@ function showSection(name){
 // MODALS
 function openModal(type){
   if(type==='exp'){
+    // Check limit for free tier
+    if(!isPro()&&experiencesData.length>=maxExp()){
+      openUpgradeModal();
+      return;
+    }
     document.getElementById('editExpId').value='';
     document.getElementById('expModalTitle').innerHTML='<span class="en">Add Experience</span><span class="es">Agregar Experiencia</span>';
     ['expTitleEn','expTitleEs','expDescEn','expDescEs','expPrice','expDuration','expMin','expMax'].forEach(function(id){document.getElementById(id).value=''});
@@ -487,14 +548,26 @@ function openModal(type){
   }
   setLang(currentLang);
 }
+
+function openUpgradeModal(){
+  document.getElementById('upgradeModal').classList.add('show');
+  setLang(currentLang);
+}
+
 function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('show')})}
+
+function handleUpgrade(){
+  // For now, redirect to a payment link or contact
+  window.open('https://hoops.money/upgrade','_blank');
+  closeAllModals();
+  showToast(currentLang==='es'?'¡Redirigiendo a upgrade!':'Redirecting to upgrade!','success');
+}
 
 // SAVE EXPERIENCE
 async function saveExperience(){
   var titleEn=document.getElementById('expTitleEn').value.trim();
   if(!titleEn){showToast('Title is required','error');return}
   var price=parseFloat(document.getElementById('expPrice').value)||0;
-  if(price<=0){showToast('Price must be > 0','error');return}
 
   var payload={
     operator_id:operatorData.id,
@@ -518,6 +591,11 @@ async function saveExperience(){
       if(error)throw error;
       showToast('Experience updated!','success');
     } else {
+      // Double-check limit
+      if(!isPro()&&experiencesData.length>=maxExp()){
+        openUpgradeModal();
+        return;
+      }
       payload.sort_order=experiencesData.length;
       var{error}=await client.from('experiences').insert(payload);
       if(error)throw error;
